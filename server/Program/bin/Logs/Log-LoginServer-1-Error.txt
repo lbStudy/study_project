@@ -1,0 +1,3 @@
+2018-05-04 12:16:32.5837 LoginServer 1 (TChannel.cs:52) connect error: 127.0.0.1 11001 ConnectionRefused Program.Main => OneThreadSynchronizationContext.Update => ExecutionContext.Run => <ConnectAsync>d__9.MoveNext
+2018-05-04 12:16:33.4864 LoginServer 1 (TChannel.cs:52) connect error: 127.0.0.1 11001 ConnectionRefused Program.Main => OneThreadSynchronizationContext.Update => ExecutionContext.Run => <ConnectAsync>d__9.MoveNext
+2018-05-04 12:16:34.4897 LoginServer 1 (TChannel.cs:52) connect error: 127.0.0.1 11001 ConnectionRefused Program.Main => OneThreadSynchronizationContext.Update => ExecutionContext.Run => <ConnectAsync>d__9.MoveNext

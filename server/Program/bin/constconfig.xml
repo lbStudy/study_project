@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ConstConfig >
+	<PlayerDataSaveCount>10</PlayerDataSaveCount><!-- 单次最多保存玩家数量 -->
+	<PlayerDetectionInterval>3000</PlayerDetectionInterval><!-- 每隔n(毫秒)，检测玩家 -->
+	<PlayerQuickDetectionInterval>500</PlayerQuickDetectionInterval><!-- 每隔n(毫秒)，快速检测玩家 -->
+	<PlayerDetectionCount>100</PlayerDetectionCount><!-- 检测玩家数量 -->
+	<PlayerDataWriteToDBInterval>60000</PlayerDataWriteToDBInterval><!-- 每隔n(毫秒)，写入数据 -->
+	<QuickWriteToDBInterval>3000</QuickWriteToDBInterval><!-- 每隔n(毫秒)，写入数据 -->
+	<PlayerDataWriteToDBCount>100</PlayerDataWriteToDBCount><!-- 单次写入n份数据 -->
+	<TimerDetectionInterval>1</TimerDetectionInterval><!-- 每隔(毫秒)，定时器检测频率 -->
+	<GridWidth>30</GridWidth><!-- 格子宽度 -->
+	<GridHeigh>30</GridHeigh><!-- 格子长度 -->
+	<GateVerifyWaitTime>10000</GateVerifyWaitTime><!-- 网关验证等待时间(毫秒) -->
+	<PingTime>15000</PingTime><!-- 心跳(毫秒) -->
+	<ServerPingTime>360000</ServerPingTime><!-- 服务器心跳检测(毫秒) -->
+	<ServerSendPing>300000</ServerSendPing><!-- 服务器间发送心跳(毫秒) -->
+	<OfflineTime>300000</OfflineTime><!--离线时间(毫秒) -->
+	<LeaveRoomVoteTime>30000</LeaveRoomVoteTime><!-- 离开房间投票时间(毫秒) -->
+	<RoomEmptyTime>3600000</RoomEmptyTime><!-- 房间空闲n(毫秒)时间后自动关闭 -->
+	<InitRoomCard>3000</InitRoomCard><!-- 玩家初始房卡 -->
+	<RecordRemoveTime>604800000</RecordRemoveTime><!-- 战斗记录保存时间 7 * 24 * 60 * 60 * 1000(毫秒) -->
+	<ServerInfoTime>10000</ServerInfoTime><!-- 服务器信息(毫秒) -->
+	<IsNoSDKLogin>1</IsNoSDKLogin><!-- 是否能够不通过平台登录 -->
+	<TotalMemberCountInRoom>36</TotalMemberCountInRoom><!-- 房间总人数 -->
+	<SynAreaLayer>1</SynAreaLayer><!-- 房间区域同步层 -->
+	<mincount>1</mincount><!-- 进入房间，最少人数 -->
+	<WaitEnterRoomTime>30000</WaitEnterRoomTime><!-- 等待进入房间 -->
+	<PreparetTime>5000</PreparetTime><!-- 准备时间 -->
+	<Score>0</Score><!-- 准备时间 -->
+	<paistr>123456,1,17,3,19,35,23,39,11,27,43,59,13,78</paistr><!--playerid,val1,val2..|playerid,val1,val2... -->
+	<!--
+	                                    1,17,33,49,  //方块2 梅花2 红桃2 黑桃2
+                                        2,18,34,50,  //方块3~黑桃3  
+                                        3,19,35,51,  //方块4~黑桃4  
+                                        4,20,36,52,  //方块5~黑桃5  
+                                        5,21,37,53,  //方块6~黑桃6  
+                                        6,22,38,54,  //方块7~黑桃7  
+                                        7,23,39,55,  //方块8~黑桃8  
+                                        8,24,40,56,  //方块9~黑桃9  
+                                        9,25,41,57,  //方块10~黑桃10  
+                                        10,26,42,58,  //方块J~黑桃J  
+                                        11,27,43,59,  //方块Q~黑桃Q  
+                                        12,28,44,60,  //方块K~黑桃K  
+                                        13,29,45,61   //方块A~黑桃A
+										78,79			//小鬼大鬼	
+	-->
+
+	<CostRoomCardNums><!-- 消耗房卡 -->
+		<val>400</val>
+		<val>800</val>
+		<val>1200</val>
+	</CostRoomCardNums>
+
+	<RoomPeopleNums><!-- 房间人数 -->
+		<val>2</val>
+		<val>3</val>
+		<val>4</val>
+	</RoomPeopleNums>
+
+	<Jushus><!-- 房间牌局数 -->
+		<val>4</val>
+		<val>8</val>
+		<val>12</val>
+	</Jushus>
+
+	<Mapais><!-- 马牌 -->
+		<val>0</val>
+		<val>52</val>
+		<val>57</val>
+		<val>61</val>
+	</Mapais>
+
+	<Specialpais_val><!-- 特殊牌大小 -->
+		<val>0</val><!-- None -->
+		<val>30</val><!-- Liuduiban 六对半-->
+		<val>20</val><!-- SanShunzi 三顺子-->
+		<val>10</val><!-- SanTonghua 三同花-->
+		<val>40</val><!-- Quanhongyidianhei 全红一点黑-->
+		<val>50</val><!-- Quanheiyidianhong 全黑一点红-->
+		<val>60</val><!-- Wuduisantiao 五对三条-->
+		<val>70</val><!-- Sitaosantiao 四套三条-->
+		<val>80</val><!-- Banxiao 半小-->
+		<val>90</val><!-- Banda 半大-->
+		<val>100</val><!-- Couyise 凑一色-->
+		<val>110</val><!-- Quanxiao 全小-->
+		<val>120</val><!-- Quanda 全大-->
+		<val>130</val><!-- Sanfentianxia 三分天下-->
+		<val>140</val><!-- Santonghuashun 三同花顺-->
+		<val>150</val><!-- ShiErhuangzu 十二皇族-->
+		<val>160</val><!-- Yitiaolong 一条龙-->
+		<val>170</val><!-- Zhizhunyitiaolong 至尊一条龙-->
+	</Specialpais_val>
+
+	<Specialpais_daoshu><!-- 特殊牌大小 -->
+		<val>0</val><!-- None -->
+		<val>5</val><!-- Liuduiban 六对半-->
+		<val>4</val><!-- SanShunzi 三顺子-->
+		<val>3</val><!-- SanTonghua 三同花-->
+		<val>6</val><!-- Quanhongyidianhei 全红一点黑-->
+		<val>6</val><!-- Quanheiyidianhong 全黑一点红-->
+		<val>6</val><!-- Wuduisantiao 五对三条-->
+		<val>6</val><!-- Sitaosantiao 四套三条-->
+		<val>8</val><!-- Banxiao 半小-->
+		<val>8</val><!-- Banda 半大-->
+		<val>10</val><!-- Couyise 凑一色-->
+		<val>12</val><!-- Quanxiao 全小-->
+		<val>15</val><!-- Quanda 全大-->
+		<val>20</val><!-- Sanfentianxia 三分天下-->
+		<val>22</val><!-- Santonghuashun 三同花顺-->
+		<val>24</val><!-- ShiErhuangzu 十二皇族-->
+		<val>36</val><!-- Yitiaolong 一条龙-->
+		<val>108</val><!-- Zhizhunyitiaolong 至尊一条龙-->
+	</Specialpais_daoshu>
+
+	<Shangduns_daoshu><!-- 上墩道数 -->
+		<val>0</val><!-- None -->
+		<val>1</val><!-- Sanpai 散牌-->
+		<val>1</val><!-- Yidui 一对-->
+		<val>1</val><!-- Liangdui 两对-->
+		<val>3</val><!-- Santiao 三条-->
+		<val>0</val><!-- Shunzi 顺子-->
+		<val>0</val><!-- Tonghua 同花-->
+		<val>0</val><!-- Hulu 葫芦-->
+		<val>0</val><!-- Zhadan 炸弹-->
+		<val>0</val><!-- Tonghuashun 同花顺-->
+		<val>0</val><!-- WuTong 五同-->
+	</Shangduns_daoshu>
+
+	<Zhongduns_daoshu><!-- 中墩道数 -->
+		<val>0</val><!-- None -->
+		<val>1</val><!-- Sanpai 散牌-->
+		<val>1</val><!-- Yidui 一对-->
+		<val>1</val><!-- Liangdui 两对-->
+		<val>1</val><!-- Santiao 三条-->
+		<val>1</val><!-- Shunzi 顺子-->
+		<val>1</val><!-- Tonghua 同花-->
+		<val>2</val><!-- Hulu 葫芦-->
+		<val>8</val><!-- Zhadan 炸弹-->
+		<val>10</val><!-- Tonghuashun 同花顺-->
+		<val>12</val><!-- WuTong 五同-->
+	</Zhongduns_daoshu>
+
+	<Xiaduns_daoshu><!-- 下墩道数 -->
+		<val>0</val><!-- None -->
+		<val>1</val><!-- Sanpai 散牌-->
+		<val>1</val><!-- Yidui 一对-->
+		<val>1</val><!-- Liangdui 两对-->
+		<val>1</val><!-- Santiao 三条-->
+		<val>1</val><!-- Shunzi 顺子-->
+		<val>1</val><!-- Tonghua 同花-->
+		<val>1</val><!-- Hulu 葫芦-->
+		<val>4</val><!-- Zhadan 炸弹-->
+		<val>5</val><!-- Tonghuashun 同花顺-->
+		<val>6</val><!-- WuTong 五同-->
+	</Xiaduns_daoshu>
+	<Activity_login><!--op:1刷新，2移除 itemid:钻石id为1-->
+		<val>1</val><!-- id -->
+		<val>1</val><!-- op -->
+		<val>1514736000</val><!-- starttime -->
+		<val>1546272000</val><!-- endtime -->
+		<val>Activity_login</val><!-- 描述 -->
+		<val>1</val><!-- itemid -->
+		<val>5</val><!-- 数量 -->
+	</Activity_login>
+	<Activity_7daylogin><!--op:1刷新，2移除 itemid:钻石id为1-->
+		<val>2</val><!-- id -->
+		<val>1</val><!-- op -->
+		<val>1514736000</val><!-- starttime -->
+		<val>1546272000</val><!-- endtime -->
+		<val>Activity_7daylogin</val><!-- 描述 -->
+		<val>1</val><!-- itemid -->
+		<val>10</val><!-- 数量 -->
+		<val>1</val><!-- itemid -->
+		<val>10</val><!-- 数量 -->
+		<val>1</val><!-- itemid -->
+		<val>10</val><!-- 数量 -->
+		<val>1</val><!-- itemid -->
+		<val>15</val><!-- 数量 -->
+		<val>1</val><!-- itemid -->
+		<val>15</val><!-- 数量 -->
+		<val>1</val><!-- itemid -->
+		<val>15</val><!-- 数量 -->
+		<val>1</val><!-- itemid -->
+		<val>20</val><!-- 数量 -->
+	</Activity_7daylogin>
+	<Activity_share><!--op:1刷新，2移除 itemid:钻石id为1-->
+		<val>3</val><!-- id -->
+		<val>1</val><!-- op -->
+		<val>1514736000</val><!-- starttime -->
+		<val>1546272000</val><!-- endtime -->
+		<val>Activity_share</val><!-- 描述 -->
+		<val>1</val><!-- itemid -->
+		<val>3</val><!-- 数量 -->
+	</Activity_share>
+	<Activity_bing><!--op:1刷新，2移除 itemid:钻石id为1-->
+		<val>4</val><!-- id -->
+		<val>1</val><!-- op -->
+		<val>1514736000</val><!-- starttime -->
+		<val>1546272000</val><!-- endtime -->
+		<val>Activity_bing</val><!-- 描述 -->
+		<val>1</val><!-- itemid -->
+		<val>10</val><!-- 数量 -->
+	</Activity_bing>
+	<Activity_daili><!--op:1刷新，2移除 itemid:钻石id为1-->
+		<val>5</val><!-- id -->
+		<val>1</val><!-- op -->
+		<val>1514736000</val><!-- starttime -->
+		<val>1546272000</val><!-- endtime -->
+		<val>代理合作微信|合作QQ|合作电话|合作微信|微信公众号</val><!-- 描述：代理合作微信|合作QQ|合作电话|合作微信|微信公众号 -->
+	</Activity_daili>
+</ConstConfig>

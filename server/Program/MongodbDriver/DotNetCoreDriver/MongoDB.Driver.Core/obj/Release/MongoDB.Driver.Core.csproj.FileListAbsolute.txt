@@ -1,0 +1,9 @@
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\bin\Release\MongoDB.Driver.Core.deps.json
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\bin\Release\MongoDB.Driver.Core.dll
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\bin\Release\MongoDB.Driver.Core.pdb
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Driver.Core\obj\Release\MongoDB.Driver.Core.csprojResolveAssemblyReference.cache
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Driver.Core\obj\Release\MongoDB.Driver.Core.csproj.CoreCompileInputs.cache
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Driver.Core\obj\Release\MongoDB.Driver.Core.AssemblyInfoInputs.cache
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Driver.Core\obj\Release\MongoDB.Driver.Core.AssemblyInfo.cs
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Driver.Core\obj\Release\MongoDB.Driver.Core.dll
+D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Driver.Core\obj\Release\MongoDB.Driver.Core.pdb

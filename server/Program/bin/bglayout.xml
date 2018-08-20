@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <page id="1" type="SimpleLayout.OptionPage">
+	<widget index="1" type="SimpleLayout.ClearOption" des="清理屏幕" gotopage="1" />
+	<widget index="2" type="SimpleLayout.HotfixOption" des="热更代码" gotopage="2" />
+	<widget index="3" type="SimpleLayout.ReloadDataConfig" des="重新加载数据表" gotopage="3" />
+	<widget index="4" type="SimpleLayout.ReloadConstConfig" des="重新加载常量表" gotopage="1" />
+	<widget index="5" type="SimpleLayout.CloseServer" des="关闭服务器" gotopage="4" />
+	<widget index="6" type="SimpleLayout.GlobalNotice" des="全局公告" gotopage="5" />
+	<widget index="7" type="SimpleLayout.AddRoomCard" des="添加房卡" gotopage="6" />
+	<widget index="8" type="SimpleLayout.RefreshActivity" des="更新活动（先更新常量表）" gotopage="1" />
+  </page>
+  <page id="2" type="SimpleLayout.InputPage">
+	<widget type="SimpleLayout.HotfixInput" des="" gotopage="1" />
+  </page>
+  <page id="3" type="SimpleLayout.InputPage">
+	<widget type="SimpleLayout.ConfigInput" des="" gotopage="1" />
+  </page>
+  <page id="4" type="SimpleLayout.InputPage">
+	<widget type="SimpleLayout.CloseServerInput" des="" gotopage="1" />
+  </page>
+  <page id="5" type="SimpleLayout.InputPage">
+	<widget type="SimpleLayout.GlobalNoticeInput" des="" gotopage="1" />
+  </page>
+  <page id="6" type="SimpleLayout.InputPage">
+	<widget type="SimpleLayout.AddRoomInput" des="" gotopage="1" />
+  </page>
+</layout>

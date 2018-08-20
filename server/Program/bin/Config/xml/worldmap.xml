@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- camp:阵营 id=阵营id(配置时注意所有阵营id要唯一) name=阵营名称-->
+<!-- room:房间 id:房间id(配置时注意所有房间id要唯一,且以1000递增) cfname:房间xml表名称 name:房间名称 serverid:所在服务器id  -->
+<!-- near:附近房间 roomid:连通的房间id from:从自己房间的上下左右连接 to:连接的房间的上下左右 condition:进入条件--><!--from 或者 to 填写 1,2,3,4代表上右下左(顺时针)-->
+<!-- camp:阵营 -->
+
+<map>
+	<camp id="1" name="北方阵营" >
+		<room id="1000" cfname="room_1000" name="长安大道1000" serverid="6301" pos_x="0" pos_y="0">
+			<near roomid="2000" from="1" to="3" condition=""/>
+			<near roomid="4000" from="3" to="1" condition=""/>
+		</room>
+		<room id="2000" cfname="room_2000" name="长安大道2000" serverid="6301" pos_x="" pos_y="80">
+			<near roomid="1000" from="3" to="1" condition=""/>
+			<near roomid="3000" from="2" to="4" condition=""/>
+		</room>
+		<room id="3000" cfname="room_3000" name="长安大道3000" serverid="6301" pos_x="240" pos_y="80">
+			<near roomid="2000" from="4" to="2" condition=""/>
+		</room>
+	</camp>
+	<camp id="2" name="南方阵营" >
+		<room id="4000" cfname="room_4000" name="长安大道4000" serverid="6301" pos_x="" pos_y="-80">
+			<near roomid="5000" from="3" to="1" condition=""/>
+			<near roomid="1000" from="1" to="3" condition=""/>
+		</room>
+		<room id="5000" cfname="room_5000" name="长安大道5000" serverid="6301" pos_x="" pos_y="-160">
+			<near roomid="4000" from="1" to="3" condition=""/>
+			<near roomid="6000" from="2" to="4" condition=""/>
+		</room>
+		<room id="6000" cfname="room_6000" name="长安大道6000" serverid="6301" pos_x="240" pos_y="-160">
+			<near roomid="5000" from="4" to="2" condition=""/>
+		</room>
+	</camp>
+</map>
