@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 906574201
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 823335e17b1257d7126d7536b9d172be
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Config/Other_ab/client_protocol.xml
+Dependencies: []
