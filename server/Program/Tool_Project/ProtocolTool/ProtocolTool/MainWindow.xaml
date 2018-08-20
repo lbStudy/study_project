@@ -1,0 +1,59 @@
+﻿<Window x:Class="ProtocolTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProtocolTool"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="530" Width="608.615">
+    <Grid Margin="0,0,-8,0">
+        <Button x:Name="button" Content="create" HorizontalAlignment="Left" Margin="288,415,0,0" VerticalAlignment="Top" Width="80" Height="35" Click="button_Click"/>
+        <Label x:Name="label" Content="name" HorizontalAlignment="Left" Margin="288,100,0,0" VerticalAlignment="Top" Width="50"/>
+        <TextBox x:Name="name" HorizontalAlignment="Left" Height="23" Margin="397,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" TextChanged="name_TextChanged"/>
+        <Label x:Name="label1" Content="from" HorizontalAlignment="Left" Margin="285,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="to" HorizontalAlignment="Left" Margin="285,36,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label3" Content="opCode" HorizontalAlignment="Left" Margin="285,163,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.605,0.496"/>
+        <TextBox x:Name="opCode" HorizontalAlignment="Left" Height="23" Margin="405,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" TextChanged="opCode_TextChanged"/>
+        <ComboBox x:Name="fromComboBox" HorizontalAlignment="Left" Margin="397,14,0,0" VerticalAlignment="Top" Width="159" SelectionChanged="fromComboBox_SelectionChanged">
+        </ComboBox>
+        <ComboBox x:Name="toComboBox" HorizontalAlignment="Left" Margin="397,43,0,0" VerticalAlignment="Top" Width="159" SelectionChanged="toComboBox_SelectionChanged">
+        </ComboBox>
+        <ComboBox x:Name="typeComboBox" HorizontalAlignment="Left" Margin="397,70,0,0" VerticalAlignment="Top" Width="159" SelectionChanged="comboBox_SelectionChanged">
+            <ComboBoxItem Content="Message" HorizontalAlignment="Left" Width="161"/>
+            <ComboBoxItem Content="Request" HorizontalAlignment="Left" Width="161"/>
+            <ComboBoxItem Content="Response" HorizontalAlignment="Left" Width="161"/>
+        </ComboBox>
+        <Label x:Name="label4" Content="type" HorizontalAlignment="Left" Margin="288,70,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="285,194,0,0" TextWrapping="Wrap" Text="(you can Don't input, if write by youself, ensure that is not the same opCode and opCode inner 100000 )" VerticalAlignment="Top" Width="294"/>
+        <ListView x:Name="itemList" HorizontalAlignment="Left" Height="151" Margin="285,259,0,0" VerticalAlignment="Top" Width="297" SelectionChanged="itemList_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="name" DisplayMemberBinding="{Binding Path=variableName}" Width="140"/>
+                    <GridViewColumn Header="type" DisplayMemberBinding="{Binding Path=variableType}" Width="160"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBox x:Name="findContent" HorizontalAlignment="Left" Height="23" Margin="10,387,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="174" TextChanged="findContent_TextChanged"/>
+        <Button x:Name="remove" Content="remove" HorizontalAlignment="Left" Margin="397,418,0,0" VerticalAlignment="Top" Width="80" Height="35" Click="remove_Click"/>
+        <Label x:Name="label5" Content="search" HorizontalAlignment="Left" Margin="219,384,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="protocolView" HorizontalAlignment="Left" Height="369" Margin="10,10,0,0" VerticalAlignment="Top" Width="256" SelectionChanged="protocolView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="opcode" DisplayMemberBinding="{Binding Path=opcode}" Width="80"/>
+                    <GridViewColumn Header="name" DisplayMemberBinding="{Binding Path=name}" Width="170"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <CheckBox x:Name="encrypt" Content="encrypt" HorizontalAlignment="Left" Margin="288,142,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label6" Content="group" HorizontalAlignment="Left" Margin="221,415,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="Groups" HorizontalAlignment="Left" Margin="10,419,0,0" VerticalAlignment="Top" Width="174" SelectionChanged="Groups_SelectionChanged"/>
+        <ComboBox x:Name="SelectGroup" HorizontalAlignment="Left" Margin="452,137,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="SelectGroup_txt" Content="SelectGroup" HorizontalAlignment="Left" Margin="372,137,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="createClient" Content="client" HorizontalAlignment="Left" Margin="502,419,0,0" VerticalAlignment="Top" Width="80" Height="35" Click="createClient_Click"/>
+        <Button x:Name="addgroup" Content="addgroup" HorizontalAlignment="Left" Margin="170,464,0,0" VerticalAlignment="Top" Width="100" Click="addgroup_Click" Height="23"/>
+        <Button x:Name="deletegroup" Content="deletegroup" HorizontalAlignment="Left" Margin="300,464,0,0" VerticalAlignment="Top" Width="100" Click="deletegroup_Click"/>
+        <Button x:Name="modifygroup" Content="modifygroup" HorizontalAlignment="Left" Margin="430,464,0,0" VerticalAlignment="Top" Width="100" Click="modifygroup_Click"/>
+        <TextBox x:Name="inputGroupName" HorizontalAlignment="Left" Height="23" Margin="10,464,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+
+    </Grid>
+</Window>

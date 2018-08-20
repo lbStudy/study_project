@@ -1,0 +1,27 @@
+using Base;
+using Data;
+using System;
+
+namespace #nameSpace
+{
+    [Protocol(#opCode)]
+    public class #HandleClassName : AMHandler<#ProtocolBodyName>
+    {
+        protected override void Run(MsgPacakage package)
+        {
+	    #ProtocolBodyName msg = package.msg as #ProtocolBodyName;
+	    try
+	    {
+
+	    }
+	    catch(Exception e)
+	    {
+		Console.WriteLine(e.ToString());
+	    }
+	    finally
+	    {
+		package.Clear();
+	    }
+        }
+    }
+}

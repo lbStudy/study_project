@@ -1,0 +1,2 @@
+cd CreateDataClassTool/CreateDataClassTool/bin/Debug
+CreateDataClassTool.exe

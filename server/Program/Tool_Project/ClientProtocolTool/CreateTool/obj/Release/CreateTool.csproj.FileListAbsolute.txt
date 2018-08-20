@@ -1,0 +1,6 @@
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\CreateTool\bin\Release\CreateTool.exe.config
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\CreateTool\bin\Release\CreateTool.exe
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\CreateTool\bin\Release\CreateTool.pdb
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\CreateTool\obj\Release\CreateTool.csprojResolveAssemblyReference.cache
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\CreateTool\obj\Release\CreateTool.exe
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\CreateTool\obj\Release\CreateTool.pdb

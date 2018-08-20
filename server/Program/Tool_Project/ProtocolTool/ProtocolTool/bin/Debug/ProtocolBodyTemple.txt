@@ -1,0 +1,14 @@
+using System;
+
+namespace Data
+{
+	[ProtoBuf.ProtoContract]
+	public class #ProtocolBodyName : IDisposable
+	{
+		#property
+		public void Dispose()
+		{
+		    #clear
+		}
+	}
+}

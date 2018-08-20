@@ -1,0 +1,67 @@
+using System;
+
+namespace CustomAttribute
+{
+	public class ClassName : IItemAttribute
+	{
+	    public const type1 maxVal = const1;
+		//¼Ó
+		public void AddValue(int id, long val, int param)
+		{
+			type2 item = null;
+			variable2.TryGetValue(id, out item);
+			if (item == null)
+			{
+				return;
+			}
+			item.variable3 += (type1)val;
+			ValueDetection(item);
+		}
+		//¼õ
+		public void SubValue(int id, long val, int param)
+		{
+			type2 item = null;
+			variable2.TryGetValue(id, out item);
+			if (item == null)
+			{
+				return;
+			}
+			item.variable3 -= (type1)val;
+			ValueDetection(item);
+		}
+		//ÉèÖÃ
+		public void SetValue(int id, long val, int param)
+		{
+			type2 item = null;
+			variable2.TryGetValue(id, out item);
+			if (item == null)
+			{
+				return;
+			}
+			item.variable3 = (type1)val;
+			ValueDetection(item);
+		}
+
+		public void ValueDetection(type2 item)
+		{
+			if (item.variable3 > maxVal)
+			{
+				item.variable3 = maxVal;
+			}
+			else if (item.variable3 < 0)
+			{
+				item.variable3 = 0;
+			}
+		}
+
+	    public long GetValue(int id)
+		{
+			type2 item = null;
+			if (variable2.TryGetValue(id, out item))
+			{
+				return item.variable3;
+			}
+		    return 0;
+		}
+	}
+}

@@ -1,0 +1,12 @@
+D:\vsProjects\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\bin\Release\ClientProtocol.dll
+D:\vsProjects\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\bin\Release\ClientProtocol.pdb
+D:\vsProjects\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\obj\Release\ClientProtocol.csprojResolveAssemblyReference.cache
+D:\vsProjects\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\obj\Release\ClientProtocol.dll
+D:\vsProjects\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\obj\Release\ClientProtocol.pdb
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\obj\Release\ClientProtocol.csprojResolveAssemblyReference.cache
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\obj\Release\ClientProtocol.dll
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\obj\Release\ClientProtocol.pdb
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\bin\Release\ClientProtocol.dll
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\bin\Release\ClientProtocol.pdb
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\bin\Release\MongoDB.Bson.dll
+E:\Project2\Server\MainApp\Tool_Project\ClientProtocolTool\ClientProtocol\bin\Release\MongoDB.Bson.xml

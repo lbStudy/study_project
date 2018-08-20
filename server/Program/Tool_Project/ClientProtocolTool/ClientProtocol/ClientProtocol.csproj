@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2628FC83-99F6-4A7F-BB4A-0355377FE7C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ClientProtocol</RootNamespace>
+    <AssemblyName>ClientProtocol</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\..\..\bin\Debug\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\AreaInfo.cs" />
+    <Compile Include="Model\B2C_BattleResultMessage.cs" />
+    <Compile Include="Model\B2C_DealMessage.cs" />
+    <Compile Include="Model\B2C_FinishPrepareResponse.cs" />
+    <Compile Include="Model\B2C_LeaveRoomMessage.cs" />
+    <Compile Include="Model\B2C_RoomMemberSyncMessage.cs" />
+    <Compile Include="Model\B2C_SettlementResponse.cs" />
+    <Compile Include="Model\BaseEntity.cs" />
+    <Compile Include="Model\BaseProtocol.cs" />
+    <Compile Include="Model\BattleResultInfo.cs" />
+    <Compile Include="Model\C2B_FinishPrepareRequest.cs" />
+    <Compile Include="Model\C2B_SettlementRequest.cs" />
+    <Compile Include="Model\C2Gate_CreateRoomRequest.cs" />
+    <Compile Include="Model\C2Gate_EnterRoomRequest.cs" />
+    <Compile Include="Model\C2Gate_LeaveRoomRequest.cs" />
+    <Compile Include="Model\C2Gate_PlayerGateVerifyRequest.cs" />
+    <Compile Include="Model\C2L_EnterAreaRequest.cs" />
+    <Compile Include="Model\C2L_LoginRequest.cs" />
+    <Compile Include="Model\C2L_RegisterRequest.cs" />
+    <Compile Include="Model\CardData.cs" />
+    <Compile Include="Model\EnumDefine.cs" />
+    <Compile Include="Model\Gate2C_CreateRoomResponse.cs" />
+    <Compile Include="Model\Gate2C_EnterRoomResponse.cs" />
+    <Compile Include="Model\Gate2C_LeaveRoomResponse.cs" />
+    <Compile Include="Model\Gate2C_PlayerCommonDataSynchroMessage.cs" />
+    <Compile Include="Model\Gate2C_PlayerGateVerifyResponse.cs" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\L2C_EnterAreaResponse.cs" />
+    <Compile Include="Model\L2C_LoginResponse.cs" />
+    <Compile Include="Model\L2C_RegisterResponse.cs" />
+    <Compile Include="Model\PlayerAttributeDescription.cs" />
+    <Compile Include="Model\PlayerBasicData.cs" />
+    <Compile Include="Model\PlayerDetailData.cs" />
+    <Compile Include="Model\PlayerExtraData.cs" />
+    <Compile Include="Model\ProtocolAttribute.cs" />
+    <Compile Include="Model\RoomMemberInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

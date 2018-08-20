@@ -1,0 +1,12 @@
+using System;
+
+namespace CustomAttribute
+{
+	public class ClassName : IItem
+	{
+	    public Item CreateItem()
+        {
+            return new type1();
+        }
+	}
+}

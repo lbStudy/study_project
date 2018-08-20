@@ -1,0 +1,50 @@
+using System;
+
+public class ClassName : PlayerAttribute
+{
+    public const type1 maxVal = const1;
+	//¼Ó
+    public override void AddValue(Player player, type2 variable1, long val)
+	{
+		variable2 += (type1)val;
+		if (variable2 > maxVal)
+		{
+			variable2 = maxVal;
+		}
+		else if (variable2 < 0)
+		{
+			variable2 = 0;
+		}
+	}
+	//¼õ
+    public override void SubValue(Player player, type2 variable1, long val)
+	{
+		variable2 -= (type1)val;
+		if (variable2 > maxVal)
+		{
+			variable2 = maxVal;
+		}
+		else if (variable2 < 0)
+		{
+			variable2 = 0;
+		}
+	}
+	//ÉèÖÃ
+    public override void SetValue(Player player, type2 variable1, long val)
+	{
+		variable2 = (type1)val;
+		if (variable2 > maxVal)
+		{
+			variable2 = maxVal;
+		}
+		else if (variable2 < 0)
+		{
+			variable2 = 0;
+		}
+	}
+	
+    public override long GetValue(Player player)
+	{
+	    return variable3;
+	}
+}

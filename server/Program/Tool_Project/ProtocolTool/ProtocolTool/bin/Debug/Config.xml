@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+    <modelDllPath path="..\..\..\..\..\bin\Debug\netcoreapp2.0\Model.dll" />
+	<msgPath path="..\..\..\..\..\bin\protocol.xml" /> 
+	<msgClientPath path="..\..\..\..\ClientProtocol\client_protocol.xml" /> 
+	<client_protocol_body_path path="..\..\..\..\..\Model\Data\proto\common\" /> 
+	<server_protocol_body_path path="..\..\..\..\..\Model\Data\proto\" /> 
+	<msgEnumPath path="..\..\..\..\..\Model\Data\enum\ProtoEnum.cs" />
+	<clientEnumPath path="..\..\..\..\ClientProtocol\ProtoEnum.cs" /> 
+	<!-- 缩减名称,命名空间 处理路径 -->
+	<app name="Client" simpleName="C"  namespace="ProtocolHandle" handlePath="..\..\..\..\ClientProtocol\"/> 
+	<app name="GameServer" simpleName="G" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> 
+	<app name="LoginServer" simpleName="L" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> 
+	<app name="GateServer" simpleName="Gate" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> 
+	<!--<app name="DBServer" simpleName="D" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> -->
+	<app name="BattleServer" simpleName="B" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> 
+	<app name="MapServer" simpleName="Map" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> 
+	<app name="ManagerServer" simpleName="M" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> 
+	<app name="SystemServer" simpleName="S" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> 
+	<app name="All" simpleName="A" namespace="ProtocolHandle" handlePath="..\..\..\..\..\ProtocolHandle\" /> 
+</config>
