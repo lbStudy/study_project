@@ -1,0 +1,58 @@
+{
+  "1": {
+    "ID": 1,
+    "name": "jump",
+    "min_dis": 1.0,
+    "max_dis": 20.0,
+    "isLoop2": false
+  },
+  "2": {
+    "ID": 2,
+    "name": "jumpdown",
+    "min_dis": 1.0,
+    "max_dis": 20.0,
+    "isLoop2": false
+  },
+  "3": {
+    "ID": 3,
+    "name": "move",
+    "min_dis": 1.0,
+    "max_dis": 20.0,
+    "isLoop2": false
+  },
+  "4": {
+    "ID": 4,
+    "name": "hit",
+    "min_dis": 1.0,
+    "max_dis": 20.0,
+    "isLoop2": false
+  },
+  "5": {
+    "ID": 5,
+    "name": "hithurt",
+    "min_dis": 1.0,
+    "max_dis": 20.0,
+    "isLoop2": false
+  },
+  "6": {
+    "ID": 6,
+    "name": "eat",
+    "min_dis": 1.0,
+    "max_dis": 20.0,
+    "isLoop2": false
+  },
+  "7": {
+    "ID": 7,
+    "name": "dead2",
+    "min_dis": 1.0,
+    "max_dis": 20.0,
+    "isLoop2": false
+  },
+  "8": {
+    "ID": 8,
+    "name": "died",
+    "min_dis": 1.0,
+    "max_dis": 20.0,
+    "isLoop2": false
+  }
+}

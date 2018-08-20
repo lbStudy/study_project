@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- room:房间 type:房间类型 room:房间 jungle:野外-->
+<!--trigger:事件触发方式 click:点击 meet:相遇-->
+<room id="2000" name="长安大道2000" des="2000" type="room">
+	<npc id="2002" campid="1">
+		<event type="teach_skill"  id="" trigger="click"/>
+	</npc>
+	<npc id="2003" campid="1">
+		<event type="battle" id="" trigger="meet"/>
+	</npc>
+</room>

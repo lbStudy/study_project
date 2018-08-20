@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+CRC: 688936612
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: hotfix_ab
+      Dependencies: {}
+    Info_1:
+      Name: ui/big_ab_sg/background2
+      Dependencies: {}
+    Info_2:
+      Name: ui/common_ab
+      Dependencies: {}
+    Info_3:
+      Name: config/other_ab
+      Dependencies: {}
+    Info_4:
+      Name: config/xml_ab_sg/worldmap
+      Dependencies: {}
+    Info_5:
+      Name: config/table_ab_sg/soundconfig
+      Dependencies: {}
+    Info_6:
+      Name: config/table_ab_sg/loginbolistory
+      Dependencies: {}
+    Info_7:
+      Name: config/table_ab_sg/characterconfig
+      Dependencies: {}
+    Info_8:
+      Name: config/xml_ab_sg/room_1000
+      Dependencies: {}
+    Info_9:
+      Name: config/xml_ab_sg/room_2000
+      Dependencies: {}
+    Info_10:
+      Name: config/xml_ab_sg/room_3000
+      Dependencies: {}
+    Info_11:
+      Name: config/xml_ab_sg/room_4000
+      Dependencies: {}
+    Info_12:
+      Name: config/xml_ab_sg/room_5000
+      Dependencies: {}
+    Info_13:
+      Name: config/xml_ab_sg/room_6000
+      Dependencies: {}

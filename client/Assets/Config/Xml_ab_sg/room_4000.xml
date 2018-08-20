@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- room:房间 type:房间类型 room:房间 jungle:野外-->
+<!--trigger:事件触发方式 click:点击 meet:相遇-->
+<room id="4000" name="长安大道4000" des="4000" type="room">
+	<npc id="4001" campid="1">
+		<event type="shop" id="" trigger="click"/>
+	</npc>
+</room>

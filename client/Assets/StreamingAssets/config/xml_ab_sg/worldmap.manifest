@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3783280841
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fdf6c61b2b813fbaab080999af5fa1c5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Config/Xml_ab_sg/worldmap.xml
+Dependencies: []

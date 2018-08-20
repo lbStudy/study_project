@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 2194867702
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f05bf051b6d395d3eb4fbee30f1f40d5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Config/Xml_ab_sg/room_1000.xml
+Dependencies: []
