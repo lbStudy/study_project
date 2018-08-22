@@ -79,6 +79,7 @@
   <msg name="Gate2M_PlayerOfflineMessage" opcode="24876" from="GateServer" to="ManagerServer" type="Message" selects="0" group="OfflineHandle" />
   <msg name="Gate2M_ReloginMessage" opcode="47292" from="GateServer" to="ManagerServer" type="Message" selects="0" group="login" />
   <msg name="Gate2M_RemovePlayerRequest" opcode="48870" from="GateServer" to="ManagerServer" type="Request" selects="0" group="OfflineHandle" />
+  <msg name="Gate2M_UpdateServerStateMessage" opcode="80544" from="GateServer" to="ManagerServer" type="Message" selects="0" group="Other" />
   <msg name="Gate2M_VerifyTimeOutMessage" opcode="38322" from="GateServer" to="ManagerServer" type="Message" selects="0" group="login" />
   <msg name="L2C_EnterAreaResponse" opcode="132508" from="LoginServer" to="Client" type="Response" selects="0" group="login" />
   <msg name="L2C_LoginResponse" opcode="192142" from="LoginServer" to="Client" type="Response" selects="0" group="login" />
@@ -90,6 +91,7 @@
   <msg name="M2A_HotfixCodeMessage" opcode="96627" from="ManagerServer" to="All" type="Message" selects="0" group="gm" />
   <msg name="M2A_ReloadConstConfigMessage" opcode="33836" from="ManagerServer" to="All" type="Message" selects="0" group="gm" />
   <msg name="M2A_ReloadDataConfigMessage" opcode="44385" from="ManagerServer" to="All" type="Message" selects="0" group="gm" />
+  <msg name="M2A_UpdatePlayerStateMessage" opcode="18669" from="ManagerServer" to="All" type="Message" selects="0" group="Other" />
   <msg name="M2Gate_CreateRoomResponse" opcode="108697" from="ManagerServer" to="GateServer" type="Response" selects="0" group="Room" />
   <msg name="M2Gate_EnterRoomResponse" opcode="193159" from="ManagerServer" to="GateServer" type="Response" selects="0" group="Room" />
   <msg name="M2Gate_GetActivityResponse" opcode="101686" from="ManagerServer" to="GateServer" type="Response" selects="0" group="gm" />
@@ -101,6 +103,7 @@
   <msg name="M2Gate_PlayerEnterGameResponse" opcode="183560" from="ManagerServer" to="GateServer" type="Response" selects="0" group="login" />
   <msg name="M2Gate_RefreshActivityMessage" opcode="8407" from="ManagerServer" to="GateServer" type="Message" selects="0" group="gm" />
   <msg name="M2Gate_RemovePlayerResponse" opcode="148870" from="ManagerServer" to="GateServer" type="Response" selects="0" group="OfflineHandle" />
+  <msg name="M2Gate_UpdateRouteInfoMessage" opcode="8504" from="ManagerServer" to="GateServer" type="Message" selects="0" group="Other" />
   <msg name="M2L_EnterAreaResponse" opcode="160747" from="ManagerServer" to="LoginServer" type="Response" selects="0" group="none" />
   <msg name="M2L_PlayerEnterGameRequest" opcode="69717" from="ManagerServer" to="LoginServer" type="Request" selects="0" group="login" />
   <msg name="M2L_PlayerOfflineMessage" opcode="1112" from="ManagerServer" to="LoginServer" type="Message" selects="0" group="OfflineHandle" />

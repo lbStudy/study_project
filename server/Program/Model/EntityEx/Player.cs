@@ -23,7 +23,14 @@ public enum PlayerDataModule
 }
 public class Player : Entity
 {
+    Dictionary<AppType, int> serverIdDic = new Dictionary<AppType, int>();
     private PlayerState state;
+
+    public int GetServerId(AppType appType)
+    {
+        return serverIdDic[appType];
+    }
+
     private bool[] tags;
     private int dataModule;
     private PlayerData data;
@@ -38,8 +45,9 @@ public class Player : Entity
         {
             return;
         }
-
         base.Dispose();
+
+        serverIdDic.Clear();
     }
     public Player() : base(EntityType.Player)
     {

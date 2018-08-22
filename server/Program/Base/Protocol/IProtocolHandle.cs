@@ -19,6 +19,7 @@ namespace Base
         {
             MsgPacakage package = ObjectPoolManager.Instance.Take<MsgPacakage>();
             package.Init(session, protoInfo, msg, toids);
+            toids.Clear();
             T message = msg as T;
             if (message == null)
             {
@@ -44,7 +45,7 @@ namespace Base
 
             ProtocolInfo respProtoInfo = ProtocolDispatcher.Instance.GetProtocolInfo(protoInfo.Opcode + 100000);
             package.Init(session, protoInfo, respProtoInfo, msg, rpcId, toids);
-
+            toids.Clear();
             TRequest request = msg as TRequest;
             if (request == null)
             {

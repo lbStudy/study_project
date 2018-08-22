@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace Base
 {
@@ -17,5 +18,7 @@ namespace Base
 			int port = int.Parse(p);
 			return ToIPEndPoint(host, port);
 		}
-	}
+
+
+    }
 }

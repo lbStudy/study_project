@@ -19,6 +19,7 @@
     //系统模块
     public enum SystemType
     {
+        None,
         Guild,
         Friend,
         Mail,

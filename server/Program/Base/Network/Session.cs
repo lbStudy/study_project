@@ -21,7 +21,8 @@ namespace Base
         public long relevanceID;
         public long pingTime;
         byte[] idByte = new byte[8];
-        List<long> toids = new List<long>();
+        byte[] rpcByte = new byte[4];
+        public List<long> toids = new List<long>();
         public void Init(long id, NetworkComponent network, AChannel channel)
         {
             this.id = id;
@@ -57,10 +58,11 @@ namespace Base
             int offset = 0;
             ushort count = BitConverter.ToUInt16(messageBytes, offset); ;
             offset += 2;
-            toids.Clear();
             for (int i = 0; i < count; i++)
             {
-                toids.Add(BitConverter.ToInt64(messageBytes, offset));
+                long id = BitConverter.ToInt64(messageBytes, offset);
+                if(id > 0)
+                    toids.Add(id);
                 offset += 8;
             }
             int opcode = BitConverter.ToInt32(messageBytes, offset);
@@ -178,8 +180,8 @@ namespace Base
                 }
                 EventDispatcher.Instance.Run((int)InnerEventIdType.SessionTranspond, this, protocolInfo, toids, packet.Stream);
             }
+            toids.Clear();
         }
-
         /// <summary>
         /// Rpc调用,发送一个消息,等待返回一个消息
         /// </summary>
@@ -221,6 +223,23 @@ namespace Base
                 Packet.Back(packet);
             }
         }
+        public void SendMessage(object message)
+        {
+            if (this.IsDisposed)
+            {
+                Console.WriteLine($"session已经被Dispose了.");
+            }
+            Packet packet = Packet.Take();
+            try
+            {
+                FillContent(packet.Stream, message, 0, toids);
+                this.SendMessage(packet.Stream);
+            }
+            finally
+            {
+                Packet.Back(packet);
+            }
+        }
         public void Reply(uint rpcId, object message, long toid, int errorCode = 0)
         {
             if (this.IsDisposed)
@@ -248,6 +267,41 @@ namespace Base
             byte[] idBytes = BitConverter.GetBytes(toid);
             stream.Write(idBytes, 0, idBytes.Length);
         }
+        public void FillContent(MemoryStream stream, object message, uint rpcId, List<long> toIds)
+        {
+            if (stream == null)
+            {
+                throw new Exception($"stream is null.");
+            }
+            ProtocolInfo protocolInfo = ProtocolDispatcher.Instance.GetProtocolInfo(message.GetType());
+
+            if (protocolInfo == null)
+            {
+                throw new Exception($"Not exist {message.GetType().Name} protocol.");
+            }
+            if(toIds != null && toIds.Count > 0)
+            {
+                ushort count = (ushort)toIds.Count;
+                idByte.WriteTo(0, count);
+                stream.Write(idByte, 0, 2);
+                foreach (long id in toIds)
+                {
+                    idByte.WriteTo(0, id);
+                    stream.Write(idByte, 0, idByte.Length);
+                }
+            }
+            else
+            {
+                ushort count = 0;
+                idByte.WriteTo(0, count);
+                stream.Write(idByte, 0, 2);
+            }
+            stream.Write(protocolInfo.opcodeBytes, 0, protocolInfo.opcodeBytes.Length);
+            stream.Write(protocolInfo.selectsBytes, 0, protocolInfo.selectsBytes.Length);
+            rpcByte.WriteTo(0, rpcId);
+            stream.Write(rpcByte, 0, rpcByte.Length);
+            ProtoBuf.Meta.RuntimeTypeModel.Default.Serialize(stream, message);
+        }
         public static void FillContent(MemoryStream stream, object message, uint rpcId, long toid)
         {
             if(stream == null)
@@ -272,7 +326,8 @@ namespace Base
         {
             if (this.IsDisposed)
             {
-                throw new Exception($"session已经被Dispose了.");
+                Console.WriteLine($"session {id}已经被Dispose了.");
+                return;
             }
             if (stream == null)
             {

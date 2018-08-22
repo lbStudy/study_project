@@ -8,8 +8,8 @@ public class InnerNetInfo
 {
     public int serverId;
     public AppType appType;
-    public int module;
-    public int state;
+    public int systemType;
+    public int state;   // 1==正常 0==断开
     public Session session;
 }
 
@@ -44,6 +44,28 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<strin
         base.Dispose();
         Instance = null;
         appSessions.Clear();
+    }
+    public InnerNetInfo Find(int serverId)
+    {
+        InnerNetInfo netInfo = null;
+        appSessionDic.TryGetValue(serverId, out netInfo);
+        return netInfo;
+    }
+    public InnerNetInfo FindSystemServer(SystemType systemType)
+    {
+        int stype = (int)systemType;
+        List<InnerNetInfo> netInfos = null;
+        if(appSessions.TryGetValue(AppType.SystemServer, out netInfos))
+        {
+            foreach(InnerNetInfo netInfo in netInfos)
+            {
+                if((netInfo.systemType & stype) > 0)
+                {
+                    return netInfo;
+                }
+            }
+        }
+        return null;
     }
     //public async void ServerPingSend()
     //{
@@ -129,7 +151,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<strin
     //public override void Remove(Session session)
     //{
     //    base.Remove(session);
-        
+
     //    if (session.relevanceID > 0 && appSessions.Remove((int)session.relevanceID))
     //    {
     //        Console.WriteLine($"NetInner Disconnect {session.relevanceID} {session.RemoteAddress.ToString()} ");

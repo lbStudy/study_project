@@ -20,7 +20,8 @@ namespace Base
         private int opcode;
         private AppType toServer;
         private AppType fromServer;
-        private ModuleType module;
+        private SystemType systemType;
+        public SystemType SysTYpe { get { return systemType; } }
         //private bool isCompress;
         private bool isEncrypt;
         private Type protocolBodyType;
