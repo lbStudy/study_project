@@ -7,7 +7,7 @@ namespace #nameSpace
     [Protocol(#opCode)]
     public class #HandleClassName : AMHandler<#ProtocolBodyName>
     {
-        protected override void Run(MsgPacakage package)
+        protected override void Run(MsgPackage package)
         {
 	    #ProtocolBodyName msg = package.msg as #ProtocolBodyName;
 	    try
@@ -20,7 +20,7 @@ namespace #nameSpace
 	    }
 	    finally
 	    {
-		package.Clear();
+		package.Dispose();
 	    }
         }
     }

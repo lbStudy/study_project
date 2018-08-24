@@ -9,14 +9,14 @@ namespace ProtocolHandle
     [Protocol(92142)]
     public class C2L_LoginRequestHandler : AMRpcHandler<C2L_LoginRequest>
     {
-        void LoginNoSdk(C2L_LoginRequest req, RpcPacakage pacakage)
+        void LoginNoSdk(C2L_LoginRequest req, RpcPackage package)
         {
             long roleId = System.Convert.ToInt64(req.account);
-            Login(roleId, pacakage, null, roleId.ToString());
+            Login(roleId, package, null, roleId.ToString());
         }
-        void Login(long roleId, RpcPacakage pacakage, string iconUrl = null, string name = null, int sex = 1)
+        void Login(long roleId, RpcPackage package, string iconUrl = null, string name = null, int sex = 1)
         {
-            L2C_LoginResponse response = pacakage.Response as L2C_LoginResponse;
+            L2C_LoginResponse response = package.Response as L2C_LoginResponse;
             try
             {
                 LoginInfo loginInfo = LoginManagerComponent.Instance.FindLoginInfoById(roleId);
@@ -30,10 +30,10 @@ namespace ProtocolHandle
                 loginInfo.sex = sex;
                 loginInfo.Name = name;
                 loginInfo.iconUrl = iconUrl;
-                loginInfo.session = pacakage.Source;
+                loginInfo.session = package.Source;
                 response.areas = LoginManagerComponent.Instance.areas;
                 response.id = roleId;
-                pacakage.Source.relevanceID = roleId;
+                package.Source.relevanceID = roleId;
             }
             catch (Exception e)
             {
@@ -42,10 +42,10 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
-       async void LoginSdk(C2L_LoginRequest req, RpcPacakage pacakage)
+       async void LoginSdk(C2L_LoginRequest req, RpcPackage package)
         {
          
             Dictionary<string, string> dic = new Dictionary<string, string>() { { "dataType", "auth" }, { "accountname", req.account }, { "password", req.password }, { "sType", req.channel.ToString() } , { "gType", "5" }, { "serverId", "0" } };
@@ -66,49 +66,49 @@ namespace ProtocolHandle
                             string nickName = extenData["nickname"].ToString();
                             string iconUrl = extenData["headimgurl"].ToString();
                             int sex = System.Convert.ToInt32(extenData["sex"].ToString());
-                            Login(roleId, pacakage, iconUrl,nickName);
+                            Login(roleId, package, iconUrl,nickName);
                         }
                         else
                         {
-                            L2C_LoginResponse response = pacakage.Response as L2C_LoginResponse;
+                            L2C_LoginResponse response = package.Response as L2C_LoginResponse;
                             response.errorCode = retcode;
-                            pacakage.Reply();
+                            package.Reply();
                         }
                     }
                     else
                     {
-                        L2C_LoginResponse response = pacakage.Response as L2C_LoginResponse;
+                        L2C_LoginResponse response = package.Response as L2C_LoginResponse;
                         response.errorCode =(int) ErrorCode.Fail;
-                        pacakage.Reply();
+                        package.Reply();
                     }
                 }
                 catch(System.Exception e)
                 {
                     Console.WriteLine(e.ToString());
-                    L2C_LoginResponse response = pacakage.Response as L2C_LoginResponse;
+                    L2C_LoginResponse response = package.Response as L2C_LoginResponse;
                     response.errorCode = (int)ErrorCode.Fail;
-                    pacakage.Reply();
+                    package.Reply();
                 }
             }
 
         }
-        protected override  void Run(RpcPacakage pacakage)
+        protected override  void Run(RpcPackage package)
         {
-            C2L_LoginRequest req = pacakage.msg as C2L_LoginRequest;
-            B2C_ExitRoomResponse response = pacakage.Response as B2C_ExitRoomResponse;
+            C2L_LoginRequest req = package.msg as C2L_LoginRequest;
+            B2C_ExitRoomResponse response = package.Response as B2C_ExitRoomResponse;
 
             if (req.channel == 0)
             {
                 if(ConstConfigComponent.ConstConfig.IsNoSDKLogin <= 0)
                 {
                     response.errorCode = (int)ErrorCode.Fail;
-                    pacakage.Reply();
+                    package.Reply();
                     return;
                 }
-                LoginNoSdk(req, pacakage);
+                LoginNoSdk(req, package);
             }
             else
-                LoginSdk(req, pacakage);
+                LoginSdk(req, package);
         }
     }
 }

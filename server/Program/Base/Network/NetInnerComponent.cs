@@ -45,11 +45,54 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<strin
         Instance = null;
         appSessions.Clear();
     }
-    public InnerNetInfo Find(int serverId)
+    public void AddByServerId(InnerNetInfo netInfo)
+    {
+        if (netInfo == null || netInfo.serverId <= 0 || appSessionDic.ContainsKey(netInfo.serverId))
+            return;
+        appSessionDic[netInfo.serverId] = netInfo;
+        List<InnerNetInfo> netInfos = null;
+        if(appSessions.TryGetValue(netInfo.appType, out netInfos) == false)
+        {
+            netInfos = new List<InnerNetInfo>();
+            appSessions.Add(netInfo.appType, netInfos);
+        }
+        netInfos.Add(netInfo);
+    }
+    public void RemoveByServerId(int serverId)
+    {
+        InnerNetInfo netInfo = null;
+        if(appSessionDic.TryGetValue(serverId, out netInfo))
+        {
+            Remove(netInfo);
+        }
+    }
+    public void Remove(InnerNetInfo netInfo)
+    {
+        if (netInfo == null)
+            return;
+        if(appSessionDic.Remove(netInfo.serverId))
+        {
+            List<InnerNetInfo> netInfos = null;
+            if (appSessions.TryGetValue(netInfo.appType, out netInfos))
+            {
+                netInfos.Remove(netInfo);
+            }
+        }
+    }
+    public InnerNetInfo FindByServerId(int serverId)
     {
         InnerNetInfo netInfo = null;
         appSessionDic.TryGetValue(serverId, out netInfo);
         return netInfo;
+    }
+    public Session FindSessionByServerId(int serverId)
+    {
+        InnerNetInfo netInfo = null;
+        if(appSessionDic.TryGetValue(serverId, out netInfo))
+        {
+            return netInfo.session;
+        }
+        return null;
     }
     public InnerNetInfo FindSystemServer(SystemType systemType)
     {

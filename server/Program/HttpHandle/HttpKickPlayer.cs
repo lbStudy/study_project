@@ -34,13 +34,13 @@ namespace HttpHandle
                 }
                 foreach (KeyValuePair<int, List<long>> pair in playeridDic)
                 {
-                    M2Gate_KickPlayerRequest reqToGate = new M2Gate_KickPlayerRequest();
-                    reqToGate.playerids = pair.Value;
-                    Session gateSession = NetInnerComponent.Instance.GetByAppID(pair.Key);
-                    if (gateSession != null)
-                    {
-                        Gate2M_KickPlayerResponse respFromGate = await gateSession.Call(reqToGate) as Gate2M_KickPlayerResponse;
-                    }
+                    //M2Gate_KickPlayerRequest reqToGate = new M2Gate_KickPlayerRequest();
+                    //reqToGate.playerids = pair.Value;
+                    //Session gateSession = NetInnerComponent.Instance.GetByAppID(pair.Key);
+                    //if (gateSession != null)
+                    //{
+                    //    Gate2M_KickPlayerResponse respFromGate = await gateSession.Call(reqToGate) as Gate2M_KickPlayerResponse;
+                    //}
                 }
             }
             

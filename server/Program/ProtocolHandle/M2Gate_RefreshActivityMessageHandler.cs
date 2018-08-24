@@ -7,11 +7,11 @@ namespace ProtocolHandle
     [Protocol(8407)]
     public class M2Gate_RefreshActivityMessageHandler : AMHandler<M2Gate_RefreshActivityMessage>
     {
-        protected override void Run(MsgPacakage pacakage)
+        protected override void Run(MsgPackage package)
         {
             try
             {
-                M2Gate_RefreshActivityMessage msg = pacakage.msg as M2Gate_RefreshActivityMessage;
+                M2Gate_RefreshActivityMessage msg = package.msg as M2Gate_RefreshActivityMessage;
                 if (msg.activitys == null)
                     return;
 
@@ -41,7 +41,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Clear();
+                package.Dispose();
             }
             
         }

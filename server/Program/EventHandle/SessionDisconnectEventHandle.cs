@@ -11,28 +11,28 @@ namespace EventHandle
         {
             if (session.relevanceID > 0)
             {
-                TranspondComponent.instance.ClientDisconnect(session.relevanceID);
-                Player player = PlayerManagerComponent.Instance.Find(session.relevanceID);
-                if (player != null)
-                {
-                    player.SetState(PlayerState.Offline);
-                    player.TemporaryData.offlineTime = Game.Instance.Msec;
+                //TranspondComponent.instance.ClientDisconnect(session.relevanceID);
+                //Player player = PlayerManagerComponent.Instance.Find(session.relevanceID);
+                //if (player != null)
+                //{
+                //    player.SetState(PlayerState.Offline);
+                //    player.TemporaryData.offlineTime = Game.Instance.Msec;
 
                         
-                    //if (player.TemporaryData.roomid > 0)
-                    //{
-                    //    Gate2B_PlayerOfflineMessage msgToB = new Gate2B_PlayerOfflineMessage();
-                    //    msgToB.id = session.relevanceID;
-                    //    msgToB.roomid = player.TemporaryData.roomid;
-                    //    Session battleSession = NetInnerComponent.Instance.GetByAppID(player.TemporaryData.battleAppid);
-                    //    battleSession.Send(msgToB);
-                    //}
-                }
-                Gate2M_PlayerOfflineMessage msgToM = new Gate2M_PlayerOfflineMessage();
-                msgToM.id = session.relevanceID;
-                Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
-                managerSession.SendMessage(msgToM, 0);
-                Log.Debug($"gate玩家离线 : {session.relevanceID}");
+                //    //if (player.TemporaryData.roomid > 0)
+                //    //{
+                //    //    Gate2B_PlayerOfflineMessage msgToB = new Gate2B_PlayerOfflineMessage();
+                //    //    msgToB.id = session.relevanceID;
+                //    //    msgToB.roomid = player.TemporaryData.roomid;
+                //    //    Session battleSession = NetInnerComponent.Instance.GetByAppID(player.TemporaryData.battleAppid);
+                //    //    battleSession.Send(msgToB);
+                //    //}
+                //}
+                //Gate2M_PlayerOfflineMessage msgToM = new Gate2M_PlayerOfflineMessage();
+                //msgToM.id = session.relevanceID;
+                //Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
+                //managerSession.SendMessage(msgToM, 0);
+                //Log.Debug($"gate玩家离线 : {session.relevanceID}");
             }   
         }
     }

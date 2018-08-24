@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(35415)]
     public class Gate2B_GameSettingRequestHandler : AMRpcHandler<Gate2B_GameSettingRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            Gate2B_GameSettingRequest req = pacakage.msg as Gate2B_GameSettingRequest;
-            B2Gate_GameSettingResponse response = pacakage.Response as B2Gate_GameSettingResponse;
+            Gate2B_GameSettingRequest req = package.msg as Gate2B_GameSettingRequest;
+            B2Gate_GameSettingResponse response = package.Response as B2Gate_GameSettingResponse;
 
 		    try
 		    {
@@ -33,7 +33,7 @@ namespace ProtocolHandle
 		    }
 		    finally
 		    {
-			    pacakage.Reply();
+			    package.Reply();
 		    }
         }
     }

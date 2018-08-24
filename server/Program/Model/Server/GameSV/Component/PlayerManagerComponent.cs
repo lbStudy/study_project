@@ -95,10 +95,10 @@ public class PlayerManagerComponent : Component, IAwake
     }
     async void SendRemove()
     {
-        SS_RemovePlayerRequest req = new SS_RemovePlayerRequest();
-        req.playerids = removePlayers;
-        Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
-        SS_RemovePlayerResponse respFromM = await managerSession.Call(req) as SS_RemovePlayerResponse;
+        //SS_RemovePlayerRequest req = new SS_RemovePlayerRequest();
+        //req.playerids = removePlayers;
+        //Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
+        //SS_RemovePlayerResponse respFromM = await managerSession.Call(req) as SS_RemovePlayerResponse;
     }
     public void Add(Player player)
     {

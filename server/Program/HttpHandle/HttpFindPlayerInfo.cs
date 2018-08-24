@@ -46,27 +46,27 @@ namespace HttpHandle
                         }
                     }
                     int ret1 = 0;
-                    if (onlinePlayerDic.Count > 0)
-                    {
-                        foreach (KeyValuePair<int, List<long>> pair in onlinePlayerDic)
-                        {
-                            Session gateSession = NetInnerComponent.Instance.GetByAppID(pair.Key);
-                            M2Gate_GmFindPlayerInfoRequest reqToGate = new M2Gate_GmFindPlayerInfoRequest();
-                            reqToGate.playerids = pair.Value;
-                            Gate2M_GmFindPlayerInfoResponse respFromGate = await gateSession.Call(reqToGate) as Gate2M_GmFindPlayerInfoResponse;
-                            if(respFromGate.errorCode != (int)ErrorCode.Success)
-                            {
-                                ret1 = 6;
-                            }
-                            else
-                            {
-                                if (respFromGate.playerdatas != null && respFromGate.playerdatas.Count > 0)
-                                {
-                                    playerdatas.AddRange(respFromGate.playerdatas);
-                                }
-                            }
-                        }
-                    }
+                    //if (onlinePlayerDic.Count > 0)
+                    //{
+                    //    foreach (KeyValuePair<int, List<long>> pair in onlinePlayerDic)
+                    //    {
+                    //        Session gateSession = NetInnerComponent.Instance.GetByAppID(pair.Key);
+                    //        M2Gate_GmFindPlayerInfoRequest reqToGate = new M2Gate_GmFindPlayerInfoRequest();
+                    //        reqToGate.playerids = pair.Value;
+                    //        Gate2M_GmFindPlayerInfoResponse respFromGate = await gateSession.Call(reqToGate) as Gate2M_GmFindPlayerInfoResponse;
+                    //        if(respFromGate.errorCode != (int)ErrorCode.Success)
+                    //        {
+                    //            ret1 = 6;
+                    //        }
+                    //        else
+                    //        {
+                    //            if (respFromGate.playerdatas != null && respFromGate.playerdatas.Count > 0)
+                    //            {
+                    //                playerdatas.AddRange(respFromGate.playerdatas);
+                    //            }
+                    //        }
+                    //    }
+                    //}
                     int ret2 = 0;
                     if (offlinePlayers.Count > 0)
                     {

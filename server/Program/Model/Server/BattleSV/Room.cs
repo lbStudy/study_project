@@ -145,7 +145,7 @@ public class Room
     }
     #endregion
     #region 广播
-    public void BroadCastChat(SC_ChatMessage msg, bool isFore = false)
+    public void BroadCastChat(object msg, bool isFore = false)
     {
 
     }

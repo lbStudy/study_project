@@ -8,10 +8,10 @@ namespace ProtocolHandle
     [Protocol(93721)]
     public class C2L_RegisterRequestHandler : AMRpcHandler<C2L_RegisterRequest>
     {
-        protected override async void Run(RpcPacakage pacakage)
+        protected override async void Run(RpcPackage package)
         {
-            C2L_RegisterRequest req = pacakage.msg as C2L_RegisterRequest;
-            L2C_RegisterResponse response = pacakage.Response as L2C_RegisterResponse;
+            C2L_RegisterRequest req = package.msg as C2L_RegisterRequest;
+            L2C_RegisterResponse response = package.Response as L2C_RegisterResponse;
 
             if(LoginManagerComponent.Instance.IsExistRegisterAccount(req.account))
             {
@@ -55,7 +55,7 @@ namespace ProtocolHandle
                 {
                     LoginManagerComponent.Instance.RemoveRegisterAccount(req.account);
                 }
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

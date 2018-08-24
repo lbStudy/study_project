@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(18669)]
     public class M2A_UpdatePlayerStateMessageHandler : AMHandler<M2A_UpdatePlayerStateMessage>
     {
-        protected override void Run(MsgPacakage package)
+        protected override void Run(MsgPackage package)
         {
 	    M2A_UpdatePlayerStateMessage msg = package.msg as M2A_UpdatePlayerStateMessage;
 	    try
@@ -20,7 +20,7 @@ namespace ProtocolHandle
 	    }
 	    finally
 	    {
-		package.Clear();
+		package.Dispose();
 	    }
         }
     }

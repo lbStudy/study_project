@@ -13,11 +13,11 @@ namespace Base
     /// <typeparam name="Message"></typeparam>
     public abstract class AMHandler<T> : IProtocolHandle where T : class
     {
-        protected abstract void Run(MsgPacakage package);
+        protected abstract void Run(MsgPackage package);
 
         public void Handle(Session session, ProtocolInfo protoInfo, object msg, List<long> toids, uint rpcId = 0)
         {
-            MsgPacakage package = ObjectPoolManager.Instance.Take<MsgPacakage>();
+            MsgPackage package = ObjectPoolManager.Instance.Take<MsgPackage>();
             package.Init(session, protoInfo, msg, toids);
             toids.Clear();
             T message = msg as T;
@@ -37,11 +37,11 @@ namespace Base
     /// <typeparam name="Response"></typeparam>
 	public abstract class AMRpcHandler<TRequest> : IProtocolHandle where TRequest : class
     {
-        protected abstract void Run(RpcPacakage package);
+        protected abstract void Run(RpcPackage package);
 
         public void Handle(Session session, ProtocolInfo protoInfo, object msg, List<long> toids, uint rpcId = 0)
         {
-            RpcPacakage package = ObjectPoolManager.Instance.Take<RpcPacakage>();
+            RpcPackage package = ObjectPoolManager.Instance.Take<RpcPackage>();
 
             ProtocolInfo respProtoInfo = ProtocolDispatcher.Instance.GetProtocolInfo(protoInfo.Opcode + 100000);
             package.Init(session, protoInfo, respProtoInfo, msg, rpcId, toids);

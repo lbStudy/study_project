@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(38833)]
     public class C2B_UseAtkRequestHandler : AMRpcHandler<C2B_UseAtkRequest>
     {
-        protected override void Run(RpcPacakage package)
+        protected override void Run(RpcPackage package)
         {
             C2B_UseAtkRequest req = package.msg as C2B_UseAtkRequest;
             B2C_UseAtkResponse response = package.Response as B2C_UseAtkResponse;

@@ -11,7 +11,7 @@ namespace EventHandle
         {
             M2Gate_RefreshActivityMessage m2gate = new M2Gate_RefreshActivityMessage();
             m2gate.activitys = activityInfos;
-            NetInnerComponent.Instance.SendMsgToSevers(m2gate, AppType.GateServer);
+            //NetInnerComponent.Instance.SendMsgToSevers(m2gate, AppType.GateServer);
         }
     }
 }

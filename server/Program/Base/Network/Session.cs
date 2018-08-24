@@ -185,7 +185,7 @@ namespace Base
         /// <summary>
         /// Rpc调用,发送一个消息,等待返回一个消息
         /// </summary>
-        public Task<object> Call(object request, object response = null, long toid = 0)
+        public Task<object> Call(object request, long toId, object response = null)
         {
             if (this.IsDisposed)
             {
@@ -195,7 +195,7 @@ namespace Base
             Packet packet = Packet.Take();
             try
             {
-                FillContent(packet.Stream, request, ++RpcId, toid);
+                FillContent(packet.Stream, request, ++RpcId);
                 this.SendMessage(packet.Stream);
                 tcs = new TaskCompletionSource<object>(response);
                 this.requestCallback[RpcId] = tcs;
@@ -215,7 +215,9 @@ namespace Base
             Packet packet = Packet.Take();
             try
             {
-                FillContent(packet.Stream, message, 0, toid);
+                toids.Clear();
+                toids.Add(toid);
+                FillContent(packet.Stream, message, 0);
                 this.SendMessage(packet.Stream);
             }
             finally
@@ -223,16 +225,21 @@ namespace Base
                 Packet.Back(packet);
             }
         }
-        public void SendMessage(object message)
+        public void SendMessage(object message, List<long> toids)
         {
             if (this.IsDisposed)
             {
-                Console.WriteLine($"session已经被Dispose了.");
+                throw new Exception($"session已经被Dispose了.");
             }
             Packet packet = Packet.Take();
             try
             {
-                FillContent(packet.Stream, message, 0, toids);
+                if(this.toids != toids)
+                {
+                    this.toids.Clear();
+                    this.toids.AddRange(toids);
+                }
+                FillContent(packet.Stream, message, 0);
                 this.SendMessage(packet.Stream);
             }
             finally
@@ -267,7 +274,7 @@ namespace Base
             byte[] idBytes = BitConverter.GetBytes(toid);
             stream.Write(idBytes, 0, idBytes.Length);
         }
-        public void FillContent(MemoryStream stream, object message, uint rpcId, List<long> toIds)
+        public void FillContent(MemoryStream stream, object message, uint rpcId)
         {
             if (stream == null)
             {
@@ -279,23 +286,26 @@ namespace Base
             {
                 throw new Exception($"Not exist {message.GetType().Name} protocol.");
             }
-            if(toIds != null && toIds.Count > 0)
+
+            if (toids.Count > 0)
             {
-                ushort count = (ushort)toIds.Count;
+                short count = (short)toids.Count;
                 idByte.WriteTo(0, count);
                 stream.Write(idByte, 0, 2);
-                foreach (long id in toIds)
+                foreach (long id in toids)
                 {
                     idByte.WriteTo(0, id);
                     stream.Write(idByte, 0, idByte.Length);
                 }
             }
-            else
-            {
-                ushort count = 0;
-                idByte.WriteTo(0, count);
-                stream.Write(idByte, 0, 2);
-            }
+            //else
+            //{
+            //    short count = (short)(toServer ? -1 : 1);
+            //    idByte.WriteTo(0, count);
+            //    stream.Write(idByte, 0, 2);
+            //    idByte.WriteTo(0, 0L);
+            //    stream.Write(idByte, 0, idByte.Length);
+            //}
             stream.Write(protocolInfo.opcodeBytes, 0, protocolInfo.opcodeBytes.Length);
             stream.Write(protocolInfo.selectsBytes, 0, protocolInfo.selectsBytes.Length);
             rpcByte.WriteTo(0, rpcId);

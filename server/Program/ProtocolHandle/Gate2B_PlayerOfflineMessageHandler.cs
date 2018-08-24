@@ -6,11 +6,11 @@ namespace ProtocolHandle
     [Protocol(73962)]
     public class Gate2B_PlayerOfflineMessageHandler : AMHandler<Gate2B_PlayerOfflineMessage>
     {
-        protected override void Run(MsgPacakage pacakage)
+        protected override void Run(MsgPackage package)
         {
             try
             {
-                Gate2B_PlayerOfflineMessage msg = pacakage.msg as Gate2B_PlayerOfflineMessage;
+                Gate2B_PlayerOfflineMessage msg = package.msg as Gate2B_PlayerOfflineMessage;
                 Room room = RoomManagerComponent.Instance.Find(msg.roomid);
                 if (room == null)
                 {
@@ -32,7 +32,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Clear();
+                package.Dispose();
             }
         }
     }

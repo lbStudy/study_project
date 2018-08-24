@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(50013)]
     public class Gate2B_LeaveRoomRequestHandler : AMRpcHandler<Gate2B_LeaveRoomRequest>
     {
-        protected override void Run(RpcPacakage package)
+        protected override void Run(RpcPackage package)
         {
             Gate2B_LeaveRoomRequest req = package.msg as Gate2B_LeaveRoomRequest;
             B2Gate_LeaveRoomResponse response = package.Response as B2Gate_LeaveRoomResponse;

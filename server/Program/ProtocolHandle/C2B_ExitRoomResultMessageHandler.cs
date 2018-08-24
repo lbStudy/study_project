@@ -6,11 +6,11 @@ namespace ProtocolHandle
     [Protocol(97911)]
     public class C2B_ExitRoomResultMessageHandler : AMHandler<C2B_ExitRoomResultMessage>
     {
-        protected override void Run(MsgPacakage pacakage)
+        protected override void Run(MsgPackage package)
         {
             try
             {
-                C2B_ExitRoomResultMessage msg = pacakage.msg as C2B_ExitRoomResultMessage;
+                C2B_ExitRoomResultMessage msg = package.msg as C2B_ExitRoomResultMessage;
                 Room room = RoomManagerComponent.Instance.Find(msg.roomid);
                 if (room == null)
                 {
@@ -24,7 +24,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Clear();
+                package.Dispose();
             }
         }
     }

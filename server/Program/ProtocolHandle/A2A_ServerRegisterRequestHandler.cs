@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(33968)]
     public class A2A_ServerRegisterRequestHandler : AMRpcHandler<A2A_ServerRegisterRequest>
     {
-        protected override void Run(RpcPacakage package)
+        protected override void Run(RpcPackage package)
         {
 		A2A_ServerRegisterRequest req = package.msg as A2A_ServerRegisterRequest;
 		A2A_ServerRegisterResponse response = package.Response as A2A_ServerRegisterResponse;

@@ -8,10 +8,10 @@ namespace ProtocolHandle
     [Protocol(44677)]
     public class M2Gate_GmFindPlayerInfoRequestHandler : AMRpcHandler<M2Gate_GmFindPlayerInfoRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            M2Gate_GmFindPlayerInfoRequest req = pacakage.msg as M2Gate_GmFindPlayerInfoRequest;
-            Gate2M_GmFindPlayerInfoResponse response = pacakage.Response as Gate2M_GmFindPlayerInfoResponse;
+            M2Gate_GmFindPlayerInfoRequest req = package.msg as M2Gate_GmFindPlayerInfoRequest;
+            Gate2M_GmFindPlayerInfoResponse response = package.Response as Gate2M_GmFindPlayerInfoResponse;
 
             try
             {
@@ -32,7 +32,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(51337)]
     public class C2B_ExitRoomRequestHandler : AMRpcHandler<C2B_ExitRoomRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            C2B_ExitRoomRequest req = pacakage.msg as C2B_ExitRoomRequest;
-            B2C_ExitRoomResponse response = pacakage.Response as B2C_ExitRoomResponse;
+            C2B_ExitRoomRequest req = package.msg as C2B_ExitRoomRequest;
+            B2C_ExitRoomResponse response = package.Response as B2C_ExitRoomResponse;
             try
             {
                 Room room = RoomManagerComponent.Instance.Find(req.roomid);
@@ -19,7 +19,7 @@ namespace ProtocolHandle
                     response.errorCode = (int)ErrorCode.Fail;
                     return;
                 }
-                RoomMember member = room.Find(pacakage.Toid);
+                RoomMember member = room.Find(package.Toid);
                 if (member == null)
                 {
                     response.errorCode = (int)ErrorCode.Fail;
@@ -34,7 +34,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

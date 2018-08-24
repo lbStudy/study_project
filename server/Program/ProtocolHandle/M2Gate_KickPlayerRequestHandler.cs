@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(72774)]
     public class M2Gate_KickPlayerRequestHandler : AMRpcHandler<M2Gate_KickPlayerRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            M2Gate_KickPlayerRequest req = pacakage.msg as M2Gate_KickPlayerRequest;
-            Gate2M_KickPlayerResponse response = pacakage.Response as Gate2M_KickPlayerResponse;
+            M2Gate_KickPlayerRequest req = package.msg as M2Gate_KickPlayerRequest;
+            Gate2M_KickPlayerResponse response = package.Response as Gate2M_KickPlayerResponse;
 
             try
             {
@@ -39,7 +39,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

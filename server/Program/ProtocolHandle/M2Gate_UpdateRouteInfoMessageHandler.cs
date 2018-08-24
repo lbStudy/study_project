@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(8504)]
     public class M2Gate_UpdateRouteInfoMessageHandler : AMHandler<M2Gate_UpdateRouteInfoMessage>
     {
-        protected override void Run(MsgPacakage package)
+        protected override void Run(MsgPackage package)
         {
 	    M2Gate_UpdateRouteInfoMessage msg = package.msg as M2Gate_UpdateRouteInfoMessage;
 	    try
@@ -20,7 +20,7 @@ namespace ProtocolHandle
 	    }
 	    finally
 	    {
-		package.Clear();
+		package.Dispose();
 	    }
         }
     }

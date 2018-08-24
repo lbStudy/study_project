@@ -106,18 +106,18 @@ public class TranspondComponent : Component, IAwake
             //{
             //    session = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.WorldAppId);
             //}
-            if (targetApp == AppType.BattleServer)
-            {
-                if(info.battleSvAppid > 0)
-                {
-                    session = NetInnerComponent.Instance.GetByAppID(info.battleSvAppid);
-                }
-                else
-                {
-                    //Log.Warning($"Warning: player({id}) not in battle, so not handle({msg.GetType().Name}).");
-                    return ErrorCode.NotInBattle;
-                }
-            }
+            //if (targetApp == AppType.BattleServer)
+            //{
+            //    if(info.battleSvAppid > 0)
+            //    {
+            //        session = NetInnerComponent.Instance.GetByAppID(info.battleSvAppid);
+            //    }
+            //    else
+            //    {
+            //        //Log.Warning($"Warning: player({id}) not in battle, so not handle({msg.GetType().Name}).");
+            //        return ErrorCode.NotInBattle;
+            //    }
+            //}
             //else if (targetApp == AppType.ChatServer)
             //{
             //    session = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ChatAppId);

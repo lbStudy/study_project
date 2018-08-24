@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(80544)]
     public class Gate2M_UpdateServerStateMessageHandler : AMHandler<Gate2M_UpdateServerStateMessage>
     {
-        protected override void Run(MsgPacakage package)
+        protected override void Run(MsgPackage package)
         {
 	    Gate2M_UpdateServerStateMessage msg = package.msg as Gate2M_UpdateServerStateMessage;
 	    try
@@ -20,7 +20,7 @@ namespace ProtocolHandle
 	    }
 	    finally
 	    {
-		package.Clear();
+		package.Dispose();
 	    }
         }
     }

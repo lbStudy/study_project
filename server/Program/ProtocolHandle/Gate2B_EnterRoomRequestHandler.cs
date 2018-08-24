@@ -8,10 +8,10 @@ namespace ProtocolHandle
     [Protocol(28023)]
     public class Gate2B_EnterRoomRequestHandler : AMRpcHandler<Gate2B_EnterRoomRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            Gate2B_EnterRoomRequest req = pacakage.msg as Gate2B_EnterRoomRequest;
-            B2Gate_EnterRoomResponse response = pacakage.Response as B2Gate_EnterRoomResponse;
+            Gate2B_EnterRoomRequest req = package.msg as Gate2B_EnterRoomRequest;
+            B2Gate_EnterRoomResponse response = package.Response as B2Gate_EnterRoomResponse;
             B2C_RoomMemberSyncMessage msgToc = ProtocolDispatcher.Instance.Take<B2C_RoomMemberSyncMessage>((int)ProtoEnum.B2C_RoomMemberSyncMessage);
             try
             {
@@ -48,7 +48,7 @@ namespace ProtocolHandle
             finally
             {
                 ProtocolDispatcher.Instance.Back(msgToc);
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

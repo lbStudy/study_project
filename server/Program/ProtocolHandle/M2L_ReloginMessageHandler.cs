@@ -6,11 +6,11 @@ namespace ProtocolHandle
     [Protocol(17474)]
     public class M2L_ReloginMessageHandler : AMHandler<M2L_ReloginMessage>
     {
-        protected override void Run(MsgPacakage pacakage)
+        protected override void Run(MsgPackage package)
         {
             try
             {
-                M2L_ReloginMessage msg = pacakage.msg as M2L_ReloginMessage;
+                M2L_ReloginMessage msg = package.msg as M2L_ReloginMessage;
                 LoginInfo info = LoginManagerComponent.Instance.FindLoginInfoById(msg.id);
                 if (info != null)
                 {
@@ -29,7 +29,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Clear();
+                package.Dispose();
             }
             
         }

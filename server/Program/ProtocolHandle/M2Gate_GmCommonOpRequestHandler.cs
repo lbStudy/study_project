@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(5597)]
     public class M2Gate_GmCommonOpRequestHandler : AMRpcHandler<M2Gate_GmCommonOpRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            M2Gate_GmCommonOpRequest req = pacakage.msg as M2Gate_GmCommonOpRequest;
-            Gate2M_GmCommonOpResponse response = pacakage.Response as Gate2M_GmCommonOpResponse;
+            M2Gate_GmCommonOpRequest req = package.msg as M2Gate_GmCommonOpRequest;
+            Gate2M_GmCommonOpResponse response = package.Response as Gate2M_GmCommonOpResponse;
 
             try
             {
@@ -36,7 +36,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

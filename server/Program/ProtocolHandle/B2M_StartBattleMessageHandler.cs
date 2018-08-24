@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(64069)]
     public class B2M_StartBattleMessageHandler : AMHandler<B2M_StartBattleMessage>
     {
-        protected override void Run(MsgPacakage package)
+        protected override void Run(MsgPackage package)
         {
             B2M_StartBattleMessage msg = package.msg as B2M_StartBattleMessage;
             try
@@ -24,7 +24,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                package.Clear();
+                package.Dispose();
             }
         }
     }

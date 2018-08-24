@@ -7,29 +7,29 @@ namespace ProtocolHandle
     [Protocol(83560)]
     public class Gate2M_PlayerEnterGameRequestHandler : AMRpcHandler<Gate2M_PlayerEnterGameRequest>
     {
-        protected override async void Run(RpcPacakage pacakage)
+        protected override async void Run(RpcPackage package)
         {
-            Gate2M_PlayerEnterGameRequest req = pacakage.msg as Gate2M_PlayerEnterGameRequest;
-            M2Gate_PlayerEnterGameResponse response = pacakage.Response as M2Gate_PlayerEnterGameResponse;
+            Gate2M_PlayerEnterGameRequest req = package.msg as Gate2M_PlayerEnterGameRequest;
+            M2Gate_PlayerEnterGameResponse response = package.Response as M2Gate_PlayerEnterGameResponse;
 
             try
             {
                 M2L_PlayerEnterGameRequest reqToL = new M2L_PlayerEnterGameRequest();
                 reqToL.id = req.id;
                 reqToL.bigAreaid = Game.Instance.BigAreaId;
-                Session loginSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.LoginAppId);
-                L2M_PlayerEnterGameResponse respFromL = await loginSession.Call(reqToL) as L2M_PlayerEnterGameResponse;
-                if(respFromL.errorCode == (int)ErrorCode.Success)
-                {
-                    ServerAllotComponent.Instance.PlayerEnter(req.id, req.gateAppid);
-                    response.name = respFromL.name;
-                    response.iconUrl = respFromL.iconUrl;
-                    response.sex = respFromL.sex;
-                }
-                else
-                {
-                    response.errorCode = respFromL.errorCode;
-                }
+                //Session loginSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.LoginAppId);
+                //L2M_PlayerEnterGameResponse respFromL = await loginSession.Call(reqToL) as L2M_PlayerEnterGameResponse;
+                //if(respFromL.errorCode == (int)ErrorCode.Success)
+                //{
+                //    ServerAllotComponent.Instance.PlayerEnter(req.id, req.gateAppid);
+                //    response.name = respFromL.name;
+                //    response.iconUrl = respFromL.iconUrl;
+                //    response.sex = respFromL.sex;
+                //}
+                //else
+                //{
+                //    response.errorCode = respFromL.errorCode;
+                //}
             }
             catch (Exception e)
             {
@@ -38,7 +38,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

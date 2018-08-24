@@ -6,11 +6,11 @@ namespace ProtocolHandle
     [Protocol(53355)]
     public class M2A_CloseServerMessageHandler : AMHandler<M2A_CloseServerMessage>
     {
-        protected override void Run(MsgPacakage pacakage)
+        protected override void Run(MsgPackage package)
         {
             try
             {
-                M2A_CloseServerMessage msg = pacakage.msg as M2A_CloseServerMessage;
+                M2A_CloseServerMessage msg = package.msg as M2A_CloseServerMessage;
                 if (Game.Instance.AppType == AppType.GateServer)
                 {
                     PlayerManagerComponent.Instance.OpenQuickSave();
@@ -22,7 +22,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Clear();
+                package.Dispose();
             }
         }
     }

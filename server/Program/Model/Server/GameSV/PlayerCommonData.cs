@@ -107,10 +107,10 @@ public partial class PlayerCommonData
     }
     public void SynchroActivity()
     {
-        SC_RefreshPlayerActivityMessage gate2c = new SC_RefreshPlayerActivityMessage();
-        gate2c.id = player.Id;
-        gate2c.playerActivitys = extraData.activitys;
-        TranspondComponent.instance.ToClient(gate2c, player.Id);
+        //SC_RefreshPlayerActivityMessage gate2c = new SC_RefreshPlayerActivityMessage();
+        //gate2c.id = player.Id;
+        //gate2c.playerActivitys = extraData.activitys;
+        //TranspondComponent.instance.ToClient(gate2c, player.Id);
     }
     public void Add7DayLoginAward(int day)
     {
@@ -135,11 +135,11 @@ public partial class PlayerCommonData
     //同步数据
     public void SynchroData()
     {
-        if(changeDatas.Count == 0)
+        if (changeDatas.Count == 0)
         {
             return;
         }
-        SC_PlayerCommonDataSynchroMessage msg = ProtocolDispatcher.Instance.Take<SC_PlayerCommonDataSynchroMessage>((int)ProtoEnum.SC_PlayerCommonDataSynchroMessage);
+        Gate2C_PlayerCommonDataSynchroMessage msg = ProtocolDispatcher.Instance.Take<Gate2C_PlayerCommonDataSynchroMessage>((int)ProtoEnum.Gate2C_PlayerCommonDataSynchroMessage);
         try
         {
             msg.id = player.Id;

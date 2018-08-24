@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Base
 {
     [Pool(100)]
-    public class MsgPacakage : Disposer
+    public class MsgPackage : Disposer
     {
         protected Session source;
         protected ProtocolInfo protoInfo;
@@ -39,7 +39,7 @@ namespace Base
         }
     }
 
-    public class RpcPacakage : MsgPacakage
+    public class RpcPackage : MsgPackage
     {
         private uint rpcId;
         private object response;

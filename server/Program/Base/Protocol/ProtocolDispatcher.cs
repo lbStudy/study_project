@@ -21,7 +21,7 @@ namespace Base
         private AppType toServer;
         private AppType fromServer;
         private SystemType systemType;
-        public SystemType SysTYpe { get { return systemType; } }
+        public SystemType SysType { get { return systemType; } }
         //private bool isCompress;
         private bool isEncrypt;
         private Type protocolBodyType;

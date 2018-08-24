@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(91135)]
     public class C2B_PingBackMessageHandler : AMHandler<C2B_PingBackMessage>
     {
-        protected override void Run(MsgPacakage package)
+        protected override void Run(MsgPackage package)
         {
             C2B_PingBackMessage msg = package.msg as C2B_PingBackMessage;
             try
@@ -45,7 +45,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                package.Clear();
+                package.Dispose();
             }
         }
     }

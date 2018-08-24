@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(19483)]
     public class M2Gate_PlayerConnectGateNotifyRequestHandler : AMRpcHandler<M2Gate_PlayerConnectGateNotifyRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            M2Gate_PlayerConnectGateNotifyRequest req = pacakage.msg as M2Gate_PlayerConnectGateNotifyRequest;
-            Gate2M_PlayerConnectGateNotifyResponse response = pacakage.Response as Gate2M_PlayerConnectGateNotifyResponse;
+            M2Gate_PlayerConnectGateNotifyRequest req = package.msg as M2Gate_PlayerConnectGateNotifyRequest;
+            Gate2M_PlayerConnectGateNotifyResponse response = package.Response as Gate2M_PlayerConnectGateNotifyResponse;
 
             try
             {
@@ -28,7 +28,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

@@ -7,14 +7,14 @@ namespace ProtocolHandle
     [Protocol(75151)]
     public class C2Gate_TriggerActivityRequestHandler : AMRpcHandler<C2Gate_TriggerActivityRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            C2Gate_TriggerActivityRequest req = pacakage.msg as C2Gate_TriggerActivityRequest;
-            Gate2C_TriggerActivityResponse response = pacakage.Response as Gate2C_TriggerActivityResponse;
+            C2Gate_TriggerActivityRequest req = package.msg as C2Gate_TriggerActivityRequest;
+            Gate2C_TriggerActivityResponse response = package.Response as Gate2C_TriggerActivityResponse;
 
             try
             {
-                Player player = PlayerManagerComponent.Instance.Find(pacakage.Toid);
+                Player player = PlayerManagerComponent.Instance.Find(package.Toid);
                 if (player == null)
                 {
                     response.errorCode = (int)ErrorCode.NotExistPlayer;
@@ -136,7 +136,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

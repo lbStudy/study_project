@@ -7,14 +7,14 @@ namespace ProtocolHandle
     [Protocol(75780)]
     public class C2Gate_GetPlayerInfoRequestHandler : AMRpcHandler<C2Gate_GetPlayerInfoRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            C2Gate_GetPlayerInfoRequest req = pacakage.msg as C2Gate_GetPlayerInfoRequest;
-            Gate2C_GetPlayerInfoResponse response = pacakage.Response as Gate2C_GetPlayerInfoResponse;
+            C2Gate_GetPlayerInfoRequest req = package.msg as C2Gate_GetPlayerInfoRequest;
+            Gate2C_GetPlayerInfoResponse response = package.Response as Gate2C_GetPlayerInfoResponse;
 
             try
             {
-                Player player = PlayerManagerComponent.Instance.Find(pacakage.Toid);
+                Player player = PlayerManagerComponent.Instance.Find(package.Toid);
                 if(player == null)
                 {
                     response.errorCode = (int)ErrorCode.Fail;
@@ -32,7 +32,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

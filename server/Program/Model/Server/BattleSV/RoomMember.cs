@@ -18,20 +18,20 @@ public class RoomMember
     }
     public void SendMsgToGateserver(MemoryStream stream)
     {
-        Session gateSession = NetInnerComponent.Instance.GetByAppID(fromGateId);
-        if(gateSession == null || gateSession.IsDisposed)
-        {
-            return;
-        }
-        gateSession.SendMessage(stream);
+        //Session gateSession = NetInnerComponent.Instance.GetByAppID(fromGateId);
+        //if(gateSession == null || gateSession.IsDisposed)
+        //{
+        //    return;
+        //}
+        //gateSession.SendMessage(stream);
     }
     public void SendMsgToGateserver(object msg)
     {
-        Session gateSession = NetInnerComponent.Instance.GetByAppID(fromGateId);
-        if (gateSession == null || gateSession.IsDisposed)
-        {
-            return;
-        }
-        gateSession.SendMessage(msg, info.playerid);
+        //Session gateSession = NetInnerComponent.Instance.GetByAppID(fromGateId);
+        //if (gateSession == null || gateSession.IsDisposed)
+        //{
+        //    return;
+        //}
+        //gateSession.SendMessage(msg, info.playerid);
     }
 }

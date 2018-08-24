@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(81594)]
     public class C2B_GetRoomInfoRequestHandler : AMRpcHandler<C2B_GetRoomInfoRequest>
     {
-        protected override void Run(RpcPacakage package)
+        protected override void Run(RpcPackage package)
         {
             C2B_GetRoomInfoRequest req = package.msg as C2B_GetRoomInfoRequest;
             B2C_GetRoomInfoResponse response = package.Response as B2C_GetRoomInfoResponse;

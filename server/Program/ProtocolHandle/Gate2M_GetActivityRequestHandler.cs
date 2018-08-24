@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(1686)]
     public class Gate2M_GetActivityRequestHandler : AMRpcHandler<Gate2M_GetActivityRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            Gate2M_GetActivityRequest req = pacakage.msg as Gate2M_GetActivityRequest;
-            M2Gate_GetActivityResponse response = pacakage.Response as M2Gate_GetActivityResponse;
+            Gate2M_GetActivityRequest req = package.msg as Gate2M_GetActivityRequest;
+            M2Gate_GetActivityResponse response = package.Response as M2Gate_GetActivityResponse;
 
             try
             {
@@ -31,7 +31,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

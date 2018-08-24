@@ -6,11 +6,11 @@ namespace ProtocolHandle
     [Protocol(85937)]
     public class M2L_VerifyTimeOutMessageHandler : AMHandler<M2L_VerifyTimeOutMessage>
     {
-        protected override void Run(MsgPacakage pacakage)
+        protected override void Run(MsgPackage package)
         {
             try
             {
-                M2L_VerifyTimeOutMessage msg = pacakage.msg as M2L_VerifyTimeOutMessage;
+                M2L_VerifyTimeOutMessage msg = package.msg as M2L_VerifyTimeOutMessage;
                 for (int i = 0; i < msg.playerids.Count; i++)
                 {
                     LoginInfo info = LoginManagerComponent.Instance.FindLoginInfoById(msg.playerids[i]);
@@ -30,7 +30,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Clear();
+                package.Dispose();
             }
         }
     }

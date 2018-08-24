@@ -178,7 +178,7 @@ namespace SimpleLayout
             OneThreadSynchronizationContext.Instance.Post((s) =>
             {
                 M2A_ReloadConstConfigMessage msg = new M2A_ReloadConstConfigMessage();
-                NetInnerComponent.Instance.SendMsgToAllServer(msg);
+                //NetInnerComponent.Instance.SendMsgToAllServer(msg);
                 ConstConfigComponent.Instance.Load();
             }, null);
         }
@@ -224,7 +224,7 @@ namespace SimpleLayout
                     {
                         M2A_HotfixCodeMessage msg = new M2A_HotfixCodeMessage();
                         msg.module = modules;
-                        NetInnerComponent.Instance.SendMsgToAllServer(msg);
+                        //NetInnerComponent.Instance.SendMsgToAllServer(msg);
                         FuncDispatcher.Instance.Run((int)FunctionId.LoadHotfixModule, msg.module);
                     }, null);
                     GmManagerComponent.Instance.GotoPage(gotopage);
@@ -284,7 +284,7 @@ namespace SimpleLayout
                         {
                             M2A_ReloadDataConfigMessage msg = new M2A_ReloadDataConfigMessage();
                             msg.configStrs = configTypes;
-                            NetInnerComponent.Instance.SendMsgToAllServer(msg);
+                            //NetInnerComponent.Instance.SendMsgToAllServer(msg);
 
                             FuncDispatcher.Instance.Run((int)FunctionId.LoadDataConfig, configTypes);
                         }, null);
@@ -313,9 +313,9 @@ namespace SimpleLayout
             {
                 OneThreadSynchronizationContext.Instance.Post((s) =>
                 {
-                    SS_GlobalNoticeMessage msgToGate = new SS_GlobalNoticeMessage();
-                    msgToGate.content = input;
-                    NetInnerComponent.Instance.SendMsgToSevers(msgToGate, AppType.GateServer);
+                    //SS_GlobalNoticeMessage msgToGate = new SS_GlobalNoticeMessage();
+                    //msgToGate.content = input;
+                    //NetInnerComponent.Instance.SendMsgToSevers(msgToGate, AppType.GateServer);
                 }, null);
                 GmManagerComponent.Instance.GotoPage(gotopage);
             }
@@ -421,8 +421,8 @@ namespace SimpleLayout
                 {
                     OneThreadSynchronizationContext.Instance.Post((s) =>
                     {
-                        M2A_CloseServerMessage msg = new M2A_CloseServerMessage();
-                        NetInnerComponent.Instance.SendMsgToAllServer(msg);
+                        //M2A_CloseServerMessage msg = new M2A_CloseServerMessage();
+                        //NetInnerComponent.Instance.SendMsgToAllServer(msg);
                     }, null);
                 }
             }

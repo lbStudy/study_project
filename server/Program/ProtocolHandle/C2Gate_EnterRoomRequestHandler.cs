@@ -8,7 +8,7 @@ namespace ProtocolHandle
     [Protocol(45951)]
     public class C2Gate_EnterRoomRequestHandler : AMRpcHandler<C2Gate_EnterRoomRequest>
     {
-        protected override async void Run(RpcPacakage package)
+        protected override async void Run(RpcPackage package)
         {
             C2Gate_EnterRoomRequest req = package.msg as C2Gate_EnterRoomRequest;
             Gate2C_EnterRoomResponse response = package.Response as Gate2C_EnterRoomResponse;
@@ -50,13 +50,13 @@ namespace ProtocolHandle
                     //离开当前房间
                     reqToB_leave.playerid = player.Id;
                     reqToB_leave.roomid = player.Data.detailData.roomid;
-                    roomSession = NetInnerComponent.Instance.GetByAppID(roomBaseConfig.serverid);
-                    respFromB_leave = await roomSession.Call(reqToB_leave, respFromB_leave) as B2Gate_LeaveRoomResponse;
-                    if(respFromB_leave.errorCode != (int)ErrorCode.Success)
-                    {
-                        response.errorCode = respFromB_leave.errorCode;
-                        return;
-                    }
+                    //roomSession = NetInnerComponent.Instance.GetByAppID(roomBaseConfig.serverid);
+                    //respFromB_leave = await roomSession.Call(reqToB_leave, respFromB_leave) as B2Gate_LeaveRoomResponse;
+                    //if(respFromB_leave.errorCode != (int)ErrorCode.Success)
+                    //{
+                    //    response.errorCode = respFromB_leave.errorCode;
+                    //    return;
+                    //}
                 }
                 //进入选择的房间
                 reqToB.id = player.Id;
@@ -66,19 +66,19 @@ namespace ProtocolHandle
                 reqToB.iconUrl = player.TemporaryData.iconUrl;
                 reqToB.sex = player.TemporaryData.sex;
                 
-                roomSession = NetInnerComponent.Instance.GetByAppID(roomBaseConfig.serverid);
-                if (roomSession == null)
-                {
-                    Log.Debug($"Not exist roomsession, serverid : {roomBaseConfig.serverid}");
-                    response.errorCode = (int)ErrorCode.Fail;
-                    return;
-                }
-                respFromB = await roomSession.Call(reqToB, respFromB) as B2Gate_EnterRoomResponse;
-                if (respFromB.errorCode != (int)ErrorCode.Success)
-                {
-                    response.errorCode = respFromB.errorCode;
-                    return;
-                }
+                //roomSession = NetInnerComponent.Instance.GetByAppID(roomBaseConfig.serverid);
+                //if (roomSession == null)
+                //{
+                //    Log.Debug($"Not exist roomsession, serverid : {roomBaseConfig.serverid}");
+                //    response.errorCode = (int)ErrorCode.Fail;
+                //    return;
+                //}
+                //respFromB = await roomSession.Call(reqToB, respFromB) as B2Gate_EnterRoomResponse;
+                //if (respFromB.errorCode != (int)ErrorCode.Success)
+                //{
+                //    response.errorCode = respFromB.errorCode;
+                //    return;
+                //}
                 player.TemporaryData.SetBattleAppid(roomBaseConfig.serverid);
                 player.CommonData.SetRoomid(roomid);
             }

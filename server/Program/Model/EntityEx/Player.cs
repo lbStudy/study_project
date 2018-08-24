@@ -6,6 +6,7 @@ using System.IO;
 
 public enum PlayerState
 {
+    None,
     Online,         //在线
     Offline,        //离线
     Background      //切入后台
@@ -24,7 +25,7 @@ public enum PlayerDataModule
 public class Player : Entity
 {
     Dictionary<AppType, int> serverIdDic = new Dictionary<AppType, int>();
-    private PlayerState state;
+    public PlayerState state;
 
     public int GetServerId(AppType appType)
     {
@@ -48,6 +49,7 @@ public class Player : Entity
         base.Dispose();
 
         serverIdDic.Clear();
+        state = PlayerState.None;
     }
     public Player() : base(EntityType.Player)
     {

@@ -11,7 +11,7 @@
         MapServer,
         GameServer,
         BattleServer,
-        //系统模块可多开(>=1),工会、好友、邮件、聊天、组队...
+        //可拆分系统,工会、好友、邮件、聊天、组队...
         SystemServer,
         All,
         SMITH,

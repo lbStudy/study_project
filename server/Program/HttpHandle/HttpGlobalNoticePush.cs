@@ -19,7 +19,7 @@ namespace HttpHandle
             {
                 M2Gate_GlobalNoticeMessage msgToGate = new M2Gate_GlobalNoticeMessage();
                 msgToGate.content = httpPackage.reqContent.content;
-                NetInnerComponent.Instance.SendMsgToSevers(msgToGate, AppType.GateServer);
+                //NetInnerComponent.Instance.SendMsgToSevers(msgToGate, AppType.GateServer);
             }
             httpPackage.Response(dic);
         }

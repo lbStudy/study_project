@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(48870)]
     public class Gate2M_RemovePlayerRequestHandler : AMRpcHandler<Gate2M_RemovePlayerRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            Gate2M_RemovePlayerRequest req = pacakage.msg as Gate2M_RemovePlayerRequest;
-            M2Gate_RemovePlayerResponse response = pacakage.Response as M2Gate_RemovePlayerResponse;
+            Gate2M_RemovePlayerRequest req = package.msg as Gate2M_RemovePlayerRequest;
+            M2Gate_RemovePlayerResponse response = package.Response as M2Gate_RemovePlayerResponse;
             try
             {
                 for(int i = 0; i <req.playerids.Count; i++)
@@ -23,7 +23,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

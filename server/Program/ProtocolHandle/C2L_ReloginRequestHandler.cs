@@ -10,7 +10,7 @@ namespace ProtocolHandle
     [Protocol(26445)]
     public class C2L_ReloginRequestHandler : AMRpcHandler<C2L_ReloginRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
             //int roleid = System.Convert.ToInt32(req.account);
             //L2C_ReloginResponse response = new L2C_ReloginResponse();

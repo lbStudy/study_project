@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(69717)]
     public class M2L_PlayerEnterGameRequestHandler : AMRpcHandler<M2L_PlayerEnterGameRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            M2L_PlayerEnterGameRequest req = pacakage.msg as M2L_PlayerEnterGameRequest;
-            L2M_PlayerEnterGameResponse response = pacakage.Response as L2M_PlayerEnterGameResponse;
+            M2L_PlayerEnterGameRequest req = package.msg as M2L_PlayerEnterGameRequest;
+            L2M_PlayerEnterGameResponse response = package.Response as L2M_PlayerEnterGameResponse;
 
             try
             {
@@ -40,7 +40,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

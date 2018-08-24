@@ -30,33 +30,33 @@ public class ActivityManagerComponent : Component, IAwake
     }
     public async void GetActivity()
     {
-        while(true)
-        {
-            if(Game.Instance.IsFinishModule(InitModule.InnerConnect))
-            {
-                SS_GetActivityRequest gate2m = new SS_GetActivityRequest();
-                Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
-                SS_GetActivityResponse respFromM = await managerSession.Call(gate2m) as SS_GetActivityResponse;
-                if (respFromM.errorCode == (int)ErrorCode.Success)
-                {
-                    for (int i = 0; i < respFromM.activitys.Count; i++)
-                    {
-                        ActivityInfo activity = respFromM.activitys[i];
-                        if (activity.op == 2)
-                        {
-                            ActivityManagerComponent.Instance.Remove(activity.id);
-                        }
-                        else
-                        {
-                            ActivityManagerComponent.Instance.Refersh(activity);
-                        }
-                    }
-                    Game.Instance.SetInitFinishModule(InitModule.GetActivity);
-                    return;
-                }
-            }
-            await Task.Delay(2000);
-        }
+        //while(true)
+        //{
+        //    if(Game.Instance.IsFinishModule(InitModule.InnerConnect))
+        //    {
+        //        Gate2M_GetActivityRequest gate2m = new Gate2M_GetActivityRequest();
+        //        Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
+        //        Gate2M_GetActivityResponse respFromM = await managerSession.Call(gate2m) as Gate2M_GetActivityResponse;
+        //        if (respFromM.errorCode == (int)ErrorCode.Success)
+        //        {
+        //            for (int i = 0; i < respFromM.activitys.Count; i++)
+        //            {
+        //                ActivityInfo activity = respFromM.activitys[i];
+        //                if (activity.op == 2)
+        //                {
+        //                    ActivityManagerComponent.Instance.Remove(activity.id);
+        //                }
+        //                else
+        //                {
+        //                    ActivityManagerComponent.Instance.Refersh(activity);
+        //                }
+        //            }
+        //            Game.Instance.SetInitFinishModule(InitModule.GetActivity);
+        //            return;
+        //        }
+        //    }
+        //    await Task.Delay(2000);
+        //}
     }
     public ActivityInfo FindById(int activityid)
     {

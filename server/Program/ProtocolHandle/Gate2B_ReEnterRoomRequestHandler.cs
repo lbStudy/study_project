@@ -8,10 +8,10 @@ namespace ProtocolHandle
     [Protocol(33834)]
     public class Gate2B_ReEnterRoomRequestHandler : AMRpcHandler<Gate2B_ReEnterRoomRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            Gate2B_ReEnterRoomRequest req = pacakage.msg as Gate2B_ReEnterRoomRequest;
-            B2Gate_ReEnterRoomResponse response = pacakage.Response as B2Gate_ReEnterRoomResponse;
+            Gate2B_ReEnterRoomRequest req = package.msg as Gate2B_ReEnterRoomRequest;
+            B2Gate_ReEnterRoomResponse response = package.Response as B2Gate_ReEnterRoomResponse;
 
             try
             {
@@ -42,7 +42,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

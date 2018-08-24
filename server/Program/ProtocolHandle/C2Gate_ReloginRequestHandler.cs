@@ -7,10 +7,10 @@ namespace ProtocolHandle
     [Protocol(41478)]
     public class C2Gate_ReloginRequestHandler : AMRpcHandler<C2Gate_ReloginRequest>
     {
-        protected override void Run(RpcPacakage pacakage)
+        protected override void Run(RpcPackage package)
         {
-            C2Gate_ReloginRequest req = pacakage.msg as C2Gate_ReloginRequest;
-            Gate2C_ReloginResponse response = pacakage.Response as Gate2C_ReloginResponse;
+            C2Gate_ReloginRequest req = package.msg as C2Gate_ReloginRequest;
+            Gate2C_ReloginResponse response = package.Response as Gate2C_ReloginResponse;
 
             try
             {
@@ -26,16 +26,16 @@ namespace ProtocolHandle
                     return;
                 }
                 player.SetState(PlayerState.Online);
-                TranspondComponent.instance.Add(req.playerid, pacakage.Source);
+                TranspondComponent.instance.Add(req.playerid, package.Source);
                 Gate2M_ReloginMessage msgToM = new Gate2M_ReloginMessage();
                 msgToM.id = req.playerid;
                 msgToM.gateAppid = Game.Instance.Appid;
                 msgToM.name = player.CommonData.name;
                 msgToM.iconUrl = player.TemporaryData.iconUrl;
                 msgToM.sex = player.TemporaryData.sex;
-                Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
-                managerSession.SendMessage(msgToM, 0);
-                Log.Debug($"gate玩家进入 : {req.playerid}");
+                //Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
+                //managerSession.SendMessage(msgToM, 0);
+                //Log.Debug($"gate玩家进入 : {req.playerid}");
             }
             catch (Exception e)
             {
@@ -44,7 +44,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Reply();
+                package.Reply();
             }
         }
     }

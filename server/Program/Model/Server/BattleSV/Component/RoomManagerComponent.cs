@@ -70,17 +70,17 @@ public class RoomManagerComponent : Component, IAwake
     }
     public void CloseRoom(long roomid)
     {
-        Room room = null;
-        if(roomDic.TryGetValue(roomid, out room))
-        {
-            SS_RemoveRoomMessage msgToM = new SS_RemoveRoomMessage();
-            msgToM.id = roomid;
-            msgToM.battleAppid = Game.Instance.Appid;
-            Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
-            managerSession.SendMessage(msgToM, 0);
+        //Room room = null;
+        //if(roomDic.TryGetValue(roomid, out room))
+        //{
+        //    B2M_RemoveRoomMessage msgToM = new B2M_RemoveRoomMessage();
+        //    msgToM.id = roomid;
+        //    msgToM.battleAppid = Game.Instance.Appid;
+        //    Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
+        //    managerSession.SendMessage(msgToM, 0);
 
-            Remove(roomid);
-        }
+        //    Remove(roomid);
+        //}
     }
     public void CloseAllRoom()
     {

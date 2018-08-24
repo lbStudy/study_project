@@ -47,10 +47,9 @@ public class VerifyComponent : Component, IAwake
         }
         if(removeIds.Count > 0)
         {
-            SS_VerifyTimeOutMessage msg = new SS_VerifyTimeOutMessage();
+            Gate2M_VerifyTimeOutMessage msg = new Gate2M_VerifyTimeOutMessage();
             msg.playerids = removeIds;
-            Session managerSession = NetInnerComponent.Instance.GetByAppID(ServerConfigComponent.Instance.ManagerAppId);
-            managerSession.SendMessage(msg, 0);
+            NetHelper.SendMessage(msg, null);
         }
     }
     public VerifyInfo Add(long playerid)

@@ -7,7 +7,7 @@ namespace ProtocolHandle
     [Protocol(15587)]
     public class C2B_MoveRequestHandler : AMRpcHandler<C2B_MoveRequest>
     {
-        protected override void Run(RpcPacakage package)
+        protected override void Run(RpcPackage package)
         {
             C2B_MoveRequest req = package.msg as C2B_MoveRequest;
             B2C_MoveResponse response = package.Response as B2C_MoveResponse;

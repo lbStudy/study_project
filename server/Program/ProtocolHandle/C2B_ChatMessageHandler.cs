@@ -6,11 +6,11 @@ namespace ProtocolHandle
     [Protocol(87657)]
     public class C2B_ChatMessageHandler : AMHandler<C2B_ChatMessage>
     {
-        protected override void Run(MsgPacakage pacakage)
+        protected override void Run(MsgPackage package)
         {
             try
             {
-                C2B_ChatMessage msg = pacakage.msg as C2B_ChatMessage;
+                C2B_ChatMessage msg = package.msg as C2B_ChatMessage;
                 if (null != msg.mInfo)
                 {
                     Room room = RoomManagerComponent.Instance.Find(msg.mInfo.mRoomId);
@@ -28,7 +28,7 @@ namespace ProtocolHandle
             }
             finally
             {
-                pacakage.Clear();
+                package.Dispose();
             }
         }
     }
