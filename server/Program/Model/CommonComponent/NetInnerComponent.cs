@@ -8,9 +8,9 @@ using System.Net;
 
 public class InnerNetInfo
 {
-    public int serverId;
+    public int appId;
     public AppType appType;
-    public int systemType;
+    public int system;
     public Session session;
 }
 
@@ -32,7 +32,17 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
     {
         Instance = this;
         this.Awake(NetworkProtocol.TCP, ipEndPoint, appType);
-        InnerConnect();
+
+        ServerConfig registerConfig = null;
+        if (AppType == AppType.ManagerServer)
+        {
+            registerConfig = ServerConfigComponent.Instance.loginServerConfig;
+        }
+        else
+        {
+            registerConfig = ServerConfigComponent.Instance.managerServerConfig;
+        }
+        InnerRegister(registerConfig.inner, registerConfig.appid, registerConfig.appType, registerConfig.system);
         //ServerPingSend();
         //ServerPingDetection();
     }
@@ -45,6 +55,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
         base.Dispose();
         Instance = null;
         appSessions.Clear();
+        appSessionDic.Clear();
     }
     public override void Remove(Session session)
     {
@@ -58,11 +69,15 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
             }
         }
     }
-    public void AddByServerId(InnerNetInfo netInfo)
+    public void Add(InnerNetInfo netInfo)
     {
-        if (netInfo == null || netInfo.serverId <= 0 || appSessionDic.ContainsKey(netInfo.serverId))
+        if (netInfo == null || netInfo.appId <= 0)
             return;
-        appSessionDic[netInfo.serverId] = netInfo;
+        if(appSessionDic.ContainsKey(netInfo.appId))
+        {
+            RemoveByServerId(netInfo.appId);
+        }
+        appSessionDic[netInfo.appId] = netInfo;
         List<InnerNetInfo> netInfos = null;
         if(appSessions.TryGetValue(netInfo.appType, out netInfos) == false)
         {
@@ -83,7 +98,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
     {
         if (netInfo == null)
             return;
-        if(appSessionDic.Remove(netInfo.serverId))
+        if(appSessionDic.Remove(netInfo.appId))
         {
             List<InnerNetInfo> netInfos = null;
             if (appSessions.TryGetValue(netInfo.appType, out netInfos))
@@ -121,7 +136,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
         {
             foreach(InnerNetInfo netInfo in netInfos)
             {
-                if((netInfo.systemType & stype) > 0)
+                if((netInfo.system & stype) > 0)
                 {
                     return netInfo;
                 }
@@ -129,6 +144,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
         }
         return null;
     }
+
     //public async void ServerPingSend()
     //{
     //    while(true)
@@ -166,57 +182,47 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
     //        }
     //    }
     //}
-    async void InnerConnect()
+    void InnerRegister(IPEndPoint ipEndPoint, int appId, AppType appType, int system)
     {
-        while (true)
+        Session session = null;
+        session = this.Create(ipEndPoint, (bool isSuccess) =>
         {
-            //连接manager
-            //Session session = this.Create(NetworkHelper.ToIPEndPoint(ServerConfigComponent.Instance.ManagerAppId, connectConfig.innerport));
-
-            A2A_ServerRegisterRequest registerReq = ProtocolDispatcher.Instance.Take<A2A_ServerRegisterRequest>((int)ProtoEnum.A2A_ServerRegisterRequest);
-
-
-
-            ProtocolDispatcher.Instance.Back(registerReq);
-            bool isFinishInnerConnect = true;
-            List<AppType> connectApps = ConstDefine.innerConnectDic[Game.Instance.AppType];
-            for (int i = 0; i < connectApps.Count; i++)
+            if (isSuccess)
             {
-                AppType connectApp = connectApps[i];
-                if (connectApp == Game.Instance.AppType)
+                
+                A2A_ServerRegisterMessage registerMsg = ProtocolDispatcher.Instance.Take<A2A_ServerRegisterMessage>((int)ProtoEnum.A2A_ServerRegisterMessage);
+                try
                 {
-                    Console.WriteLine($"error : exist same apptype({Game.Instance.AppType}) connect in ConstDefine.innerConnectDic");
-                    continue;
+                    ServerConfig serverConfig = ServerConfigComponent.Instance.curServerConfig;
+                    registerMsg.appId = serverConfig.appid;
+                    registerMsg.appType = (int)serverConfig.appType;
+                    registerMsg.innerIp = serverConfig.innerip;
+                    registerMsg.innerPort = serverConfig.innerport;
+                    registerMsg.outerIp = serverConfig.outerip;
+                    registerMsg.outerPort = serverConfig.outerport;
+                    registerMsg.system = serverConfig.system;
+
+                    session.SendMessage(registerMsg, NetHelper.GetSendId(null));
+
+                    InnerNetInfo netInfo = new InnerNetInfo();
+                    netInfo.appType = appType;
+                    netInfo.appId = appId;
+                    netInfo.session = session;
+                    netInfo.system = system;
+                    session.relevanceID = appId;
+                    Add(netInfo);
                 }
-
-                //List<ServerConfig> connectServers = ServerConfigComponent.Instance.GetServerConfigByAppType(connectApp);
-                //if (connectServers != null && connectServers.Count > 0)
-                //{
-                //    for (int j = 0; j < connectServers.Count; j++)
-                //    {
-                //        ServerConfig connectConfig = connectServers[j];
-                //        if (appSessions.ContainsKey(connectConfig.appid) && !appSessions[connectConfig.appid].IsDisposed)
-                //        {
-                //            Console.WriteLine($"connect success : ({connectConfig.appid}){connectConfig.innerAddress}");
-                //            continue;
-                //        }
-                //        Session session = this.Create(NetworkHelper.ToIPEndPoint(connectConfig.innerip, connectConfig.innerport));
-                //        Console.WriteLine($"start connect : ({connectConfig.appid }){connectConfig.innerAddress}");
-                //        session.relevanceID = connectConfig.appid;
-                //        session.pingTime = Game.Instance.Msec;
-                //        this.appSessions.Add(connectConfig.appid, session);
-
-                //        isFinishInnerConnect = false;
-                //    }
-                //}
-            }
-            if (isFinishInnerConnect)
-            {
+                finally
+                {
+                    ProtocolDispatcher.Instance.Back(registerMsg);
+                }
                 Game.Instance.SetInitFinishModule(InitModule.InnerConnect);
-                return;
             }
-            await Task.Delay(3000);
-        }
+            else
+            {
+                InnerRegister(ipEndPoint, appId, appType, system);
+            }
+        });
     }
     //public override void Remove(Session session)
     //{

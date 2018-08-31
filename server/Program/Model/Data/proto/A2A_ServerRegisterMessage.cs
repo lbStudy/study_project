@@ -1,10 +1,9 @@
 using System;
 
-
 namespace Data
 {
 	[ProtoBuf.ProtoContract]
-	public class A2A_ServerRegisterRequest : IDisposable
+	public class A2A_ServerRegisterMessage : IDisposable
 	{
         [ProtoBuf.ProtoMember(1)]
         public int appId { set; get; }
@@ -22,7 +21,8 @@ namespace Data
         public string outerIp { set; get; }
         public void Dispose()
 		{
-		    
-		}
+            innerIp = string.Empty;
+            outerIp = string.Empty;
+        }
 	}
 }

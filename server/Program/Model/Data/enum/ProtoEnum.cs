@@ -2,9 +2,9 @@ namespace Data
 {
 	public enum ProtoEnum
 	{
+		A2A_ServerConnectMessage = 23260,
 		A2A_ServerPingMessage = 2691,
-		A2A_ServerRegisterRequest = 33968,
-		A2A_ServerRegisterResponse = 133968,
+		A2A_ServerRegisterMessage = 65357,
 		B2C_BattleResultMessage = 24210,
 		B2C_ChatMessage = 80265,
 		B2C_DamageMessage = 90141,

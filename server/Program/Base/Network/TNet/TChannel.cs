@@ -128,13 +128,14 @@ namespace Base
 
             if (e.SocketError != SocketError.Success)
             {
+                OnConnect(false);
                 this.OnError((int)e.SocketError);
                 return;
             }
 
             e.RemoteEndPoint = null;
             this.isConnected = true;
-
+            OnConnect(true);
             this.StartRecv();
             this.StartSend();
         }

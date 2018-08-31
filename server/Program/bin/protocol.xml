@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <protocols>
+  <msg name="A2A_ServerConnectMessage" opcode="23260" from="All" to="All" type="Message" selects="0" group="Other" />
   <msg name="A2A_ServerPingMessage" opcode="2691" from="All" to="All" type="Message" selects="0" group="Other" />
-  <msg name="A2A_ServerRegisterRequest" opcode="33968" from="All" to="All" type="Request" selects="0" group="Other" />
-  <msg name="A2A_ServerRegisterResponse" opcode="133968" from="All" to="All" type="Response" selects="0" group="Other" />
+  <msg name="A2A_ServerRegisterMessage" opcode="65357" from="All" to="All" type="Message" selects="0" group="Other" />
   <msg name="B2C_BattleResultMessage" opcode="24210" from="BattleServer" to="Client" type="Message" selects="0" group="Op" />
   <msg name="B2C_ChatMessage" opcode="80265" from="BattleServer" to="Client" type="Message" selects="0" group="Other" />
   <msg name="B2C_DamageMessage" opcode="90141" from="BattleServer" to="Client" type="Message" selects="0" group="Room" />

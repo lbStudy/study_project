@@ -6,11 +6,10 @@ using Base;
 
 public class ServerConfig
 {
-    //public int bigAreaId;
     public AppType appType;
     public int appid;
-    //public string innerip;
-    //public int innerport;
+    public string innerip;
+    public int innerport;
     //public string listenOuterip;
     //public int listenOuterport;
     public string outerip;
@@ -229,6 +228,8 @@ public class ServerConfigComponent : Component, IAwake
         int port = 0;
         if(int.TryParse(str, out port))
         {
+            serverConfig.innerip = ip;
+            serverConfig.innerport = port;
             serverConfig.inner = NetworkHelper.ToIPEndPoint(ip, port);
         }
         

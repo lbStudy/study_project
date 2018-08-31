@@ -78,9 +78,11 @@ namespace Base
         /// <summary>
         /// 创建一个新Session
         /// </summary>
-        public Session Create(IPEndPoint ipEndPoint)
+        public Session Create(IPEndPoint ipEndPoint, Action<bool> onConnect)
         {
             AChannel channel = this.Service.ConnectChannel(ipEndPoint);
+            if (onConnect != null)
+                channel.ConnectCallback += onConnect;
             Session session = ObjectPoolManager.Instance.Take<Session, long, NetworkComponent, AChannel>(IdGenerater.GenerateId(), this, channel);
             channel.ErrorCallback += (c, e) => { this.Remove(session); };
             this.AddSession(session);

@@ -92,9 +92,22 @@ public static class NetHelper
         }
         return session;
     }
-    public static long GetSendId(Player player)
+    /// <summary>
+    /// 如果player == null && isBroadcast == true，对所有玩家广播
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="isBroadcast"></param>
+    /// <returns></returns>
+    public static long GetSendId(Player player, bool isBroadcast = false)
     {
-        return player == null ? -Game.Instance.Appid : player.Id;
+        if (player == null)
+        {
+            if (isBroadcast)
+                return 0;
+            else
+                return -Game.Instance.Appid;
+        }
+        return player.Id;
     }
 
     //使用条件

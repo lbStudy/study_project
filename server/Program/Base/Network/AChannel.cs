@@ -60,6 +60,19 @@ namespace Base
             }
         }
 
+        private Action<bool> connectCallback;
+
+        public event Action<bool> ConnectCallback
+        {
+            add
+            {
+                this.connectCallback += value;
+            }
+            remove
+            {
+                this.connectCallback -= value;
+            }
+        }
         protected void OnRead(Packet packet)
         {
             this.readCallback?.Invoke(packet);
@@ -75,6 +88,10 @@ namespace Base
             this.Id = id;
             this.ChannelType = channelType;
             this.service = service;
+        }
+        protected void OnConnect(bool isSuccess)
+        {
+            this.connectCallback?.Invoke(isSuccess);
         }
 		/// <summary>
 		/// 发送消息
