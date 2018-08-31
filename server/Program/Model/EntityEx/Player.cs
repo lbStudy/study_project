@@ -123,14 +123,6 @@ public class Player : Entity
     }
     public void SendMsg(MemoryStream stream)
     {
-        TranspondInfo tranInfo = TranspondComponent.instance.Find(Id);
-        if(tranInfo != null)
-        {
-            Session session = tranInfo.clientSession;
-            if (session != null && !session.IsDisposed)
-            {
-                session.SendMessage(stream);
-            }
-        }
+
     }
 }

@@ -13,6 +13,7 @@ namespace Base
         protected readonly Dictionary<long, Session> sessionDic = new Dictionary<long, Session>();
         private AppType appType;
         public AppType AppType { get { return appType; } }
+        public virtual bool IsOuter { get { return false; } }
 
         public void Awake(NetworkProtocol protocol, AppType appType)
         {

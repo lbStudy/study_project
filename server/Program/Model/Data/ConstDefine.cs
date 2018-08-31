@@ -4,6 +4,8 @@ using Base;
 
 public class ConstDefine
 {
+    public static int managerServerId = 100;
+    public static int loginServerId = 1;
     public static Dictionary<AppType, int> initModuleDic = new Dictionary<AppType, int>()
     {
         { AppType.GameServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig },

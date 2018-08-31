@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using Base;
 using Data;
 
@@ -58,14 +59,14 @@ public class Game : Entity
         this.isAddApp = isAddApp;
         //服务器配置
         AddComponent<ServerConfigComponent>();
-        bool isLoadSuccess = ServerConfigComponent.Instance.LoadConfig(bigAreaId);
+        bool isLoadSuccess = ServerConfigComponent.Instance.LoadConfig(appid, bigAreaId);
         if(!isLoadSuccess)
         {
             this.state = GameState.End;
             Console.WriteLine($"error : serverconfig load fail.");
             return;
         }
-        ServerConfig serverConfig = ServerConfigComponent.Instance.GetServerConfigByAppid(appid);
+        ServerConfig serverConfig = ServerConfigComponent.Instance.curServerConfig;
         if (serverConfig == null)
         {
             this.state = GameState.End;
@@ -86,7 +87,7 @@ public class Game : Entity
     }
     public void LoadComponent()
     {
-        ServerConfig serverConfig = ServerConfigComponent.Instance.GetServerConfigByAppid(appid);
+        ServerConfig serverConfig = ServerConfigComponent.Instance.curServerConfig;
 
         AddComponent<ConstConfigComponent>();
         AddComponent<ConfigManagerComponent>();
@@ -99,16 +100,15 @@ public class Game : Entity
                 //AddComponent<SmithComponent, string, int, AppType>( serverConfig.outerip, serverConfig.outerport, appType);
                 break;
             case AppType.LoginServer:
-                AddComponent<NetInnerComponent, string, int, AppType>(serverConfig.innerip, serverConfig.innerport, appType);
-                AddComponent<NetOuterComponent, string, int, AppType>(serverConfig.listenOuterip, serverConfig.listenOuterport, appType);
+                AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
+                AddComponent<NetOuterComponent, IPEndPoint, AppType>(serverConfig.listenOuter, appType);
                 //AddComponent<HttpComponent, string, int>(ServerConfigComponent.Instance.LoginHttpIp, ServerConfigComponent.Instance.LoginHttpPort);
                 AddComponent<ClientHttpComponent>();
                 AddComponent<LoginManagerComponent>();
                 break;
             case AppType.GateServer:
-                AddComponent<NetInnerComponent, string, int, AppType>(serverConfig.innerip, serverConfig.innerport, appType);
-                AddComponent<NetOuterComponent, string, int, AppType>(serverConfig.listenOuterip, serverConfig.listenOuterport, appType);
-                AddComponent<TranspondComponent>();
+                AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
+                AddComponent<NetOuterComponent, IPEndPoint, AppType>(serverConfig.listenOuter, appType);
                 AddComponent<VerifyComponent>();
                 AddComponent<PlayerManagerComponent>();
                 AddComponent<ClientHttpComponent>();
@@ -119,13 +119,13 @@ public class Game : Entity
             //case AppType.ChatServer:
             //    break;
             case AppType.BattleServer:
-                AddComponent<NetInnerComponent, string, int, AppType>(serverConfig.innerip, serverConfig.innerport, appType);
+                AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
                 //AddComponent<NetOuterComponent, string, int, AppType>(serverConfig.listenOuterip, serverConfig.listenOuterport, appType);
                 AddComponent<DBOperateComponent>();
                 AddComponent<RoomManagerComponent>();
                 break;
             case AppType.ManagerServer:
-                AddComponent<NetInnerComponent, string, int, AppType>(serverConfig.innerip, serverConfig.innerport, appType);
+                AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
                 //AddComponent<HttpComponent, string, int>(ServerConfigComponent.Instance.GmHttpIp, ServerConfigComponent.Instance.GmHttpPort);
                 AddComponent<GmManagerComponent>();
                 AddComponent<ClientHttpComponent>();

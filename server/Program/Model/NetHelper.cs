@@ -14,67 +14,81 @@ public static class NetHelper
             return null;
         }
         Session session = null;
-        if (player == null)
-        {//向manager发送
-            if (protoInfo.ToServer != AppType.ManagerServer && protoInfo.ToServer != AppType.SystemServer)
-            {
-                return null;
-            }
-            int serverId = ServerConfigComponent.Instance.ManagerAppId;
-            session = NetInnerComponent.Instance.FindSessionByServerId(serverId);
-        }
-        else
+
+        switch(protoInfo.ToServer)
         {
-            if (protoInfo.ToServer == AppType.Client)
-            {//发送客户端
-                if (NetInnerComponent.Instance.AppType == AppType.GateServer)
+            case AppType.LoginServer:
+                if (NetInnerComponent.Instance.AppType == AppType.ManagerServer)
                 {
-                    session = NetOuterComponent.Instance.FindByRelevanceID(player.Id);
-                }
-                else
-                {
-                    session = NetInnerComponent.Instance.FindSessionByServerId(player.GetServerId(AppType.GateServer));
-                }
-            }
-            else
-            {
-                int serverId = 0;
-                if (protoInfo.ToServer == AppType.GateServer)
-                {
-                    serverId = player.GetServerId(AppType.GateServer);
-                }
-                else if (protoInfo.ToServer == AppType.ManagerServer)
-                {
-                    serverId = ServerConfigComponent.Instance.ManagerAppId;
-                }
-                else
-                {
-                    if (NetInnerComponent.Instance.AppType == AppType.ManagerServer || NetInnerComponent.Instance.AppType == AppType.GateServer)
+                    List<InnerNetInfo> netInfos = NetInnerComponent.Instance.FindByAppType(AppType.LoginServer);
+                    if(netInfos != null && netInfos.Count > 0)
                     {
-                        if (protoInfo.ToServer == AppType.SystemServer)
-                        {
-                            InnerNetInfo systemInfo = NetInnerComponent.Instance.FindSystemServer(protoInfo.SysType);
-                            if (systemInfo == null)
-                            {
-                                serverId = 0;
-                            }
-                            else
-                            {
-                                serverId = systemInfo.serverId;
-                            }
-                        }
-                        else
-                        {
-                            serverId = player.GetServerId(protoInfo.ToServer);
-                        }
+                        session = netInfos[0].session;
+                    }
+                }
+                else
+                {
+                    session = NetInnerComponent.Instance.FindSessionByAppId(ServerConfigComponent.Instance.ManagerAppId);
+                }
+                break;
+            case AppType.ManagerServer:
+                session = NetInnerComponent.Instance.FindSessionByAppId(ServerConfigComponent.Instance.ManagerAppId);
+                break;
+            case AppType.Client:
+                if(player != null)
+                {
+                    if (NetInnerComponent.Instance.AppType == AppType.GateServer)
+                    {
+                        session = NetOuterComponent.Instance.FindByRelevanceID(player.Id);
                     }
                     else
                     {
-                        serverId = ServerConfigComponent.Instance.ManagerAppId;
+                        session = NetInnerComponent.Instance.FindSessionByAppId(player.GetServerId(AppType.GateServer));
                     }
                 }
-                session = NetInnerComponent.Instance.FindSessionByServerId(serverId);
-            }
+                break;
+            case AppType.GameServer:
+            case AppType.MapServer:
+            case AppType.BattleServer:
+                if (player != null)
+                {
+                    if (NetInnerComponent.Instance.AppType == AppType.ManagerServer || NetInnerComponent.Instance.AppType == AppType.GateServer)
+                    {
+                        session = NetInnerComponent.Instance.FindSessionByAppId(player.GetServerId(protoInfo.ToServer));
+                    }
+                    else
+                    {
+                        session = NetInnerComponent.Instance.FindSessionByAppId(ServerConfigComponent.Instance.ManagerAppId);
+                    }
+                }
+                break;
+            case AppType.SystemServer:
+                if (NetInnerComponent.Instance.AppType == AppType.ManagerServer || NetInnerComponent.Instance.AppType == AppType.GateServer)
+                {
+                    InnerNetInfo systemInfo = NetInnerComponent.Instance.FindSystemServer(protoInfo.SysType);
+                    if (systemInfo != null)
+                    {
+                        session = systemInfo.session;
+                    }
+                }
+                else
+                {
+                    session = NetInnerComponent.Instance.FindSessionByAppId(ServerConfigComponent.Instance.ManagerAppId);
+                }
+                break;
+            case AppType.GateServer:
+                if (player != null)
+                {
+                    if (NetInnerComponent.Instance.AppType == AppType.LoginServer)
+                    {
+                        session = NetInnerComponent.Instance.FindSessionByAppId(ServerConfigComponent.Instance.ManagerAppId);
+                    }
+                    else
+                    {
+                        session = NetInnerComponent.Instance.FindSessionByAppId(player.GetServerId(AppType.GateServer));
+                    }
+                }
+                break;
         }
         return session;
     }

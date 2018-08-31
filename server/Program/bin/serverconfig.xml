@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Root>
 	<project id="0" />
-	<LoginServer appid="1" innerip="127.0.0.1" innerport="10001" listenOuterip="127.0.0.1" listenOuterport="20001"/> 
+	<App appid="1" apptype="LoginServer" innerip="127.0.0.1" innerport="10001" listenOuterip="127.0.0.1" listenOuterport="20001"/> 
 	<LoginHttp ip="127.0.0.1" port="20002" /> 
 	<WebUrl>
 		<url action="login" address="http://122.152.211.190:30080/plat/cc/index.php/user/token" />
@@ -13,29 +13,24 @@
 	</WebUrl>
 
 	<BigArea id="100" name="菜鸟1区">
-		<ManagerServer appid="6001" innerip="127.0.0.1" innerport="11001" outerip="" outerport="" />
-		<!--<ChatServer appid="1002" innerip="127.0.0.1" innerport="11002" outerip="" outerport="" /> -->
-		<!--<DBServer appid="6003" innerip="127.0.0.1" innerport="11003" outerip="" outerport=""/>-->
-		<SMITH appid="10000" innerip="" innerport="" outerip="127.0.0.1" outerport="20001"/>
-		<!--<WorldServer appid="1004" innerip="127.0.0.1" innerport="11004" outerip="" outerport=""/>-->
-		<Gates>
-			<GateServer appid="6101" innerip="127.0.0.1" innerport="11101" listenOuterip="127.0.0.1" listenOuterport="21101" outerip="127.0.0.1" outerport="21101"/> 
-		</Gates>
-		<!--
-		<Games>
-			<GameServer appid="1201" innerip="127.0.0.1" innerport="11201" outerip="" outerport=""/> 
-		</Games>
-		-->
-		<Battles>
-			<BattleServer appid="6301" innerip="127.0.0.1" innerport="11301" listenOuterip="127.0.0.1" listenOuterport="21301" outerip="127.0.0.1" outerport="21301"/> 
-		</Battles>
-		<!--
-		<Scenes>
-			<SceneServer appid="1401" innerip="127.0.0.1" innerport="11401" outerip="" outerport=""/> 
-		</Scenes>
--->
+		<App appid="100" apptype="ManagerServer" innerip="127.0.0.1" innerport="11001" outerip="" outerport="" />
+		<!--1000 <= GateServer < 2000-->
+		<App appid="1000" apptype="GateServer" innerip="127.0.0.1" innerport="11101" listenOuterip="127.0.0.1" listenOuterport="21101" outerip="127.0.0.1" outerport="21101"/> 
+
+		<!--2000 <= BattleServer < 3000-->
+		<App appid="2000" apptype="BattleServer" innerip="127.0.0.1" innerport="11301" listenOuterip="127.0.0.1" listenOuterport="21301" outerip="127.0.0.1" outerport="21301"/> 
+
+		<!--3000 <= GameServer < 4000-->
+		<App appid="3000" apptype="GameServer" innerip="127.0.0.1" innerport="11001" outerip="" outerport="" />
+		
+		<!--4000 <= MapServer < 5000-->
+		<App appid="3000" apptype="MapServer" innerip="127.0.0.1" innerport="11001" outerip="" outerport="" />
+
+		<!--200 <= SystemServer < 500-->
+		<App appid="200" apptype="SystemServer" system="Guild|Friend|Mail|Chat|Team" innerip="127.0.0.1" innerport="11001" outerip="" outerport="" />
+
 		<GmHttp ip="127.0.0.1" port="20101" /> 
-		<PlayerDB address="mongodb://127.0.0.1:27017" />
+		<DB address="mongodb://127.0.0.1:27017" />
 <!--		<PlayerDB address="mongodb://pai:123@127.0.0.1:27017" />-->
 	</BigArea>
 <!--

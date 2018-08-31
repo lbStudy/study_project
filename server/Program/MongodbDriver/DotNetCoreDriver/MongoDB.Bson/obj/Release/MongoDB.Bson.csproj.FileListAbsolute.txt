@@ -6,4 +6,3 @@ D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.
 D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Bson\obj\Release\MongoDB.Bson.AssemblyInfo.cs
 D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Bson\obj\Release\MongoDB.Bson.dll
 D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Bson\obj\Release\MongoDB.Bson.pdb
-D:\UnityProjects\MMO\code\server\Program\MongodbDriver\DotNetCoreDriver\MongoDB.Bson\obj\Release\MongoDB.Bson.csprojResolveAssemblyReference.cache

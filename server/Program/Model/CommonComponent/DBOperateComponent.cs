@@ -53,7 +53,7 @@ public class DBOperateComponent : Component, IAwake
     }
     public void Connect()
     {
-        strconn = ServerConfigComponent.Instance.PlayerDBUrl + "/" + databaseName;
+        strconn = ServerConfigComponent.Instance.DBUrl + "/" + databaseName;
         client = new MongoClient(strconn);
         //client = new MongoClient(ServerConfigComponent.Instance.PlayerDBUrl);
         gameDatabase = client.GetDatabase(databaseName);

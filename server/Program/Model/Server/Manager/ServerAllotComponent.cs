@@ -18,11 +18,11 @@ public class ServerAllotComponent : Component, IAwake
     public void Awake()
     {
         Instance = this;
-        List<ServerConfig> gateCfs = ServerConfigComponent.Instance.GetServerConfigByAppType(AppType.GateServer);
-        for(int i = 0; i < gateCfs.Count; i++)
-        {
-            gateNumDic[gateCfs[i].appid] = 0;
-        }
+        //List<ServerConfig> gateCfs = ServerConfigComponent.Instance.GetServerConfigByAppType(AppType.GateServer);
+        //for(int i = 0; i < gateCfs.Count; i++)
+        //{
+        //    gateNumDic[gateCfs[i].appid] = 0;
+        //}
     }
     public override void Dispose()
     {

@@ -32,11 +32,11 @@ public class RoomAllotComponent : Component, IAwake
     public void Awake()
     {
         Instance = this;
-        List<ServerConfig> battleCfs = ServerConfigComponent.Instance.GetServerConfigByAppType(AppType.BattleServer);
-        for (int i = 0; i < battleCfs.Count; i++)
-        {
-            numDic[battleCfs[i].appid] = 0;
-        }
+        //List<ServerConfig> battleCfs = ServerConfigComponent.Instance.GetServerConfigByAppType(AppType.BattleServer);
+        //for (int i = 0; i < battleCfs.Count; i++)
+        //{
+        //    numDic[battleCfs[i].appid] = 0;
+        //}
 
     }
     public override void Dispose()

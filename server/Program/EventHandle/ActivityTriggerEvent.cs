@@ -43,7 +43,7 @@ namespace EventHandle
                     if (activityType == ActivityType.BingAgent)
                         logAction = LogAction.bing_getcard;
                     Helper.AddAward(player, msg2c.awardInfo, logAction);
-                    TranspondComponent.instance.ToClient(msg2c, player.Id);
+                    //TranspondComponent.instance.ToClient(msg2c, player.Id);
                 }
             }
         }

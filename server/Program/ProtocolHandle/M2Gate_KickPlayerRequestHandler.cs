@@ -24,12 +24,12 @@ namespace ProtocolHandle
                     if (player == null)
                         continue;
                     player.TemporaryData.checkCode = "";                    
-                    TranspondInfo ti = TranspondComponent.instance.Find(v);
-                    if(ti != null)
-                    {
-                        if (ti.clientSession != null)
-                            ti.clientSession.Dispose();
-                    }
+                    //TranspondInfo ti = TranspondComponent.instance.Find(v);
+                    //if(ti != null)
+                    //{
+                    //    if (ti.clientSession != null)
+                    //        ti.clientSession.Dispose();
+                    //}
                 }
             }
             catch (Exception e)

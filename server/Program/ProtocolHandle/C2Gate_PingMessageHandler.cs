@@ -11,12 +11,12 @@ namespace ProtocolHandle
             try
             {
                 C2Gate_PingMessage msg = package.msg as C2Gate_PingMessage;
-                TranspondInfo info = TranspondComponent.instance.Find(package.Toid);
-                if (info == null)
-                {
-                    return;
-                }
-                info.clientSession.pingTime = Game.Instance.Msec;
+                //TranspondInfo info = TranspondComponent.instance.Find(package.Toid);
+                //if (info == null)
+                //{
+                //    return;
+                //}
+                //info.clientSession.pingTime = Game.Instance.Msec;
             }
             finally
             {

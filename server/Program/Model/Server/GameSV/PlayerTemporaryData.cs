@@ -20,6 +20,6 @@ public class PlayerTemporaryData
     public void SetBattleAppid(int appid)
     {
         battleAppid = appid;
-        TranspondComponent.instance.SetBattleAppid(player.Id, appid);
+        //TranspondComponent.instance.SetBattleAppid(player.Id, appid);
     }
 }

@@ -26,7 +26,7 @@ namespace ProtocolHandle
                     return;
                 }
                 player.SetState(PlayerState.Online);
-                TranspondComponent.instance.Add(req.playerid, package.Source);
+                //TranspondComponent.instance.Add(req.playerid, package.Source);
                 Gate2M_ReloginMessage msgToM = new Gate2M_ReloginMessage();
                 msgToM.id = req.playerid;
                 msgToM.gateAppid = Game.Instance.Appid;

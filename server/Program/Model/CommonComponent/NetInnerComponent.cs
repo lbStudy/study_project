@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Base;
 using System.IO;
+using Data;
+using System.Net;
 
 public class InnerNetInfo
 {
     public int serverId;
     public AppType appType;
     public int systemType;
-    public int state;   // 1==正常 0==断开
     public Session session;
 }
 
-public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<string, int, AppType>
+public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEndPoint, AppType>
 {
     //private readonly Dictionary<int, Session> appSessions = new Dictionary<int, Session>();
     public static NetInnerComponent Instance;
@@ -27,11 +28,11 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<strin
         this.Awake(NetworkProtocol.TCP, appType);
     }
 
-    public void Awake(string host, int port, AppType appType)
+    public void Awake(IPEndPoint ipEndPoint, AppType appType)
     {
         Instance = this;
-        this.Awake(NetworkProtocol.TCP, NetworkHelper.ToIPEndPoint(host, port), appType);
-        //InnerConnect();
+        this.Awake(NetworkProtocol.TCP, ipEndPoint, appType);
+        InnerConnect();
         //ServerPingSend();
         //ServerPingDetection();
     }
@@ -44,6 +45,18 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<strin
         base.Dispose();
         Instance = null;
         appSessions.Clear();
+    }
+    public override void Remove(Session session)
+    {
+        base.Remove(session);
+        foreach(InnerNetInfo netInfo in appSessionDic.Values)
+        {
+            if(netInfo.session == session)
+            {
+                netInfo.session = null;
+                break;
+            }
+        }
     }
     public void AddByServerId(InnerNetInfo netInfo)
     {
@@ -85,7 +98,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<strin
         appSessionDic.TryGetValue(serverId, out netInfo);
         return netInfo;
     }
-    public Session FindSessionByServerId(int serverId)
+    public Session FindSessionByAppId(int serverId)
     {
         InnerNetInfo netInfo = null;
         if(appSessionDic.TryGetValue(serverId, out netInfo))
@@ -93,6 +106,12 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<strin
             return netInfo.session;
         }
         return null;
+    }
+    public List<InnerNetInfo> FindByAppType(AppType appType)
+    {
+        List<InnerNetInfo> netInfos = null;
+        appSessions.TryGetValue(appType, out netInfos);
+        return netInfos;
     }
     public InnerNetInfo FindSystemServer(SystemType systemType)
     {
@@ -147,50 +166,58 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<strin
     //        }
     //    }
     //}
-    //async void InnerConnect()
-    //{
-    //    while(true)
-    //    {
-    //        bool isFinishInnerConnect = true;
-    //        List<AppType> connectApps = ConstDefine.innerConnectDic[Game.Instance.AppType];
-    //        for (int i = 0; i < connectApps.Count; i++)
-    //        {
-    //            AppType connectApp = connectApps[i];
-    //            if(connectApp == Game.Instance.AppType)
-    //            {
-    //                Console.WriteLine($"error : exist same apptype({Game.Instance.AppType}) connect in ConstDefine.innerConnectDic");
-    //                continue;
-    //            }
+    async void InnerConnect()
+    {
+        while (true)
+        {
+            //连接manager
+            //Session session = this.Create(NetworkHelper.ToIPEndPoint(ServerConfigComponent.Instance.ManagerAppId, connectConfig.innerport));
 
-    //            List<ServerConfig> connectServers = ServerConfigComponent.Instance.GetServerConfigByAppType(connectApp);
-    //            if(connectServers != null && connectServers.Count > 0)
-    //            {
-    //                for(int j = 0; j < connectServers.Count; j++)
-    //                {
-    //                    ServerConfig connectConfig = connectServers[j];
-    //                    if (appSessions.ContainsKey(connectConfig.appid) && !appSessions[connectConfig.appid].IsDisposed)
-    //                    {
-    //                        Console.WriteLine($"connect success : ({connectConfig.appid}){connectConfig.innerAddress}");
-    //                        continue;
-    //                    }
-    //                    Session session = this.Create(NetworkHelper.ToIPEndPoint(connectConfig.innerip, connectConfig.innerport));
-    //                    Console.WriteLine($"start connect : ({connectConfig.appid }){connectConfig.innerAddress}");
-    //                    session.relevanceID = connectConfig.appid;
-    //                    session.pingTime = Game.Instance.Msec;
-    //                    this.appSessions.Add(connectConfig.appid, session);
+            A2A_ServerRegisterRequest registerReq = ProtocolDispatcher.Instance.Take<A2A_ServerRegisterRequest>((int)ProtoEnum.A2A_ServerRegisterRequest);
 
-    //                    isFinishInnerConnect = false;
-    //                }
-    //            }
-    //        }
-    //        if (isFinishInnerConnect)
-    //        {
-    //            Game.Instance.SetInitFinishModule(InitModule.InnerConnect);
-    //            return;
-    //        }                
-    //        await Task.Delay(3000);
-    //    }
-    //}
+
+
+            ProtocolDispatcher.Instance.Back(registerReq);
+            bool isFinishInnerConnect = true;
+            List<AppType> connectApps = ConstDefine.innerConnectDic[Game.Instance.AppType];
+            for (int i = 0; i < connectApps.Count; i++)
+            {
+                AppType connectApp = connectApps[i];
+                if (connectApp == Game.Instance.AppType)
+                {
+                    Console.WriteLine($"error : exist same apptype({Game.Instance.AppType}) connect in ConstDefine.innerConnectDic");
+                    continue;
+                }
+
+                //List<ServerConfig> connectServers = ServerConfigComponent.Instance.GetServerConfigByAppType(connectApp);
+                //if (connectServers != null && connectServers.Count > 0)
+                //{
+                //    for (int j = 0; j < connectServers.Count; j++)
+                //    {
+                //        ServerConfig connectConfig = connectServers[j];
+                //        if (appSessions.ContainsKey(connectConfig.appid) && !appSessions[connectConfig.appid].IsDisposed)
+                //        {
+                //            Console.WriteLine($"connect success : ({connectConfig.appid}){connectConfig.innerAddress}");
+                //            continue;
+                //        }
+                //        Session session = this.Create(NetworkHelper.ToIPEndPoint(connectConfig.innerip, connectConfig.innerport));
+                //        Console.WriteLine($"start connect : ({connectConfig.appid }){connectConfig.innerAddress}");
+                //        session.relevanceID = connectConfig.appid;
+                //        session.pingTime = Game.Instance.Msec;
+                //        this.appSessions.Add(connectConfig.appid, session);
+
+                //        isFinishInnerConnect = false;
+                //    }
+                //}
+            }
+            if (isFinishInnerConnect)
+            {
+                Game.Instance.SetInitFinishModule(InitModule.InnerConnect);
+                return;
+            }
+            await Task.Delay(3000);
+        }
+    }
     //public override void Remove(Session session)
     //{
     //    base.Remove(session);

@@ -148,7 +148,7 @@ public partial class PlayerCommonData
             {
                 msg.changeDataDic.Add(changeDatas[i], Get(changeDatas[i]));
             }
-            TranspondComponent.instance.ToClient(msg, player.Id);
+            //TranspondComponent.instance.ToClient(msg, player.Id);
             changeDatas.Clear();
         }
         finally

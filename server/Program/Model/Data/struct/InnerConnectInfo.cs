@@ -1,11 +1,12 @@
-using System;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Data
 {
-	[ProtoBuf.ProtoContract]
-	public class A2A_ServerRegisterRequest : IDisposable
-	{
+    [ProtoBuf.ProtoContract]
+    public class InnerConnectInfo
+    {
         [ProtoBuf.ProtoMember(1)]
         public int appId { set; get; }
         [ProtoBuf.ProtoMember(2)]
@@ -16,13 +17,5 @@ namespace Data
         public int innerPort { set; get; }
         [ProtoBuf.ProtoMember(5)]
         public string innerIp { set; get; }
-        [ProtoBuf.ProtoMember(6)]
-        public int outerPort { set; get; }
-        [ProtoBuf.ProtoMember(7)]
-        public string outerIp { set; get; }
-        public void Dispose()
-		{
-		    
-		}
-	}
+    }
 }

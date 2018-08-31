@@ -1,22 +1,23 @@
 ﻿using Base;
 using System.Collections.Generic;
+using System.Net;
 
-public class NetOuterComponent : NetworkComponent, IAwake<AppType>, IAwake<string, int, AppType>
+public class NetOuterComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEndPoint, AppType>
 {
     public static NetOuterComponent Instance;
     Dictionary<long, Session> relevanceSessionDic = new Dictionary<long, Session>();
 
-
+    public override bool IsOuter { get { return true; } }
     public void Awake(AppType appType)
     {
         Instance = this;
         this.Awake(NetworkProtocol.TCP, appType);
     }
 
-    public void Awake(string host, int port, AppType appType)
+    public void Awake(IPEndPoint ipEndPoint, AppType appType)
     {
         Instance = this;
-        this.Awake(NetworkProtocol.TCP, NetworkHelper.ToIPEndPoint(host, port), appType);
+        this.Awake(NetworkProtocol.TCP, ipEndPoint, appType);
     }
     public override void Dispose()
     {

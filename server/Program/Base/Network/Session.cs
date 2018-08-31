@@ -140,7 +140,7 @@ namespace Base
                     }
 
                     if(protocolInfo.FromServer == AppType.Client 
-                        && network is NetOuterComponent)
+                        && network.IsOuter)
                     {
                         if(toids.Count > 0)
                         {
@@ -162,7 +162,7 @@ namespace Base
                         Dispose();
                         return;
                     }
-                    if(network is NetOuterComponent)
+                    if(network.IsOuter)
                     {
                         if (toids.Count > 0)
                         {
