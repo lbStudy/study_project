@@ -9,19 +9,22 @@ namespace ProtocolHandle
     {
         protected override void Run(MsgPackage package)
         {
-	    A2A_ServerConnectMessage msg = package.msg as A2A_ServerConnectMessage;
-	    try
-	    {
-
-	    }
-	    catch(Exception e)
-	    {
-		Console.WriteLine(e.ToString());
-	    }
-	    finally
-	    {
-		package.Dispose();
-	    }
+            A2A_ServerConnectMessage msg = package.msg as A2A_ServerConnectMessage;
+            try
+            {
+                foreach(InnerConnectInfo v in msg.connectInfo)
+                {
+                    NetInnerComponent.Instance.InnerRegister(v.innerIp, v.innerPort, v.appId, (AppType)v.appType, v.system);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                package.Dispose();
+            }
         }
     }
 }

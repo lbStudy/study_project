@@ -15,16 +15,6 @@ public class LoginManagerComponent : Component, IAwake
     public void Awake()
     {
         Instance = this;
-        //foreach(BigAreaConfig bigAreaCf in ServerConfigComponent.Instance.bigAreaCfDic.Values)
-        //{
-        //    AreaInfo areaInfo = new AreaInfo();
-        //    areaInfo.enterCount = 0;
-        //    areaInfo.id = bigAreaCf.bigAreaId;
-        //    areaInfo.name = bigAreaCf.bigAreaName;
-        //    areaInfo.isOpen = true;
-        //    areaDic.Add(areaInfo.id, areaInfo);
-        //    areas.Add(areaInfo);
-        //}
     }
     public override void Dispose()
     {
@@ -74,5 +64,10 @@ public class LoginManagerComponent : Component, IAwake
         AreaInfo areaInfo = null;
         areaDic.TryGetValue(areaid, out areaInfo);
         return areaInfo;
+    }
+    public void AddAreaInfo(AreaInfo areaInfo)
+    {
+        areaDic[areaInfo.id] = areaInfo;
+        areas.Add(areaInfo);
     }
 }

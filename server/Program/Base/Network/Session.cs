@@ -17,7 +17,7 @@ namespace Base
         private NetworkComponent network;
         private Dictionary<uint, TaskCompletionSource<object>> requestCallback = new Dictionary<uint, TaskCompletionSource<object>>();
         private AChannel channel;
-
+        public bool IsConnect { get { return channel.IsConnected; } }
         public long relevanceID;
         public long pingTime;
         byte[] idByte = new byte[8];

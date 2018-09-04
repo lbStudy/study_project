@@ -245,6 +245,17 @@ namespace Base
             }
             return (T)obj;
         }
+        public T Take<T>()
+        {
+            ProtocolInfo pi = null;
+            Type type = typeof(T);
+            object obj = null;
+            if (msgOpcodes.TryGetValue(type, out pi))
+            {
+                obj = pi.Take();
+            }
+            return (T)obj;
+        }
         public void Back(object obj)
         {
             Type type = obj.GetType();

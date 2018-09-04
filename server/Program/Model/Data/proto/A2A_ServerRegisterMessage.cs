@@ -19,10 +19,15 @@ namespace Data
         public int outerPort { set; get; }
         [ProtoBuf.ProtoMember(7)]
         public string outerIp { set; get; }
+        [ProtoBuf.ProtoMember(8)]
+        public string areaName { set; get; }
+        [ProtoBuf.ProtoMember(9)]
+        public int areaId { set; get; }
         public void Dispose()
 		{
             innerIp = string.Empty;
             outerIp = string.Empty;
+            areaName = string.Empty;
         }
 	}
 }

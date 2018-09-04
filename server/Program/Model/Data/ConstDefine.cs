@@ -26,6 +26,8 @@ public class ConstDefine
         { AppType.BattleServer, new List<AppType>() { AppType.ManagerServer, AppType.GateServer}},
         { AppType.ManagerServer, new List<AppType>() {AppType.LoginServer, AppType.GateServer, AppType.BattleServer}}
     };
+    //主动连接Gate的服务器
+    public static List<AppType> ActiveConnectGate = new List<AppType> { AppType.GameServer, AppType.MapServer, AppType.BattleServer, AppType.SystemServer};
     public static string configPath = "../../Config/";
     public static string xmlPath = "../../Config/xml/";
     public static float fixedTime = 0.06f;

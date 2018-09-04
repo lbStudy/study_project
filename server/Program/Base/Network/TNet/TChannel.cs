@@ -21,7 +21,7 @@ namespace Base
         private readonly PacketParser parser = new PacketParser();
 
         private bool isSending;
-		private bool isConnected;
+		
 
 
         public void Init(long id, IPEndPoint ipEndPoint, TService service)

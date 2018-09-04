@@ -9,6 +9,16 @@ public class PlayerAllotInfo
     public int gateid;
 }
 
+public class ServerAllotInfo
+{
+    public int appId;
+    public AppType appType;
+    public string innerIp;
+    public int innterPort;
+    public string outerIp;
+    public int outerPort;
+}
+
 public class ServerAllotComponent : Component, IAwake
 {
     public static ServerAllotComponent Instance;

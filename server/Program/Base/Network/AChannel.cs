@@ -73,6 +73,8 @@ namespace Base
                 this.connectCallback -= value;
             }
         }
+        protected bool isConnected;
+        public bool IsConnected { get { return isConnected; } }
         protected void OnRead(Packet packet)
         {
             this.readCallback?.Invoke(packet);

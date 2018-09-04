@@ -12,6 +12,11 @@ public class InnerNetInfo
     public AppType appType;
     public int system;
     public Session session;
+    public string innerIp;
+    public int innerPort;
+    public string outerIp;
+    public int outerPort;
+    public int allotCount;
 }
 
 public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEndPoint, AppType>
@@ -42,7 +47,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
         {
             registerConfig = ServerConfigComponent.Instance.managerServerConfig;
         }
-        InnerRegister(registerConfig.inner, registerConfig.appid, registerConfig.appType, registerConfig.system);
+        InnerRegister(registerConfig.innerip, registerConfig.innerport, registerConfig.appid, registerConfig.appType, registerConfig.system);
         //ServerPingSend();
         //ServerPingDetection();
     }
@@ -65,18 +70,15 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
             if(netInfo.session == session)
             {
                 netInfo.session = null;
+                Console.WriteLine($"inner disconnect with {netInfo.appId}.");
                 break;
             }
         }
     }
     public void Add(InnerNetInfo netInfo)
     {
-        if (netInfo == null || netInfo.appId <= 0)
+        if (netInfo == null || netInfo.appId <= 0 || appSessionDic.ContainsKey(netInfo.appId))
             return;
-        if(appSessionDic.ContainsKey(netInfo.appId))
-        {
-            RemoveByServerId(netInfo.appId);
-        }
         appSessionDic[netInfo.appId] = netInfo;
         List<InnerNetInfo> netInfos = null;
         if(appSessions.TryGetValue(netInfo.appType, out netInfos) == false)
@@ -86,7 +88,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
         }
         netInfos.Add(netInfo);
     }
-    public void RemoveByServerId(int serverId)
+    public void RemoveByAppId(int serverId)
     {
         InnerNetInfo netInfo = null;
         if(appSessionDic.TryGetValue(serverId, out netInfo))
@@ -107,7 +109,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
             }
         }
     }
-    public InnerNetInfo FindByServerId(int serverId)
+    public InnerNetInfo FindByAppId(int serverId)
     {
         InnerNetInfo netInfo = null;
         appSessionDic.TryGetValue(serverId, out netInfo);
@@ -182,14 +184,31 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
     //        }
     //    }
     //}
-    void InnerRegister(IPEndPoint ipEndPoint, int appId, AppType appType, int system)
+    public void InnerRegister(string ip, int port, int appId, AppType appType, int system)
     {
-        Session session = null;
-        session = this.Create(ipEndPoint, (bool isSuccess) =>
+        InnerNetInfo netInfo = FindByAppId(appId);
+        if(netInfo != null)
+        {
+            if (netInfo.session != null && netInfo.session.IsDisposed == false)
+                netInfo.session.Dispose();
+            Remove(netInfo);
+        }
+        else
+        {
+            netInfo = new InnerNetInfo();
+        }
+        netInfo.appType = appType;
+        netInfo.appId = appId;
+        netInfo.system = system;
+        netInfo.innerIp = ip;
+        netInfo.innerPort = port;
+        Add(netInfo);
+        Console.WriteLine($"start inner connect {appId}.");
+        netInfo.session = this.Create(NetworkHelper.ToIPEndPoint(ip, port), (bool isSuccess) =>
         {
             if (isSuccess)
             {
-                
+                Console.WriteLine($"inner connect success {appId}.");
                 A2A_ServerRegisterMessage registerMsg = ProtocolDispatcher.Instance.Take<A2A_ServerRegisterMessage>((int)ProtoEnum.A2A_ServerRegisterMessage);
                 try
                 {
@@ -201,16 +220,10 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
                     registerMsg.outerIp = serverConfig.outerip;
                     registerMsg.outerPort = serverConfig.outerport;
                     registerMsg.system = serverConfig.system;
-
-                    session.SendMessage(registerMsg, NetHelper.GetSendId(null));
-
-                    InnerNetInfo netInfo = new InnerNetInfo();
-                    netInfo.appType = appType;
-                    netInfo.appId = appId;
-                    netInfo.session = session;
-                    netInfo.system = system;
-                    session.relevanceID = appId;
-                    Add(netInfo);
+                    registerMsg.areaId = ServerConfigComponent.Instance.AreaId;
+                    registerMsg.areaName = ServerConfigComponent.Instance.AreaName;
+                    netInfo.session.relevanceID = appId;
+                    netInfo.session.SendMessage(registerMsg, NetHelper.GetSendId(null));
                 }
                 finally
                 {
@@ -220,7 +233,8 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
             }
             else
             {
-                InnerRegister(ipEndPoint, appId, appType, system);
+                Console.WriteLine($"inner connect fail {appId}.");
+                //InnerRegister(ipEndPoint, appId, appType, system);
             }
         });
     }

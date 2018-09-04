@@ -40,6 +40,8 @@ public class ServerConfigComponent : Component, IAwake
     private string dbUrl;
  
     #region
+    public int AreaId { get { return areaId; } }
+    public string AreaName { get { return areaName; } }
     public int LoginAppId { get { return loginServerConfig.appid; } }
     private string loginHttpip;
     public string LoginHttpIp { get { return loginHttpip; } }
