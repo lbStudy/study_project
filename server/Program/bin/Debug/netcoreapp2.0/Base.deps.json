@@ -8,6 +8,9 @@
     ".NETCoreApp,Version=v2.0": {
       "Base/1.0.0": {
         "dependencies": {
+          "MongoDB.Bson": "1.0.0",
+          "MongoDB.Driver": "1.0.0",
+          "MongoDB.Driver.Core": "1.0.0",
           "MySql.Data": "6.10.6",
           "NLog": "5.0.0-beta11",
           "protobuf-net": "2.3.4"
@@ -1024,6 +1027,31 @@
           "System.Xml.ReaderWriter": "4.3.0",
           "System.Xml.XmlDocument": "4.3.0"
         }
+      },
+      "MongoDB.Bson/1.0.0": {
+        "dependencies": {
+          "System.Reflection.Emit.Lightweight": "4.3.0"
+        },
+        "runtime": {
+          "MongoDB.Bson.dll": {}
+        }
+      },
+      "MongoDB.Driver/1.0.0": {
+        "dependencies": {
+          "MongoDB.Bson": "1.0.0",
+          "MongoDB.Driver.Core": "1.0.0"
+        },
+        "runtime": {
+          "MongoDB.Driver.dll": {}
+        }
+      },
+      "MongoDB.Driver.Core/1.0.0": {
+        "dependencies": {
+          "MongoDB.Bson": "1.0.0"
+        },
+        "runtime": {
+          "MongoDB.Driver.Core.dll": {}
+        }
       }
     }
   },
@@ -1606,6 +1634,21 @@
       "sha512": "sha512-MYoTCP7EZ98RrANESW05J5ZwskKDoN0AuZ06ZflnowE50LTpbR5yRg3tHckTVm5j/m47stuGgCrCHWePyHS70Q==",
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    },
+    "MongoDB.Bson/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MongoDB.Driver/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MongoDB.Driver.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

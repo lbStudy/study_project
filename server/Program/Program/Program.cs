@@ -40,18 +40,18 @@ namespace App
                 return;
             }
 
-            bool isAdd = false;
-            try
-            {
-                isAdd = int.Parse(args[2]) == 0 ? false : true;
-            }
-            catch
-            {
-                Console.WriteLine($"error : process parameter {args[2]}.");
-                return;
-            }
+            //bool isAdd = false;
+            //try
+            //{
+            //    isAdd = int.Parse(args[2]) == 0 ? false : true;
+            //}
+            //catch
+            //{
+            //    Console.WriteLine($"error : process parameter {args[2]}.");
+            //    return;
+            //}
             SynchronizationContext.SetSynchronizationContext(OneThreadSynchronizationContext.Instance);
-            Game.Instance.Init(curAppid, bigAreaId, isAdd);
+            Game.Instance.Init(curAppid, bigAreaId);
             Console.Title = $"{Game.Instance.AppType.ToString()}({curAppid})";
 
             Console.WriteLine($"main thread id {Thread.CurrentThread.ManagedThreadId}.");
@@ -69,6 +69,7 @@ namespace App
                     Console.WriteLine(e.ToString());
                 }
             }
+            Console.ReadLine();
         }
         public static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {

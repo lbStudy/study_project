@@ -8,23 +8,14 @@ public class ConstDefine
     public static int loginServerId = 1;
     public static Dictionary<AppType, int> initModuleDic = new Dictionary<AppType, int>()
     {
-        { AppType.GameServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig },
-        { AppType.LoginServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig },
-        { AppType.GateServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig | (int)InitModule.DBConnect},
+        { AppType.GameServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig | (int)InitModule.DBConnect },
+        { AppType.LoginServer, (int)InitModule.LoadConfig },
+        { AppType.GateServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig},
         { AppType.MapServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig },
-        //{ AppType.TeamServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig },
-        { AppType.BattleServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig | (int)InitModule.DBConnect},
-        //{ AppType.ChatServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig },
+        { AppType.SystemServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig | (int)InitModule.DBConnect},
+        { AppType.BattleServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig},
         { AppType.ManagerServer, (int)InitModule.InnerConnect | (int)InitModule.LoadConfig | (int)InitModule.DBConnect},
         { AppType.SMITH, (int)InitModule.LoadConfig },
-    };
-
-    public static Dictionary<AppType, List<AppType>> innerConnectDic = new Dictionary<AppType, List<AppType>>()
-    {
-        { AppType.LoginServer, new List<AppType>() {AppType.ManagerServer}},
-        { AppType.GateServer, new List<AppType>() {AppType.ManagerServer, AppType.BattleServer }},
-        { AppType.BattleServer, new List<AppType>() { AppType.ManagerServer, AppType.GateServer}},
-        { AppType.ManagerServer, new List<AppType>() {AppType.LoginServer, AppType.GateServer, AppType.BattleServer}}
     };
     //主动连接Gate的服务器
     public static List<AppType> ActiveConnectGate = new List<AppType> { AppType.GameServer, AppType.MapServer, AppType.BattleServer, AppType.SystemServer};

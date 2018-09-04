@@ -14,7 +14,7 @@ namespace Base
         private Socket socket;
         private SocketAsyncEventArgs innArgs;
         private SocketAsyncEventArgs outArgs;
-        public readonly byte[] cache = new byte[2];
+        public readonly byte[] cache = new byte[4];
 
 		private readonly Buffer recvBuffer = new Buffer();
 		private readonly Buffer sendBuffer = new Buffer();

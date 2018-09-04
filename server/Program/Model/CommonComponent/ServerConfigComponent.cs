@@ -210,10 +210,13 @@ public class ServerConfigComponent : Component, IAwake
             XmlElement dbNode = bigAreaNode.SelectSingleNode("DB") as XmlElement;
             if(dbNode != null)
             {
-                dbUrl = httpNode.GetAttribute("address");
+                dbUrl = dbNode.GetAttribute("address");
             }
         }
-
+        else
+        {
+            curServerConfig = loginServerConfig;
+        }
         return true;
     }
     private ServerConfig Analysis(XmlElement elem)

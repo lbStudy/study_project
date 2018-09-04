@@ -9,7 +9,7 @@ using Data;
 public class DBOperateComponent : Component, IAwake
 {
     private const string playerTable = "player";        //对象在数据库的集合名称,类似表的名字
-    private string databaseName = "mud_";               //用户信息数据库
+    private string databaseName = "mmo_";               //用户信息数据库
     private const string roomrecordTable = "record";
     private string strconn;
     IMongoDatabase gameDatabase;

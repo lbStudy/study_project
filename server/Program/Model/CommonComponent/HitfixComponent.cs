@@ -34,8 +34,9 @@ public class HitfixComponent : Component, IAwake
             byte[] pdbBytes = File.ReadAllBytes("./ProtocolHandle.pdb");
             ProtocolDispatcher.Instance.Load(Assembly.Load(dllBytes, pdbBytes), Game.Instance.AppType);
         }
-        catch
+        catch (Exception e)
         {
+            string str = e.ToString();
             Console.WriteLine($"error : fail Load ProtocolHandle.dll/ProtocolHandle.pdb");
         }
     }

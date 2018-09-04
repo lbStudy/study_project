@@ -43,7 +43,7 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
         {
             registerConfig = ServerConfigComponent.Instance.loginServerConfig;
         }
-        else
+        else if(appType != AppType.LoginServer)
         {
             registerConfig = ServerConfigComponent.Instance.managerServerConfig;
         }
@@ -238,84 +238,4 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
             }
         });
     }
-    //public override void Remove(Session session)
-    //{
-    //    base.Remove(session);
-
-    //    if (session.relevanceID > 0 && appSessions.Remove((int)session.relevanceID))
-    //    {
-    //        Console.WriteLine($"NetInner Disconnect {session.relevanceID} {session.RemoteAddress.ToString()} ");
-    //        if(Game.Instance.State == GameState.Runing)
-    //        {
-    //            ServerConfig serverCf = ServerConfigComponent.Instance.GetServerConfigByAppid((int)session.relevanceID);
-    //            InnectReconnect(serverCf);
-    //        }
-    //    }
-    //}
-    //public async void InnectReconnect(ServerConfig connectConfig)
-    //{
-    //    Session session = this.Create(NetworkHelper.ToIPEndPoint(connectConfig.innerip, connectConfig.innerport));
-    //    Console.WriteLine($"start reconnect : ({connectConfig.appid }){connectConfig.innerAddress}");
-    //    session.relevanceID = connectConfig.appid;
-    //    session.pingTime = Game.Instance.Msec;
-    //    this.appSessions.Add(connectConfig.appid, session);
-
-    //    await Task.Delay(3000);
-
-    //    if (appSessions.ContainsKey(connectConfig.appid) && !appSessions[connectConfig.appid].IsDisposed)
-    //    {
-    //        Console.WriteLine($"reconnect success : ({connectConfig.appid}){connectConfig.innerAddress}");
-    //    }
-    //}
-    //public Session GetByAppID(int appid)
-    //{
-    //    Session session = null;
-    //    appSessions.TryGetValue(appid, out session);
-    //    return session;
-    //}
-    //public void SendMsgToAllServer(object msg)
-    //{
-    //    Packet packet = Packet.Take();
-    //    try
-    //    {
-    //        Session.FillContent(packet.Stream, msg, 0, Game.Instance.Appid);
-    //        foreach (Session session in appSessions.Values)
-    //        {
-    //            session.SendMessage(packet.Stream);
-    //        }
-    //    }
-    //    catch(Exception e)
-    //    {
-    //        Log.Error(e.ToString());
-    //    }
-    //    finally
-    //    {
-    //        Packet.Back(packet);
-    //    }
-    //}
-    //public void SendMsgToSevers(object msg, AppType appType)
-    //{
-    //    List<ServerConfig> cfs = ServerConfigComponent.Instance.GetServerConfigByAppType(appType);
-    //    if (cfs == null || cfs.Count == 0)
-    //        return;
-    //    Packet packet = Packet.Take();
-    //    try
-    //    {
-    //        Session.FillContent(packet.Stream, msg, 0, Game.Instance.Appid);
-    //        for (int i = 0; i < cfs.Count; i++)
-    //        {
-    //            Session session = GetByAppID(cfs[i].appid);
-    //            if (session != null)
-    //                session.SendMessage(packet.Stream);
-    //        }
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Log.Error(e.ToString());
-    //    }
-    //    finally
-    //    {
-    //        Packet.Back(packet);
-    //    }
-    //}
 }

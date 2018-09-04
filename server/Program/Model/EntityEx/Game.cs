@@ -41,13 +41,11 @@ public class Game : Entity
     public long Sec { get { return sec; } }
     private int initModule;
 
-    private bool isAddApp;
-    public bool IsAddApp { get { return isAddApp; } }
     Game() : base(EntityType.Game)
     {
 
     }
-    public void Init(int appid, int bigAreaId, bool isAddApp)
+    public void Init(int appid, int bigAreaId)
     {
         this.appid = appid;
         this.bigAreaId = bigAreaId;
@@ -56,7 +54,6 @@ public class Game : Entity
         msec = TimeHelper.ClientNow();
         sec = TimeHelper.ClientNowSeconds();
         initModule = 0;
-        this.isAddApp = isAddApp;
         //服务器配置
         AddComponent<ServerConfigComponent>();
         bool isLoadSuccess = ServerConfigComponent.Instance.LoadConfig(appid, bigAreaId);
@@ -106,22 +103,49 @@ public class Game : Entity
                 AddComponent<ClientHttpComponent>();
                 AddComponent<LoginManagerComponent>();
                 break;
+            case AppType.GameServer:
+                AddComponent<DBOperateComponent>();
+                AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
+                break;
             case AppType.GateServer:
                 AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
                 AddComponent<NetOuterComponent, IPEndPoint, AppType>(serverConfig.listenOuter, appType);
                 AddComponent<VerifyComponent>();
                 AddComponent<PlayerManagerComponent>();
                 AddComponent<ClientHttpComponent>();
-                AddComponent<DBOperateComponent>();
                 break;
             case AppType.MapServer:
+                AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
                 break;
-            //case AppType.ChatServer:
-            //    break;
+            case AppType.SystemServer:
+                {
+                    AddComponent<DBOperateComponent>();
+                    AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
+                    if ((serverConfig.system & (int)SystemType.Chat) > 0)
+                    {
+
+                    }
+                    if((serverConfig.system & (int)SystemType.Guild) > 0)
+                    {
+
+                    }
+                    if ((serverConfig.system & (int)SystemType.Mail) > 0)
+                    {
+
+                    }
+                    if ((serverConfig.system & (int)SystemType.Team) > 0)
+                    {
+
+                    }
+                    if ((serverConfig.system & (int)SystemType.Friend) > 0)
+                    {
+
+                    }
+                }
+                break;
             case AppType.BattleServer:
                 AddComponent<NetInnerComponent, IPEndPoint, AppType>(serverConfig.inner, appType);
                 //AddComponent<NetOuterComponent, string, int, AppType>(serverConfig.listenOuterip, serverConfig.listenOuterport, appType);
-                AddComponent<DBOperateComponent>();
                 AddComponent<RoomManagerComponent>();
                 break;
             case AppType.ManagerServer:

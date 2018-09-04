@@ -1118,6 +1118,9 @@
       },
       "Base/1.0.0": {
         "dependencies": {
+          "MongoDB.Bson": "1.0.0",
+          "MongoDB.Driver": "1.0.0",
+          "MongoDB.Driver.Core": "1.0.0",
           "MySql.Data": "6.10.6",
           "NLog": "5.0.0-beta11",
           "protobuf-net": "2.3.4"
