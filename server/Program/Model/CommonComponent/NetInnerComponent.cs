@@ -47,7 +47,8 @@ public class NetInnerComponent : NetworkComponent, IAwake<AppType>, IAwake<IPEnd
         {
             registerConfig = ServerConfigComponent.Instance.managerServerConfig;
         }
-        InnerRegister(registerConfig.innerip, registerConfig.innerport, registerConfig.appid, registerConfig.appType, registerConfig.system);
+        if(registerConfig != null)
+            InnerRegister(registerConfig.innerip, registerConfig.innerport, registerConfig.appid, registerConfig.appType, registerConfig.system);
         //ServerPingSend();
         //ServerPingDetection();
     }
