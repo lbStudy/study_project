@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace Base
 {
@@ -49,8 +49,32 @@ namespace Base
             }
             EntityManager.Instance.Remove(this);
         }
+        public async Task<K> AddDBComponent<K>() where K : DBComponent, new()
+        {
+            Type type = typeof(K);
+            if (this.componentDict != null && this.componentDict.ContainsKey(type))
+            {
+                throw new Exception($"AddComponent, component already exist, id: {this.Id}, component: {type.Name}");
+            }
 
-		public K AddComponent<K>() where K : Component, new()
+            K component = await DBOperateComponent.Instance.FindOneComponen<K>(id);
+            if(component == null)
+            {
+                component = Activator.CreateInstance(type) as K;
+                component.id = id;
+            }
+            if(componentDict.ContainsKey(type))
+            {
+                return componentDict[type] as K;
+            }
+            AddComponent(component);
+            component.Init();
+            var awake = component as IAwake;
+            if (awake != null)
+                awake.Awake();
+            return component;
+        }
+        public K AddComponent<K>() where K : Component, new()
 		{
             if (this.componentDict != null && this.componentDict.ContainsKey(typeof(K)))
 			{

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Base
@@ -36,8 +37,8 @@ namespace Base
         public abstract void Remove(long channelId);
         public abstract void Start();
         public abstract void Update();
-
-		public override void Dispose()
+        protected SendOrPostCallback onAcceptComplete;
+        public override void Dispose()
         {
             if (IsDisposed)
                 return;

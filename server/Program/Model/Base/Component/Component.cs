@@ -36,7 +36,7 @@ namespace Base
 			}
             base.Dispose();
 			this.Owner.RemoveComponent(this.GetType());
-            ComponentManager.Instance.Remove(this);
+            //ComponentManager.Instance.Remove(this);
         }
     }
 }

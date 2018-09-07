@@ -4,13 +4,17 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Base;
-using Data;
 
+public class TableInfo
+{
+    public string tableName;
+    public object findOptions;
+}
 public class DBOperateComponent : Component, IAwake
 {
-    private const string playerTable = "player";        //对象在数据库的集合名称,类似表的名字
+    //private const string playerTable = "player";        //对象在数据库的集合名称,类似表的名字
     private string databaseName = "mmo_";               //用户信息数据库
-    private const string roomrecordTable = "record";
+    //private const string roomrecordTable = "record";
     private string strconn;
     IMongoDatabase gameDatabase;
     MongoClient client;
@@ -67,12 +71,12 @@ public class DBOperateComponent : Component, IAwake
     {
         try
         {
-            IMongoCollection<PlayerData> playerCollections = gameDatabase.GetCollection<PlayerData>(playerTable);
-            if (playerCollections == null)
-            {
-                gameDatabase.CreateCollection(playerTable);
-                Console.WriteLine($"创建数据集：{databaseName}:{playerTable}");
-            }
+            //IMongoCollection<PlayerData> playerCollections = gameDatabase.GetCollection<PlayerData>(playerTable);
+            //if (playerCollections == null)
+            //{
+            //    gameDatabase.CreateCollection(playerTable);
+            //    Console.WriteLine($"创建数据集：{databaseName}:{playerTable}");
+            //}
 
             //IMongoCollection<BattleRecord> recordCollections = gameDatabase.GetCollection<BattleRecord>(roomrecordTable);
             //if (recordCollections == null)
@@ -109,26 +113,106 @@ public class DBOperateComponent : Component, IAwake
         }
     }
     CountOptions playerCountOption = new CountOptions();
-    FindOptions<PlayerData> playerFindOptions = new FindOptions<PlayerData>();
-    FindOptions<PlayerData, long> playerIdFindOption = new FindOptions<PlayerData, long>();
-    FindOptions<PlayerData, PlayerDetailData> playerBasicFindOption = new FindOptions<PlayerData, PlayerDetailData>();
-    FindOptions<PlayerData, PlayerDetailData> playerBasicsFindOption = new FindOptions<PlayerData, PlayerDetailData>();
-    FindOptions<PlayerData, long> playerUnionFindOption = new FindOptions<PlayerData, long>();
+    //FindOptions<PlayerData> playerFindOptions = new FindOptions<PlayerData>();
+    //FindOptions<PlayerData, long> playerIdFindOption = new FindOptions<PlayerData, long>();
+    //FindOptions<PlayerData, PlayerDetailData> playerBasicFindOption = new FindOptions<PlayerData, PlayerDetailData>();
+    //FindOptions<PlayerData, PlayerDetailData> playerBasicsFindOption = new FindOptions<PlayerData, PlayerDetailData>();
+    //FindOptions<PlayerData, long> playerUnionFindOption = new FindOptions<PlayerData, long>();
     //FindOptions<BattleRecord> recordFindOptions = new FindOptions<BattleRecord>();
+
+    Dictionary<Type, TableInfo> tableDic = new Dictionary<Type, TableInfo>();
+
+    public TableInfo CreateTable<T>()
+    {
+        Type type = typeof(T);
+        object[] attrs = type.GetCustomAttributes(typeof(DBAttribute), true);
+        if (attrs.Length == 0)
+        {
+            Console.WriteLine($"Error: {type.Name} have not DBAttribute, so is not db table.");
+            return null;
+        }
+        DBAttribute dbAttr = attrs[0] as DBAttribute;
+        TableInfo tableInfo = new TableInfo();
+        tableInfo.tableName = dbAttr.tableName;
+        FindOptions<T> findOptions = new FindOptions<T>();
+        tableInfo.findOptions = findOptions;
+        findOptions.Limit = 1;
+        tableDic[type] = tableInfo;
+        return tableInfo;
+    }
+    public TableInfo CreateTable(Type type)
+    {
+        object[] attrs = type.GetCustomAttributes(typeof(DBAttribute), true);
+        if (attrs.Length == 0)
+        {
+            Console.WriteLine($"Error: {type.Name} have not DBAttribute, so is not db table.");
+            return null;
+        }
+        DBAttribute dbAttr = attrs[0] as DBAttribute;
+        TableInfo tableInfo = new TableInfo();
+        tableInfo.tableName = dbAttr.tableName;
+        tableDic[type] = tableInfo;
+        return tableInfo;
+    }
+    public FindOptions<T> CreateFindOptions<T>()
+    {
+        FindOptions<T> findOptions = new FindOptions<T>();
+        findOptions.Limit = 1;
+        return findOptions;
+    }
+    public Task<T> FindOneComponen<T>(long id) where T : DBComponent
+    {
+        Type type = typeof(T);
+        TableInfo tableInfo = null;
+        if (tableDic.TryGetValue(type, out tableInfo) == false)
+        {
+            tableInfo = CreateTable<T>();
+        }
+        else
+        {
+            if (tableInfo.findOptions == null)
+            {
+                tableInfo.findOptions = CreateFindOptions<T>();
+            }
+        }
+        IMongoCollection<T> collections = gameDatabase.GetCollection<T>(tableInfo.tableName);
+        if (collections == null)
+        {
+            gameDatabase.CreateCollection(tableInfo.tableName);
+            Console.WriteLine($"创建数据集：{databaseName}:{tableInfo.tableName}");
+        }
+        return collections.FindAsync(s => s.id == id, tableInfo.findOptions as FindOptions<T>).Result.FirstOrDefaultAsync();
+    }
+    public async Task<BulkWriteResult> BulkWriteAsync(List<WriteModel<DBComponent>> datas, Type type)
+    {
+        if (datas.Count == 0) return null;
+        TableInfo tableInfo = null;
+        if (tableDic.TryGetValue(type, out tableInfo) == false)
+        {
+            tableInfo = CreateTable(type);
+        }
+        IMongoCollection<DBComponent> collections = gameDatabase.GetCollection<DBComponent>(tableInfo.tableName);
+        if (collections == null)
+        {
+            gameDatabase.CreateCollection(tableInfo.tableName);
+            Console.WriteLine($"创建数据集：{databaseName}:{tableInfo.tableName}");
+        }
+        return await collections.BulkWriteAsync(datas);
+    }
     public void PlayerHandlerInit()
     {
         playerCountOption.Limit = 1;
-        playerFindOptions.Limit = 1;
+        //playerFindOptions.Limit = 1;
         //recordFindOptions.Limit = 1;
 
 
-        playerIdFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.id);
-        playerIdFindOption.Limit = 1;
+        //playerIdFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.id);
+        //playerIdFindOption.Limit = 1;
 
-        playerBasicFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
-        playerBasicFindOption.Limit = 1;
+        //playerBasicFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
+        //playerBasicFindOption.Limit = 1;
 
-        playerBasicsFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
+        //playerBasicsFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
 
         //playerUnionFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData.unionID);
         //playerUnionFindOption.Limit = 1;
@@ -140,11 +224,11 @@ public class DBOperateComponent : Component, IAwake
     /// <param name="id"></param>
     /// <param name="serverID"></param>
     /// <returns></returns>
-    public async Task<PlayerData> FindPlayerDataAsync(long id)
-    {
-        IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
-        return await collections.FindAsync(s => s.id == id, playerFindOptions).Result.FirstOrDefaultAsync();
-    }
+    //public async Task<PlayerData> FindPlayerDataAsync(long id)
+    //{
+    //    IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
+    //    return await collections.FindAsync(s => s.id == id, playerFindOptions).Result.FirstOrDefaultAsync();
+    //}
     //public async Task<BattleRecord> FindBattleRecordAsync(long id)
     //{
     //    IMongoCollection<BattleRecord> collections = gameDatabase.GetCollection<BattleRecord>(roomrecordTable);
@@ -161,12 +245,12 @@ public class DBOperateComponent : Component, IAwake
     //    IMongoCollection<BattleRecord> collections = gameDatabase.GetCollection<BattleRecord>(roomrecordTable);
     //    await collections.UpdateOneAsync(s => s.id == id, Builders<BattleRecord>.Update.Push(x => x.battles, data));
     //}
-    public async Task<BulkWriteResult> UpdatePlayerDatasAsync(List<WriteModel<PlayerData>> datas)
-    {
-        if (datas.Count == 0) return null;
-        IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
-        return await collections.BulkWriteAsync(datas);
-    }
+    //public async Task<BulkWriteResult> UpdatePlayerDatasAsync(List<WriteModel<PlayerData>> datas)
+    //{
+    //    if (datas.Count == 0) return null;
+    //    IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
+    //    return await collections.BulkWriteAsync(datas);
+    //}
     //public async Task<BulkWriteResult> UpdateBattleRecordAsync(List<WriteModel<BattleRecord>> datas)
     //{
     //    if (datas.Count == 0) return null;
@@ -178,55 +262,55 @@ public class DBOperateComponent : Component, IAwake
     /// </summary>
     /// <param name="data"></param>
     /// <param name="serverID"></param>
-    public async Task InsertPlayerDataAsync(PlayerData data)
-    {
-        IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
-        await collections.InsertOneAsync(data);
-    }
-    public async Task<int> AddRoomCardAsync(long id, int count)
-    {
-        UpdateDefinition<PlayerData> updateDef = Builders<PlayerData>.Update.Inc(x => x.detailData.roomcard, count);
-        IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
-        UpdateResult result = await collections.UpdateOneAsync(s => s.id == id, updateDef);
-        return (int)result.ModifiedCount;
-    }
-    public async Task<PlayerDetailData> FindDetaildata(long id)
-    {
-        IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
-        FilterDefinition<PlayerData> filterDef = Builders<PlayerData>.Filter.Eq(x => x.id, id);
-        FindOptions<PlayerData, PlayerDetailData> detailFindOption = new FindOptions<PlayerData, PlayerDetailData>();
-        detailFindOption.Limit = 1;
-        detailFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
-        return await collections.FindAsync(filterDef, detailFindOption).Result.FirstOrDefaultAsync();
-    }
-    public async Task<int> FindRoomcardAsync(long id, int count)
-    {
-        IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
-        //FindOptions<PlayerData, int> detailFindOption = new FindOptions<PlayerData, int>();
-        //detailFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData.roomcard);
-        FilterDefinition<PlayerData> filterDef = Builders<PlayerData>.Filter.Eq(x => x.id, id);
-        UpdateDefinition<PlayerData> updateDef = Builders<PlayerData>.Update.Inc(x => x.detailData.roomcard, count);
-        FindOneAndUpdateOptions<PlayerData, int> fuo = new FindOneAndUpdateOptions<PlayerData, int>();
-        fuo.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData.roomcard);
-        fuo.IsUpsert = false;
-        return await collections.FindOneAndUpdateAsync(x => x.id == id, updateDef, fuo);
-    }
-    public async Task<List<PlayerDetailData>> FindPlayerDetailData(List<long> ids)
-    {
-        IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
-        FilterDefinition<PlayerData> filterDef = Builders<PlayerData>.Filter.In(x => x.id, ids);
-        FindOptions<PlayerData, PlayerDetailData> detailFindOption = new FindOptions<PlayerData, PlayerDetailData>();
-        detailFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
-        return await collections.FindSync(filterDef, detailFindOption).ToListAsync();
-    }
-    public async Task<List<PlayerDetailData>> FindPlayerDetailData()
-    {
-        IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
-        FindOptions<PlayerData, PlayerDetailData> unionBasicDataFindOption = new FindOptions<PlayerData, PlayerDetailData>();
-        unionBasicDataFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
-        FilterDefinition<PlayerData> fileterDef = Builders<PlayerData>.Filter.Gt(x => x.id, 0);
-        return await collections.FindAsync(fileterDef, unionBasicDataFindOption).Result.ToListAsync();
-    }
+    //public async Task InsertPlayerDataAsync(PlayerData data)
+    //{
+    //    IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
+    //    await collections.InsertOneAsync(data);
+    //}
+    //public async Task<int> AddRoomCardAsync(long id, int count)
+    //{
+    //    UpdateDefinition<PlayerData> updateDef = Builders<PlayerData>.Update.Inc(x => x.detailData.roomcard, count);
+    //    IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
+    //    UpdateResult result = await collections.UpdateOneAsync(s => s.id == id, updateDef);
+    //    return (int)result.ModifiedCount;
+    //}
+    //public async Task<PlayerDetailData> FindDetaildata(long id)
+    //{
+    //    IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
+    //    FilterDefinition<PlayerData> filterDef = Builders<PlayerData>.Filter.Eq(x => x.id, id);
+    //    FindOptions<PlayerData, PlayerDetailData> detailFindOption = new FindOptions<PlayerData, PlayerDetailData>();
+    //    detailFindOption.Limit = 1;
+    //    detailFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
+    //    return await collections.FindAsync(filterDef, detailFindOption).Result.FirstOrDefaultAsync();
+    //}
+    //public async Task<int> FindRoomcardAsync(long id, int count)
+    //{
+    //    IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
+    //    //FindOptions<PlayerData, int> detailFindOption = new FindOptions<PlayerData, int>();
+    //    //detailFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData.roomcard);
+    //    FilterDefinition<PlayerData> filterDef = Builders<PlayerData>.Filter.Eq(x => x.id, id);
+    //    UpdateDefinition<PlayerData> updateDef = Builders<PlayerData>.Update.Inc(x => x.detailData.roomcard, count);
+    //    FindOneAndUpdateOptions<PlayerData, int> fuo = new FindOneAndUpdateOptions<PlayerData, int>();
+    //    fuo.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData.roomcard);
+    //    fuo.IsUpsert = false;
+    //    return await collections.FindOneAndUpdateAsync(x => x.id == id, updateDef, fuo);
+    //}
+    //public async Task<List<PlayerDetailData>> FindPlayerDetailData(List<long> ids)
+    //{
+    //    IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
+    //    FilterDefinition<PlayerData> filterDef = Builders<PlayerData>.Filter.In(x => x.id, ids);
+    //    FindOptions<PlayerData, PlayerDetailData> detailFindOption = new FindOptions<PlayerData, PlayerDetailData>();
+    //    detailFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
+    //    return await collections.FindSync(filterDef, detailFindOption).ToListAsync();
+    //}
+    //public async Task<List<PlayerDetailData>> FindPlayerDetailData()
+    //{
+    //    IMongoCollection<PlayerData> collections = gameDatabase.GetCollection<PlayerData>(playerTable);
+    //    FindOptions<PlayerData, PlayerDetailData> unionBasicDataFindOption = new FindOptions<PlayerData, PlayerDetailData>();
+    //    unionBasicDataFindOption.Projection = Builders<PlayerData>.Projection.Expression(x => x.detailData);
+    //    FilterDefinition<PlayerData> fileterDef = Builders<PlayerData>.Filter.Gt(x => x.id, 0);
+    //    return await collections.FindAsync(fileterDef, unionBasicDataFindOption).Result.ToListAsync();
+    //}
     //public async Task<DeleteResult> RefreshRecord(long recordRemoveTime)
     //{
     //    IMongoCollection<BattleRecord> collections = gameDatabase.GetCollection<BattleRecord>(roomrecordTable);

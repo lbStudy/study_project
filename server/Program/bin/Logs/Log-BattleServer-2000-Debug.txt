@@ -1,0 +1,7 @@
+2018-09-04 17:46:49.1907 BattleServer 2000 (ConfigManagerComponent.cs:148) characterconfig config load  success.
+2018-09-04 17:49:47.8029 BattleServer 2000 (ConfigManagerComponent.cs:148) characterconfig config load  success.
+2018-09-04 17:58:38.9904 BattleServer 2000 (ConfigManagerComponent.cs:148) characterconfig config load  success.
+2018-09-04 19:21:46.9601 BattleServer 2000 (ConfigManagerComponent.cs:148) characterconfig config load  success.
+2018-09-04 19:22:05.4410 BattleServer 2000 (ConfigManagerComponent.cs:148) characterconfig config load  success.
+2018-09-04 19:23:29.6324 BattleServer 2000 (ConfigManagerComponent.cs:148) characterconfig config load  success.
+2018-09-06 15:45:45.5272 BattleServer 2000 (ConfigManagerComponent.cs:148) characterconfig config load  success.

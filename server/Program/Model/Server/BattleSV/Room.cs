@@ -155,17 +155,17 @@ public class Room
         MemoryStream stream = packet.Stream;
         try
         {
-            Session.FillContent(stream, msg, 0, 0);
-            foreach (RoomMember val in memberDic.Values)
-            {
-                if (val.info.playerid == noid)
-                    continue;
-                if (val.info.isOnline || isForce)
-                {
-                    Session.ReplaceToid(stream, val.info.playerid);
-                    val.SendMsgToGateserver(stream);
-                }
-            }
+            //Session.FillContent(stream, msg, 0, 0);
+            //foreach (RoomMember val in memberDic.Values)
+            //{
+            //    if (val.info.playerid == noid)
+            //        continue;
+            //    if (val.info.isOnline || isForce)
+            //    {
+            //        Session.ReplaceToid(stream, val.info.playerid);
+            //        val.SendMsgToGateserver(stream);
+            //    }
+            //}
         }
         catch (Exception e)
         {

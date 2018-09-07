@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Base
@@ -75,6 +76,12 @@ namespace Base
         }
         protected bool isConnected;
         public bool IsConnected { get { return isConnected; } }
+
+        protected SendOrPostCallback onConnectComplete;
+        protected SendOrPostCallback onRecvComplete;
+        protected SendOrPostCallback onSendComplete;
+        protected SendOrPostCallback onDisconnectComplete;
+
         protected void OnRead(Packet packet)
         {
             this.readCallback?.Invoke(packet);

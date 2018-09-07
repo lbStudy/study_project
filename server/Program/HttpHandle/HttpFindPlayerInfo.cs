@@ -14,7 +14,7 @@ namespace HttpHandle
             dic["ret"] = 0;
             if (httpPackage.reqContent.stype == "all")
             {
-                playerdatas = await DBOperateComponent.Instance.FindPlayerDetailData();
+                //playerdatas = await DBOperateComponent.Instance.FindPlayerDetailData();
             }
             else if(httpPackage.reqContent.stype == "some")
             {
@@ -70,7 +70,7 @@ namespace HttpHandle
                     int ret2 = 0;
                     if (offlinePlayers.Count > 0)
                     {
-                        playerdatas = await DBOperateComponent.Instance.FindPlayerDetailData(offlinePlayers);
+                        //playerdatas = await DBOperateComponent.Instance.FindPlayerDetailData(offlinePlayers);
                     }
                     if(ret1 == 6 && ret2 == 6)
                     {

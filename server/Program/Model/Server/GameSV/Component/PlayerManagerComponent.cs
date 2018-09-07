@@ -69,12 +69,12 @@ public class PlayerManagerComponent : Component, IAwake
         }
         if(saveDatas.Count > 0)
         {
-            BulkWriteResult result = await DBOperateComponent.Instance.UpdatePlayerDatasAsync(saveDatas);
-            if (result.MatchedCount != saveDatas.Count)
-            {
-                Console.WriteLine("警告：向数据库更新玩家数据时，有玩家id未查询到，导致数据未保存到数据库。");
-            }
-            saveDatas.Clear();
+            //BulkWriteResult result = await DBOperateComponent.Instance.UpdatePlayerDatasAsync(saveDatas);
+            //if (result.MatchedCount != saveDatas.Count)
+            //{
+            //    Console.WriteLine("警告：向数据库更新玩家数据时，有玩家id未查询到，导致数据未保存到数据库。");
+            //}
+            //saveDatas.Clear();
         }
         if(removePlayers.Count > 0)
         {
@@ -159,11 +159,11 @@ public class PlayerManagerComponent : Component, IAwake
         Packet packet = Packet.Take();
         try
         {
-            Session.FillContent(packet.Stream, msg, 0, Game.Instance.Appid);
-            foreach (Player player in players)
-            {
-                player.SendMsg(packet.Stream);
-            }
+            //Session.FillContent(packet.Stream, msg, 0, Game.Instance.Appid);
+            //foreach (Player player in players)
+            //{
+            //    player.SendMsg(packet.Stream);
+            //}
         }
         catch (Exception e)
         {

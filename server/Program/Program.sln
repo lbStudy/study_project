@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Program", "Program\Program.csproj", "{7FCFB2E2-873D-41FC-AE21-1207F2439E7D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{B2E11C72-7B4A-4FB0-93C0-75E7D136784E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base", "Base\Base.csproj", "{AE20EA0A-240C-4E7E-9365-356B99B62526}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotfix", "Hotfix", "{8A4A3F4E-6DB5-4037-B7D1-93A95144985A}"
 EndProject
@@ -15,13 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHandle", "EventHandle\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuncHandle", "FuncHandle\FuncHandle.csproj", "{A9DC2CCC-7E73-49E8-9898-99ACF7E0E657}"
 	ProjectSection(ProjectDependencies) = postProject
-		{AE20EA0A-240C-4E7E-9365-356B99B62526} = {AE20EA0A-240C-4E7E-9365-356B99B62526}
 		{B2E11C72-7B4A-4FB0-93C0-75E7D136784E} = {B2E11C72-7B4A-4FB0-93C0-75E7D136784E}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpHandle", "HttpHandle\HttpHandle.csproj", "{67064105-B6E3-4982-9EEE-978F8E383087}"
 	ProjectSection(ProjectDependencies) = postProject
-		{AE20EA0A-240C-4E7E-9365-356B99B62526} = {AE20EA0A-240C-4E7E-9365-356B99B62526}
 		{B2E11C72-7B4A-4FB0-93C0-75E7D136784E} = {B2E11C72-7B4A-4FB0-93C0-75E7D136784E}
 	EndProjectSection
 EndProject
@@ -49,10 +45,6 @@ Global
 		{B2E11C72-7B4A-4FB0-93C0-75E7D136784E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2E11C72-7B4A-4FB0-93C0-75E7D136784E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2E11C72-7B4A-4FB0-93C0-75E7D136784E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE20EA0A-240C-4E7E-9365-356B99B62526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE20EA0A-240C-4E7E-9365-356B99B62526}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE20EA0A-240C-4E7E-9365-356B99B62526}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE20EA0A-240C-4E7E-9365-356B99B62526}.Release|Any CPU.Build.0 = Release|Any CPU
 		{502CA1D2-9DFA-41A1-8544-7CBC95F06089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{502CA1D2-9DFA-41A1-8544-7CBC95F06089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{502CA1D2-9DFA-41A1-8544-7CBC95F06089}.Release|Any CPU.ActiveCfg = Release|Any CPU

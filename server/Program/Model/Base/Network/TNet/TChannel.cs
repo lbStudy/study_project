@@ -22,8 +22,6 @@ namespace Base
 
         private bool isSending;
 		
-
-
         public void Init(long id, IPEndPoint ipEndPoint, TService service)
         {
             base.Init(id, service, ChannelType.Connect);
@@ -39,6 +37,10 @@ namespace Base
             parser.Init(recvBuffer);
             this.isConnected = false;
             this.isSending = false;
+            onConnectComplete = OnConnectComplete;
+            onRecvComplete = OnRecvComplete;
+            onSendComplete = OnSendComplete;
+            onDisconnectComplete = OnDisconnectComplete;
         }
 
         public void Init(long id, Socket socket, TService service)
@@ -56,6 +58,10 @@ namespace Base
             parser.Init(recvBuffer);
             this.isConnected = true;
             this.isSending = false;
+            onConnectComplete = OnConnectComplete;
+            onRecvComplete = OnRecvComplete;
+            onSendComplete = OnSendComplete;
+            onDisconnectComplete = OnDisconnectComplete;
         }
         public override void Dispose()
         {
@@ -92,16 +98,16 @@ namespace Base
             switch (e.LastOperation)
             {
                 case SocketAsyncOperation.Connect:
-                    OneThreadSynchronizationContext.Instance.Post(this.OnConnectComplete, e);
+                    OneThreadSynchronizationContext.Instance.Post(this.onConnectComplete, e);
                     break;
                 case SocketAsyncOperation.Receive:
-                    OneThreadSynchronizationContext.Instance.Post(this.OnRecvComplete, e);
+                    OneThreadSynchronizationContext.Instance.Post(this.onRecvComplete, e);
                     break;
                 case SocketAsyncOperation.Send:
-                    OneThreadSynchronizationContext.Instance.Post(this.OnSendComplete, e);
+                    OneThreadSynchronizationContext.Instance.Post(this.onSendComplete, e);
                     break;
                 case SocketAsyncOperation.Disconnect:
-                    OneThreadSynchronizationContext.Instance.Post(this.OnDisconnectComplete, e);
+                    OneThreadSynchronizationContext.Instance.Post(this.onDisconnectComplete, e);
                     break;
                 default:
                     throw new Exception($"socket error: {e.LastOperation}");

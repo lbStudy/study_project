@@ -23,7 +23,7 @@ namespace Base
             this.acceptor.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             this.innArgs = new SocketAsyncEventArgs();
             this.innArgs.Completed += this.OnComplete;
-
+            onAcceptComplete = OnAcceptComplete;
             this.acceptor.Bind(ipEndPoint);
             this.acceptor.Listen(1000);
         }
@@ -63,7 +63,7 @@ namespace Base
             switch (e.LastOperation)
             {
                 case SocketAsyncOperation.Accept:
-                    OneThreadSynchronizationContext.Instance.Post(this.OnAcceptComplete, e);
+                    OneThreadSynchronizationContext.Instance.Post(this.onAcceptComplete, e);
                     break;
                 default:
                     throw new Exception($"socket error: {e.LastOperation}");

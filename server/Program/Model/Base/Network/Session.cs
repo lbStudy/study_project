@@ -22,7 +22,7 @@ namespace Base
         public long pingTime;
         byte[] idByte = new byte[8];
         byte[] rpcByte = new byte[4];
-        public List<long> toids = new List<long>();
+        public List<long> ids = new List<long>();
         public void Init(long id, NetworkComponent network, AChannel channel)
         {
             this.id = id;
@@ -54,15 +54,15 @@ namespace Base
         private void OnRead(Packet packet)
         {
             //byte[] messageBytes, int dataLength
+            ids.Clear();
             byte[] messageBytes = packet.Stream.GetBuffer();
             int offset = 0;
-            ushort count = BitConverter.ToUInt16(messageBytes, offset); ;
+            short count = BitConverter.ToInt16(messageBytes, offset); ;
             offset += 2;
             for (int i = 0; i < count; i++)
             {
                 long id = BitConverter.ToInt64(messageBytes, offset);
-                if(id > 0)
-                    toids.Add(id);
+                ids.Add(id);
                 offset += 8;
             }
             int opcode = BitConverter.ToInt32(messageBytes, offset);
@@ -142,21 +142,21 @@ namespace Base
                     if(protocolInfo.FromServer == AppType.Client 
                         && network.IsOuter)
                     {
-                        if(toids.Count > 0)
+                        if(count != 1)
                         {
                             Dispose();
-                            Log.Warning("If proto from client, should not exist toid count > 0.");
+                            Log.Warning("If proto from client, should not exist toid count != 1.");
                             return;
                         }
-                        toids.Add(relevanceID);
+                        ids[0] = relevanceID;
                     }
-                    protocolInfo.HandleInterface.Handle(this, protocolInfo, message, toids, rpcId);
+                    protocolInfo.HandleInterface.Handle(this, protocolInfo, message, ids, rpcId);
                 }
             }
             else
             {//转发
                 if(protocolInfo.FromServer == AppType.Client)
-                {
+                {//前端消息进过了网关验证才能转发到内外
                     if(relevanceID == 0)
                     {
                         Dispose();
@@ -164,28 +164,25 @@ namespace Base
                     }
                     if(network.IsOuter)
                     {
-                        if (toids.Count > 0)
+                        if (count != 1)
                         {
                             Dispose();
-                            Log.Warning("If proto from client, should not exist toid count > 0.");
+                            Log.Warning("If proto from client, should not exist toid count != 1.");
                             return;
                         }
-                        toids.Add(relevanceID);
-                        count = 1;
-                        idByte.WriteTo(0, count);
-                        Array.Copy(idByte, 0, messageBytes, 0, 2);
+                        ids[0] = relevanceID;
                         idByte.WriteTo(0, relevanceID);
                         Array.Copy(idByte, 0, messageBytes, 2, 8);
                     }
                 }
-                EventDispatcher.Instance.Run((int)InnerEventIdType.SessionTranspond, this, protocolInfo, toids, packet.Stream);
+                EventDispatcher.Instance.Run((int)InnerEventIdType.SessionTranspond, this, protocolInfo, ids, packet.Stream);
             }
-            toids.Clear();
+            ids.Clear();
         }
         /// <summary>
         /// Rpc调用,发送一个消息,等待返回一个消息
         /// </summary>
-        public Task<object> Call(object request, long toId, object response = null)
+        public Task<object> Call(object request, long sendId, object response = null)
         {
             if (this.IsDisposed)
             {
@@ -195,7 +192,9 @@ namespace Base
             Packet packet = Packet.Take();
             try
             {
-                FillContent(packet.Stream, request, ++RpcId);
+                ids.Clear();
+                ids.Add(sendId);
+                FillContent(packet.Stream, request, ++RpcId, ids);
                 this.SendMessage(packet.Stream);
                 tcs = new TaskCompletionSource<object>(response);
                 this.requestCallback[RpcId] = tcs;
@@ -206,7 +205,7 @@ namespace Base
             }
             return tcs.Task;
         }
-        public void SendMessage(object message, long toid)
+        public void SendMessage(object message, long sendId)
         {
             if (this.IsDisposed)
             {
@@ -215,9 +214,9 @@ namespace Base
             Packet packet = Packet.Take();
             try
             {
-                toids.Clear();
-                toids.Add(toid);
-                FillContent(packet.Stream, message, 0);
+                ids.Clear();
+                ids.Add(sendId);
+                FillContent(packet.Stream, message, 0, ids);
                 this.SendMessage(packet.Stream);
             }
             finally
@@ -225,7 +224,7 @@ namespace Base
                 Packet.Back(packet);
             }
         }
-        public void SendMessage(object message, List<long> toids)
+        public void SendMessage(object message, List<long> sendIds)
         {
             if (this.IsDisposed)
             {
@@ -234,12 +233,7 @@ namespace Base
             Packet packet = Packet.Take();
             try
             {
-                if(this.toids != toids)
-                {
-                    this.toids.Clear();
-                    this.toids.AddRange(toids);
-                }
-                FillContent(packet.Stream, message, 0);
+                FillContent(packet.Stream, message, 0, sendIds);
                 this.SendMessage(packet.Stream);
             }
             finally
@@ -247,7 +241,7 @@ namespace Base
                 Packet.Back(packet);
             }
         }
-        public void Reply(uint rpcId, object message, long toid, int errorCode = 0)
+        public void Reply(uint rpcId, object message, long sendId, int errorCode = 0)
         {
             if (this.IsDisposed)
             {
@@ -256,7 +250,9 @@ namespace Base
             Packet packet = Packet.Take();
             try
             {
-                FillContent(packet.Stream, message, rpcId, toid);
+                ids.Clear();
+                ids.Add(sendId);
+                FillContent(packet.Stream, message, rpcId, ids);
                 this.SendMessage(packet.Stream);
             }
             finally
@@ -264,17 +260,7 @@ namespace Base
                 Packet.Back(packet);
             }
         }
-        public static void ReplaceToid(MemoryStream stream, long toid)
-        {
-            if (stream == null)
-            {
-                throw new Exception($"stream is null.");
-            }
-            stream.Position = 0;
-            byte[] idBytes = BitConverter.GetBytes(toid);
-            stream.Write(idBytes, 0, idBytes.Length);
-        }
-        public void FillContent(MemoryStream stream, object message, uint rpcId)
+        public void FillContent(MemoryStream stream, object message, uint rpcId, List<long> sendIds)
         {
             if (stream == null)
             {
@@ -287,49 +273,21 @@ namespace Base
                 throw new Exception($"Not exist {message.GetType().Name} protocol.");
             }
 
-            if (toids.Count > 0)
+            short count = sendIds == null ? (short)0 :(short)sendIds.Count;
+            idByte.WriteTo(0, count);
+            stream.Write(idByte, 0, 2);
+            if (sendIds != null && sendIds.Count > 0)
             {
-                short count = (short)toids.Count;
-                idByte.WriteTo(0, count);
-                stream.Write(idByte, 0, 2);
-                foreach (long id in toids)
+                foreach (long id in sendIds)
                 {
                     idByte.WriteTo(0, id);
                     stream.Write(idByte, 0, idByte.Length);
                 }
             }
-            //else
-            //{
-            //    short count = (short)(toServer ? -1 : 1);
-            //    idByte.WriteTo(0, count);
-            //    stream.Write(idByte, 0, 2);
-            //    idByte.WriteTo(0, 0L);
-            //    stream.Write(idByte, 0, idByte.Length);
-            //}
             stream.Write(protocolInfo.opcodeBytes, 0, protocolInfo.opcodeBytes.Length);
             stream.Write(protocolInfo.selectsBytes, 0, protocolInfo.selectsBytes.Length);
             rpcByte.WriteTo(0, rpcId);
             stream.Write(rpcByte, 0, rpcByte.Length);
-            ProtoBuf.Meta.RuntimeTypeModel.Default.Serialize(stream, message);
-        }
-        public static void FillContent(MemoryStream stream, object message, uint rpcId, long toid)
-        {
-            if(stream == null)
-            {
-                throw new Exception($"stream is null.");
-            }
-            ProtocolInfo protocolInfo = ProtocolDispatcher.Instance.GetProtocolInfo(message.GetType());
-
-            if (protocolInfo == null)
-            {
-                throw new Exception($"Not exist {message.GetType().Name} protocol.");
-            }
-            byte[] idBytes = BitConverter.GetBytes(toid);
-            stream.Write(idBytes, 0, idBytes.Length);
-            stream.Write(protocolInfo.opcodeBytes, 0, protocolInfo.opcodeBytes.Length);
-            stream.Write(protocolInfo.selectsBytes, 0, protocolInfo.selectsBytes.Length);
-            byte[] seqBytes = BitConverter.GetBytes(rpcId);
-            stream.Write(seqBytes, 0, seqBytes.Length);
             ProtoBuf.Meta.RuntimeTypeModel.Default.Serialize(stream, message);
         }
         public void SendMessage(MemoryStream stream)
@@ -364,7 +322,7 @@ namespace Base
                 Log.Warning("session rpc request not handle, but session is removed.");
             }
             relevanceID = 0;
-            toids.Clear();
+            ids.Clear();
         }
     }
 }
